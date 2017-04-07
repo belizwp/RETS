@@ -1,0 +1,190 @@
+body {
+    padding-top: 50px;
+    background-color: #FAFAFA;
+}
+
+.jumbotron {
+    background-image: 	linear-gradient(
+        rgba(0, 0, 0, 0.5), 
+        rgba(0, 0, 0, 0.5)
+        ), url("../img/cover.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+    color: #FAFAFA;
+
+}
+
+.panel {
+    border-radius: 0;
+    -webkit-appearance: none;
+}
+
+.btn {
+    border-radius: 0;
+    -webkit-appearance: none;
+    margin: 2px 0;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.caption {
+    overflow: hidden;
+}
+
+.caption h4 {
+    white-space: nowrap;
+}
+
+.thumbnail img {
+    width: 100%;
+}
+
+a.thumbnail {
+    text-decoration: none;
+}
+
+.thumbnail {
+    border-radius: 0;
+    -webkit-appearance: none;
+    padding: 0;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+    color: #333;
+}
+
+.searchbox {
+    margin: 0 15px;
+}
+
+.searchbox .btn, .dropdown-menu {
+    border-radius: 0;
+    -webkit-appearance: none;
+}
+
+.list-special .list-group-item:first-child {
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+}
+
+.list-special .list-group-item:last-child {
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}
+
+.list-special .list-group-item {
+    border-left: none;
+    border-right: none;
+}
+
+.list-special {
+    margin: 0px;
+    border: none;
+}
+
+a.list-group-item {
+    overflow: hidden;  
+    position: relative;
+    display: block;
+    padding: 0;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ================= form style ================== */
+
+fieldset {
+    margin: auto 20px;
+}
+
+.image-preview-input {
+    position: relative;
+    overflow: hidden;
+    margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.image-preview-input input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+    margin-left:2px;
+}
+/* layout.css Style */
+.upload-drop-zone {
+    height: 200px;
+    border-width: 2px;
+    margin-bottom: 20px;
+}
+
+/* skin.css Style*/
+.upload-drop-zone {
+    color: #ccc;
+    border-style: dashed;
+    border-color: #ccc;
+    line-height: 200px;
+    text-align: center
+}
+.upload-drop-zone.drop {
+    color: #222;
+    border-color: #222;
+}
+
+/* ================== Main carousel style ================== */
+.carousel-outer {
+    max-height: 400px;
+    position:relative;
+}
+#myCarousel .carousel-indicators {
+    margin: 10px 0;
+    overflow: auto;
+    position: static;
+    text-align: left;
+    white-space: nowrap;
+    width: 100%;
+}
+#myCarousel .carousel-indicators li {
+    background-color: transparent;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    display: inline-block;
+    height: auto;
+    margin: 0 !important;
+    width: auto;
+}
+#myCarousel .carousel-indicators li img {
+    display: block;
+    opacity: 0.5;
+}
+#myCarousel .carousel-indicators li.active img {
+    opacity: 1;
+}
+#myCarousel .carousel-indicators li:hover img {
+    opacity: 0.75;
+}
+
+.contact .form-control {
+    margin-bottom: 10px;
+}
+
+.contact textarea {
+    min-height: 100px;
+}
+
