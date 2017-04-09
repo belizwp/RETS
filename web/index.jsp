@@ -5,16 +5,16 @@
     <div class="container text-center">
         <h1>Real Estate Trading System</h1>
         <p>(RETS)</p>
-        <jsp:include page="searchbox/searchbox.jsp"/>
+        <jsp:include page="searchbox"/>
     </div>
 </div>
 
 <div class="container">
-    <h4><b>ประชาสัมพันธ์</b></h4>
-    <div class="row">
-        <jsp:include page="advertise.jsp"/>
+    <jsp:include page="advertise.jsp"/>
+    <div class="text-center">
+        <a href="search" type="button" class="btn btn-default">ดูโครงการทั้งหมด</a>
+        <a type="button" class="btn btn-danger">ลงประกาศกับเรา</a>
     </div>
 </div>
 
 <jsp:include page="templates/footer.jsp" />
-

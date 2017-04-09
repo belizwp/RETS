@@ -24,4 +24,28 @@
         <servlet-name>registerURL</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>loginURL</servlet-name>
+        <jsp-file>/login.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginURL</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>searchboxURL</servlet-name>
+        <jsp-file>/searchbox/searchbox.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchboxURL</servlet-name>
+        <url-pattern>/searchbox</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>searchURL</servlet-name>
+        <jsp-file>/search.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchURL</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
 </web-app>

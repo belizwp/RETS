@@ -24,7 +24,6 @@ body {
 .btn {
     border-radius: 0;
     -webkit-appearance: none;
-    margin: 2px 0;
 }
 
 .btn:focus {
@@ -62,9 +61,9 @@ a.thumbnail {
     margin: 0 15px;
 }
 
-.searchbox .btn, .dropdown-menu {
-    border-radius: 0;
-    -webkit-appearance: none;
+.searchbox .form-control, .dropdown-menu {
+    border-radius: 0 !important;
+    -webkit-appearance: none !important;
 }
 
 .list-special .list-group-item:first-child {

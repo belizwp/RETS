@@ -1,8 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="SITE_URL" value="${pageContext.request.contextPath}" scope="request"/>
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,11 +8,11 @@
 
         <title>RETS | Real Estate Trading System</title>
 
-        <link href="${SITE_URL}/assets/css/bootstrap.min.css" rel="stylesheet">
-        <link href="${SITE_URL}/assets/css/style.css" rel="stylesheet">
+        <link href="/RETS/assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/RETS/assets/css/style.css" rel="stylesheet">
 
-        <script src="${SITE_URL}/assets/js/jquery-3.2.0.min.js"></script>
-        <script src="${SITE_URL}/assets/js/bootstrap.min.js"></script>
+        <script src="/RETS/assets/js/jquery-3.2.0.min.js"></script>
+        <script src="/RETS/assets/js/bootstrap.min.js"></script>
     </head>
     <body>
 
@@ -33,8 +31,8 @@
                     <div id="navbar" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li><a href="/RETS">หน้าหลัก</a></li>
-                            <li><a href="#">ขาย</a></li>
-                            <li><a href="#">เช่า</a></li>
+                            <li><a href="search?announce_type=1">ขาย</a></li>
+                            <li><a href="search?announce_type=2">เช่า</a></li>
                             <li><a href="#">ลงประกาศ</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
