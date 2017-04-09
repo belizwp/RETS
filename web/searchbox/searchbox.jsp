@@ -79,11 +79,11 @@
                         </c:if>
                     </select>
 
-                    <div class="dropdown btn col-md-*" style="padding: 0;">
-                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    <div id="price_dropdown" class="dropdown btn-group col-md-*" style="padding: 0;">
+                        <button id="price" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                             ราคา <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" style="padding: 5px;">
+                        <ul class="dropdown-menu" id="price_range" style="padding: 5px;" open>
                             <li><input name="min_price" id="min_price" class="form-control" type="number" min="0" placeholder="ราคาต่ำสุด" /></li>
                             <li><input name="max_price" id="max_price" class="form-control" type="number" min="0" placeholder="ราคาสูงสุด" /></li>
                         </ul>
@@ -132,4 +132,40 @@
             });
         }
     }
+
+    function addCommas(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function setPriceDesc(min, max) {
+        if (!isNaN(min) && !isNaN(max)) {
+            if (min <= max) {
+                $("#price").text(addCommas(min) + ' - ' + addCommas(max) + ' บาท');
+            } else {
+                $('#min_price').val(NaN);
+                $('#max_price').val(NaN);
+                $("#price").text('ไม่ระบุราคา');
+            }
+        } else if (!isNaN(min) && isNaN(max)) {
+            $("#price").text('ตั้งแต่ ' + addCommas(min) + ' บาท');
+        } else if (isNaN(min) && !isNaN(max)) {
+            $("#price").text('สูงสุด ' + addCommas(max) + ' บาท');
+        } else {
+            $('#min_price').val(NaN);
+            $('#max_price').val(NaN);
+            $("#price").text('ไม่ระบุราคา');
+        }
+    }
+
+    $(document).ready(function () {
+        // default price
+        $('#min_price').val(${param.min_price});
+        $('#max_price').val(${param.max_price});
+        setPriceDesc(parseInt(${param.min_price}), parseInt(${param.max_price}));
+
+        // refresh price
+        $("#price_dropdown").on("hide.bs.dropdown", function () {
+            setPriceDesc(parseInt($('#min_price').val()), parseInt($('#max_price').val()));
+        });
+    });
 </script>
