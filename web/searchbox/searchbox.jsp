@@ -37,7 +37,8 @@
                                 <option value="${amphur_row.amphur_id}" >${amphur_row.amphur_name}</option>
                             </c:forEach>
                             <script>
-                                $("#amphur-list").val(${param.amphur}).attr("disabled", false);
+                                $("#amphur-list").val(${param.amphur});
+                                $("#amphur-list").attr("disabled", false);
                             </script>
                         </c:if>
                     </select>
@@ -55,7 +56,8 @@
                                 <option value="${district_row.district_id}" >${district_row.district_name}</option>
                             </c:forEach>
                             <script>
-                                $("#district-list").val(${param.district}).attr("disabled", false);
+                                $("#district-list").val(${param.district});
+                                $("#district-list").attr("disabled", false);
                             </script>
                         </c:if>
                     </select>
