@@ -11,6 +11,13 @@
     <option value='0'>ทั้งหมด</option>
 
     <c:forEach var="amphur_row" items="${amphur_rows.rows}">
-        <option value="${amphur_row.amphur_id}" >${amphur_row.amphur_name}</option>
+        <c:choose>
+            <c:when test="${amphur_row.amphur_id == param.amphur}">
+                <option selected value="${amphur_row.amphur_id}" >${amphur_row.amphur_name}</option>
+            </c:when>
+            <c:otherwise>
+                <option value="${amphur_row.amphur_id}" >${amphur_row.amphur_name}</option>
+            </c:otherwise>
+        </c:choose>
     </c:forEach>
 </c:if>

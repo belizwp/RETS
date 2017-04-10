@@ -19,54 +19,18 @@
                         <c:forEach var="province_row" items="${province_rows.rows}">
                             <option value="${province_row.province_id}" >${province_row.province_name}</option>
                         </c:forEach>
-                        <script>
-                            $("#province-list").val(${param.province});
-                        </script>
                     </select>
 
                     <select name="amphur" id="amphur-list" onChange="getDistrict(this.value);" class="selectpicker col-md-*" title="อำเภอ/เขต" data-size="10" disabled="true">
-                        <c:if test="${param.amphur != null}">
-                            <sql:query var="amphur_rows" dataSource="${dataSource}">
-                                SELECT * FROM amphur WHERE province_id = ?
-                                <sql:param value="${param.province}"/>
-                            </sql:query>
-
-                            <option value='0'>ทั้งหมด</option>
-
-                            <c:forEach var="amphur_row" items="${amphur_rows.rows}">
-                                <option value="${amphur_row.amphur_id}" >${amphur_row.amphur_name}</option>
-                            </c:forEach>
-                            <script>
-                                $("#amphur-list").val(${param.amphur}).attr("disabled", false);
-                            </script>
-                        </c:if>
                     </select>
 
                     <select name="district" id="district-list" class="selectpicker col-md-*" title="ตำบล/แขวง" data-size="10" disabled="true">
-                        <c:if test="${param.district != null}">
-                            <sql:query var="district_rows" dataSource="${dataSource}">
-                                SELECT * FROM district WHERE amphur_id = ?
-                                <sql:param value="${param.amphur}"/>
-                            </sql:query>
-
-                            <option value='0'>ทั้งหมด</option>
-
-                            <c:forEach var="district_row" items="${district_rows.rows}">
-                                <option value="${district_row.district_id}" >${district_row.district_name}</option>
-                            </c:forEach>
-                            <script>
-                                $("#district-list").val(${param.district}).attr("disabled", false);
-                            </script>
-                        </c:if>
                     </select>
 
                     <select name="announce_type" id="announce-type-list" class="selectpicker col-md-*" title="ประกาศสำหรับ">
                         <option value="0">ทั้งหมด</option>
                         <option value="1">ขาย</option>
                         <option value="2">เช่า</option>
-                        <c:if test="${param.announce_type != null}">
-                            <script>$("#announce-type-list").val(${param.announce_type});</script>
-                        </c:if>
                     </select>
 
                     <select name="property_type" id="property-type-list" class="selectpicker col-md-*" title="ประเภท">
@@ -76,9 +40,6 @@
                         <option value="3">ทาวน์เฮ้าส์</option>
                         <option value="4">ที่ดิน</option>
                         <option value="5">อพาร์ทเม้น</option>
-                        <c:if test="${param.property_type != null}">
-                            <script>$("#property-type-list").val(${param.property_type});</script>
-                        </c:if>
                     </select>
 
                     <div id="price_dropdown" class="dropdown btn-group col-md-*" style="padding: 0;">
@@ -108,7 +69,7 @@
             $.ajax({
                 type: "POST",
                 url: "/RETS/searchbox/get_amphur.jsp",
-                data: {province_id: val},
+                data: {province_id: val, amphur: '${param.amphur}'},
                 success: function (data) {
                     $("#amphur-list").html(data).attr("disabled", false);
                     $("#district-list").val('').attr("disabled", true);
@@ -126,7 +87,7 @@
             $.ajax({
                 type: "POST",
                 url: "/RETS/searchbox/get_district.jsp",
-                data: {amphur_id: val},
+                data: {amphur_id: val, district: '${param.district}'},
                 success: function (data) {
                     $("#district-list").html(data).attr("disabled", false);
                     $(".selectpicker").selectpicker('refresh');
@@ -159,7 +120,25 @@
         }
     }
 
+    function fecthOption() {
+        if (${param.province != null}) {
+            getAmphur('${param.province}');
+        }
+
+        if (${param.amphur != null}) {
+            getDistrict('${param.amphur}');
+        }
+
+    }
+
     $(document).ready(function () {
+        fecthOption();
+
+        // default selected
+        $("#province-list").val(${param.province});
+        $("#announce-type-list").val(${param.announce_type});
+        $("#property-type-list").val(${param.property_type});
+
         // default price
         $('#min_price').val(${param.min_price});
         $('#max_price').val(${param.max_price});

@@ -11,6 +11,13 @@
     <option value='0'>ทั้งหมด</option>
 
     <c:forEach var="district_row" items="${district_rows.rows}">
-        <option value="${district_row.district_id}" >${district_row.district_name}</option>
+        <c:choose>
+            <c:when test="${district_row.district_id == param.district}">
+                <option selected value="${district_row.district_id}" >${district_row.district_name}</option>
+            </c:when>
+            <c:otherwise>
+                <option value="${district_row.district_id}" >${district_row.district_name}</option>
+            </c:otherwise>
+        </c:choose>
     </c:forEach>
 </c:if>
