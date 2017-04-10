@@ -1,4 +1,6 @@
+<%@ taglib prefix="rets" tagdir="/WEB-INF/tags/"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <jsp:include page="templates/header.jsp" />
 
 <div class="jumbotron">
@@ -10,7 +12,7 @@
 </div>
 
 <div class="container">
-    <jsp:include page="advertise.jsp"/>
+    <rets:ads type="main" />
     <div class="text-center">
         <a href="search" type="button" class="btn btn-default">ดูโครงการทั้งหมด</a>
         <a type="button" class="btn btn-danger">ลงประกาศกับเรา</a>

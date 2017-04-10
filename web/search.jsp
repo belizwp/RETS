@@ -1,3 +1,4 @@
+<%@ taglib prefix="rets" tagdir="/WEB-INF/tags/"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
 
@@ -17,10 +18,12 @@
 
     <div class="row">
         <div class="col-md-9">
+            <!-- search result -->
             <jsp:include page="result.jsp"/>
         </div>
         <div class="col-md-3">
             <!-- advertise -->
+            <rets:ads type="sidebar" />
         </div>
     </div>
 </div>
