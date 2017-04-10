@@ -3,8 +3,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <c:if test="${param.province_id != null}">
-    <sql:query var="amphur_rows" dataSource="${applicationScope.dataSource}">
-        select * from amphur where province_id = ${param.province_id}
+    <sql:query var="amphur_rows" dataSource="${dataSource}">
+        SELECT * FROM amphur WHERE province_id = ?
+        <sql:param value="${param.province_id}"/>
     </sql:query>
 
     <option value='0'>ทั้งหมด</option>

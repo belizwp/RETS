@@ -13,8 +13,8 @@
 
                     <select name="province" id="province-list" onChange="getAmphur(this.value);" class="selectpicker col-md-*" data-live-search="true" title="จังหวัด" data-size="10">
                         <option value='0'>ทั้งหมด</option>
-                        <sql:query var="province_rows" dataSource="${applicationScope.dataSource}">
-                            select * from province
+                        <sql:query var="province_rows" dataSource="${dataSource}">
+                            SELECT * FROM province
                         </sql:query>
                         <c:forEach var="province_row" items="${province_rows.rows}">
                             <option value="${province_row.province_id}" >${province_row.province_name}</option>
@@ -26,8 +26,9 @@
 
                     <select name="amphur" id="amphur-list" onChange="getDistrict(this.value);" class="selectpicker col-md-*" title="อำเภอ/เขต" data-size="10" disabled="true">
                         <c:if test="${param.amphur != null}">
-                            <sql:query var="amphur_rows" dataSource="${applicationScope.dataSource}">
-                                select * from amphur where province_id = ${param.province}
+                            <sql:query var="amphur_rows" dataSource="${dataSource}">
+                                SELECT * FROM amphur WHERE province_id = ?
+                                <sql:param value="${param.province}"/>
                             </sql:query>
 
                             <option value='0'>ทั้งหมด</option>
@@ -43,8 +44,9 @@
 
                     <select name="district" id="district-list" class="selectpicker col-md-*" title="ตำบล/แขวง" data-size="10" disabled="true">
                         <c:if test="${param.district != null}">
-                            <sql:query var="district_rows" dataSource="${applicationScope.dataSource}">
-                                select * from district where amphur_id = ${param.amphur}
+                            <sql:query var="district_rows" dataSource="${dataSource}">
+                                SELECT * FROM district WHERE amphur_id = ?
+                                <sql:param value="${param.amphur}"/>
                             </sql:query>
 
                             <option value='0'>ทั้งหมด</option>
@@ -140,7 +142,7 @@
     function setPriceDesc(min, max) {
         if (!isNaN(min) && !isNaN(max)) {
             if (min <= max) {
-                $("#price").text(addCommas(min) + ' - ' + addCommas(max) + ' บาท');
+                $("#price").text(addCommas(min) + ' ถึง ' + addCommas(max) + ' บาท');
             } else {
                 $('#min_price').val(NaN);
                 $('#max_price').val(NaN);
