@@ -33,7 +33,7 @@
                             <li><a href="/RETS">หน้าหลัก</a></li>
                             <li><a href="search?announce_type=1">ขาย</a></li>
                             <li><a href="search?announce_type=2">เช่า</a></li>
-                            <li><a href="#">ลงประกาศ</a></li>
+                            <li><a href="CreateAnnounce">ลงประกาศ</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="register">ลงทะเบียน</a></li>

@@ -15,7 +15,7 @@
     <rets:ads type="main" />
     <div class="text-center">
         <a href="search" type="button" class="btn btn-default">ดูโครงการทั้งหมด</a>
-        <a type="button" class="btn btn-danger">ลงประกาศกับเรา</a>
+        <a href="CreateAnnounce" type="button" class="btn btn-danger">ลงประกาศกับเรา</a>
     </div>
 </div>
 

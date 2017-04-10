@@ -10,7 +10,7 @@
                     <jsp:include page="searchbox"/>
                 </div>
                 <div class="col-md-2">
-                    <a type="button" class="btn btn-danger pull-right">ลงประกาศกับเรา</a>
+                    <a href="CreateAnnounce" type="button" class="btn btn-danger">ลงประกาศกับเรา</a>
                 </div>
             </div>
         </div>
