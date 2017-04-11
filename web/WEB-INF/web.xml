@@ -4,6 +4,22 @@
         <description>ServletContextListener</description>
         <listener-class>listener.Init</listener-class>
     </listener>
+    <servlet-mapping>
+        <servlet-name>basic</servlet-name>
+        <url-pattern>/new_announce/basic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>detail</servlet-name>
+        <url-pattern>/new_announce/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>media</servlet-name>
+        <url-pattern>/new_announce/media</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>summary</servlet-name>
+        <url-pattern>/new_announce/summary</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -19,6 +35,22 @@
     <servlet>
         <servlet-name>headerURL</servlet-name>
         <jsp-file>/templates/header.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>basic</servlet-name>
+        <jsp-file>/new_announce1.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>detail</servlet-name>
+        <jsp-file>/new_announce2.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>media</servlet-name>
+        <jsp-file>/new_announce3.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>summary</servlet-name>
+        <jsp-file>/new_announce4.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>headerURL</servlet-name>

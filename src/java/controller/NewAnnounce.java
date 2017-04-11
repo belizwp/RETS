@@ -53,7 +53,7 @@ public class NewAnnounce extends HttpServlet {
         String process_id = genProcessID(request);
         session.setAttribute(process_id, announce);
 
-        request.getRequestDispatcher("new_announce1.jsp?process_id=" + process_id).forward(request, response);
+        response.sendRedirect("NewAnnounce?process_id=" + process_id);
     }
 
     private void changeProcess(HttpServletRequest request, HttpServletResponse response,
@@ -63,22 +63,24 @@ public class NewAnnounce extends HttpServlet {
 
         Announce announce = (Announce) session.getAttribute(process_id);
 
-        if (submit.equals("ถัดไป")) {
+        if (process == null) {
+            response.sendRedirect("new_announce/basic?process_id=" + process_id);
+        } else if (submit.equals("ถัดไป")) {
             switch (process) {
                 case "basic":
                     announce.saveBasicVal(request);
-                    request.getRequestDispatcher("new_announce2.jsp?process_id=" + process_id).forward(request, response);
+                    response.sendRedirect("new_announce/detail?process_id=" + process_id);
                     break;
                 case "detail":
                     announce.saveDetailVal(request);
-                    request.getRequestDispatcher("new_announce3.jsp?process_id=" + process_id).forward(request, response);
+                    response.sendRedirect("new_announce/media?process_id=" + process_id);
                     break;
                 case "media":
                     announce.saveMediaVal(request);
-                    request.getRequestDispatcher("new_announce4.jsp?process_id=" + process_id).forward(request, response);
+                    response.sendRedirect("new_announce/summary?process_id=" + process_id);
                     break;
                 default:
-                    request.getRequestDispatcher("new_announce1.jsp?process_id=" + process_id).forward(request, response);
+                    response.sendRedirect("new_announce/basic?process_id=" + process_id);
                     break;
             }
 
@@ -86,17 +88,17 @@ public class NewAnnounce extends HttpServlet {
             switch (process) {
                 case "detail":
                     announce.saveDetailVal(request);
-                    request.getRequestDispatcher("new_announce1.jsp?process_id=" + process_id).forward(request, response);
+                    response.sendRedirect("new_announce/basic?process_id=" + process_id);
                     break;
                 case "media":
                     announce.saveMediaVal(request);
-                    request.getRequestDispatcher("new_announce2.jsp?process_id=" + process_id).forward(request, response);
+                    response.sendRedirect("new_announce/detail?process_id=" + process_id);
                     break;
                 case "summary":
-                    request.getRequestDispatcher("new_announce3.jsp?process_id=" + process_id).forward(request, response);
+                    response.sendRedirect("new_announce/media?process_id=" + process_id);
                     break;
                 default:
-                    request.getRequestDispatcher("new_announce1.jsp?process_id=" + process_id).forward(request, response);
+                    response.sendRedirect("new_announce/basic?process_id=" + process_id);
                     break;
             }
         } else if (submit.equals("บันทึก")) {

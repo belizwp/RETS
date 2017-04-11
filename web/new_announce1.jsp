@@ -7,7 +7,7 @@
 <c:set var="ann" value="${sessionScope[param.process_id]}"/>
 
 <div class="container">
-    <form class="create-info form-horizontal" action="NewAnnounce" method="POST">
+    <form class="create-info form-horizontal" action="/RETS/NewAnnounce" method="POST">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>ลงประกาศใหม่</h2>

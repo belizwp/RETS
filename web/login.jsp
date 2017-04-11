@@ -2,7 +2,7 @@
 <jsp:include page="templates/header.jsp" />
 
 <div class="container">
-    <form class="login form-horizontal" action="Login" method="POST">
+    <form class="login form-horizontal" action="/RETS/Login" method="POST">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>เข้าสู่ระบบ</h2>

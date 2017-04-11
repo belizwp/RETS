@@ -2,7 +2,7 @@
 <jsp:include page="templates/header.jsp" />
 
 <div class="container">
-    <form class="register form-horizontal" action="Register" method="POST">
+    <form class="register form-horizontal" action="/RETS/Register" method="POST">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>ลงทะเบียน สมาชิก</h2>

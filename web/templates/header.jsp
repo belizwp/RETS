@@ -31,19 +31,19 @@
                     <div id="navbar" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li><a href="/RETS">หน้าหลัก</a></li>
-                            <li><a href="search?announce_type=1">ขาย</a></li>
-                            <li><a href="search?announce_type=2">เช่า</a></li>
-                            <li><a href="NewAnnounce">ลงประกาศ</a></li>
+                            <li><a href="/RETS/search?announce_type=1">ขาย</a></li>
+                            <li><a href="/RETS/search?announce_type=2">เช่า</a></li>
+                            <li><a href="/RETS/NewAnnounce" >ลงประกาศ</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="register">ลงทะเบียน</a></li>
+                            <li><a href="/RETS/register">ลงทะเบียน</a></li>
                             <li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">เข้าสู่ระบบ <b class="caret"></b></a>
                                 <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
                                     <li>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <form action="Login" class="form" role="form" method="post" action="login" id="login-nav">
+                                                <form action="/RETS/Login" class="form" role="form" method="post" action="login" id="login-nav">
                                                     <div class="form-group">
                                                         <input type="email" class="form-control" placeholder="อีเมล" required>
                                                     </div>

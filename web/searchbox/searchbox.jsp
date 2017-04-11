@@ -6,7 +6,7 @@
 <script src="/RETS/assets/js/bootstrap-select.min.js"></script>
 
 <div class="searchbox">
-    <form name="search_form" action="search" method="GET">
+    <form name="search_form" action="/RETS/search" method="GET">
         <div class="row-fluid">
             <div class="input-group">
                 <span class="input-group-btn">
