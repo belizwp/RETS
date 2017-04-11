@@ -33,12 +33,12 @@
                             <li><a href="/RETS">หน้าหลัก</a></li>
                             <li><a href="search?announce_type=1">ขาย</a></li>
                             <li><a href="search?announce_type=2">เช่า</a></li>
-                            <li><a href="CreateAnnounce">ลงประกาศ</a></li>
+                            <li><a href="NewAnnounce">ลงประกาศ</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="register">ลงทะเบียน</a></li>
                             <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown">เข้าสู่ระบบ <b class="caret"></b></a>
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown">เข้าสู่ระบบ <b class="caret"></b></a>
                                 <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
                                     <li>
                                         <div class="row">

@@ -8,7 +8,7 @@
         <sql:param value="${param.province_id}"/>
     </sql:query>
 
-    <option value='0'>ทั้งหมด</option>
+    ${param.specific ? '' : "<option value='0'>ทั้งหมด</option>"}
 
     <c:forEach var="amphur_row" items="${amphur_rows.rows}">
         <option value="${amphur_row.amphur_id}" >${amphur_row.amphur_name}</option>

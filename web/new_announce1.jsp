@@ -1,23 +1,19 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+<%@taglib prefix="rets" tagdir="/WEB-INF/tags/"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:include page="templates/header.jsp" />
+<jsp:include page="/header" />
 
-<!--content-->
+<c:set var="ann" value="${sessionScope[param.process_id]}"/>
+
 <div class="container">
-    <form class="create-info form-horizontal">
+    <form class="create-info form-horizontal" action="NewAnnounce" method="POST">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>ลงประกาศใหม่</h2>
             </div>
-            <div class="panel-body">
-                <a type="button" class="btn btn-primary">ข้อมูลทั่วไป</a>
-                <span class="glyphicon glyphicon-menu-right"></span>
-                <a type="button" class="btn btn-default">รายละเอียดเพิ่มเติม</a>
-                <span class="glyphicon glyphicon-menu-right"></span>
-                <a type="button" class="btn btn-default">รูปภาพ</a>
-                <span class="glyphicon glyphicon-menu-right"></span>
-                <a type="button" class="btn btn-default">สรุป</a>
-                <h6 class="pull-right" style="color: red">* ข้อมูลที่จำเป็นต้องใช้</h6>
-            </div>
+
+            <rets:tabnav/>
 
             <div class="panel-body">
                 <div class="row">
@@ -27,32 +23,32 @@
                         <div class="form-group" required>
                             <label class="col-md-4 control-label" for="title">* ประกาศสำหรับ : </label>  
                             <div class="col-md-2">
-                                <label class="radio-inline"><input type="radio" name="announce_type">ขาย</label>
-                                <label class="radio-inline"><input type="radio" name="announce_type">เช่า</label>
+                                <label class="radio-inline"><input type="radio" name="type" value="1" ${ann.type == 1 ? 'checked' : ''}>ขาย</label>
+                                <label class="radio-inline"><input type="radio" name="type" value="2" ${ann.type == 2 ? 'checked' : ''}>เช่า</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">* ประเภท :</label>
                             <div class="col-md-3">
-                                <select class="form-control" name="propery_type" required>
-                                    <option value="1">บ้านเดี่ยว</option>
-                                    <option value="2">คอนโด</option>
-                                    <option value="3">ทาวน์เฮ้าส์</option>
-                                    <option value="4">ที่ดิน</option>
-                                    <option value="5">อพาร์ทเม้น</option>
+                                <select class="form-control" name="propType" required>
+                                    <option value="1" ${ann.propType == 1 ? 'selected' : ''}>บ้านเดี่ยว</option>
+                                    <option value="2" ${ann.propType == 2 ? 'selected' : ''}>คอนโด</option>
+                                    <option value="3" ${ann.propType == 3 ? 'selected' : ''}>ทาวน์เฮ้าส์</option>
+                                    <option value="4" ${ann.propType == 4 ? 'selected' : ''}>ที่ดิน</option>
+                                    <option value="5" ${ann.propType == 5 ? 'selected' : ''}>อพาร์ทเม้น</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">* หัวข้อประกาศ : </label>
                             <div class="col-md-4">
-                                <input class="form-control" type="text" name="announce_title" required>
+                                <input class="form-control" type="text" name="title" value="${ann.title}" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">* รายละเอียดประกาศ : </label>
                             <div class="col-md-4">
-                                <textarea class="form-control" name="announce_detail" required></textarea>
+                                <textarea class="form-control" name="detail" required>${ann.detail}</textarea>
                             </div>
                         </div>
                         <br>
@@ -61,8 +57,16 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">* จังหวัด : </label>
                             <div class="col-md-3">
-                                <select class="form-control" name="province" id="province-list" required>
-                                    <option>[เลือก จังหวัด]</option>
+                                <select class="form-control" name="province" id="province-list" onChange="getAmphur(this.value);" required >
+                                    <sql:query var="province_rows" dataSource="${dataSource}">
+                                        SELECT * FROM province
+                                    </sql:query>
+                                    <c:forEach var="province_row" items="${province_rows.rows}">
+                                        <option value="${province_row.province_id}" >${province_row.province_name}</option>
+                                    </c:forEach>
+                                    <script>
+                                        $("#province-list").val(${ann.province});
+                                    </script>
                                 </select>
                             </div>
                         </div>
@@ -70,41 +74,59 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">* อำเภอ/เขต : </label>
                             <div class="col-md-3">
-                                <select class="form-control" name="amphur" id="amphur-list" required disabled>
-                                    <option>[เลือก อำเภอ/เขต]</option>
+                                <select class="form-control" name="amphur" id="amphur-list" onChange="getDistrict(this.value);" required>
+                                    <sql:query var="amphur_rows" dataSource="${dataSource}">
+                                        SELECT * FROM amphur WHERE province_id = ?
+                                        <sql:param value="${ann.province == null ? 1 : ann.province}"/>
+                                    </sql:query>
+                                    <c:forEach var="amphur_row" items="${amphur_rows.rows}">
+                                        <option value="${amphur_row.amphur_id}" >${amphur_row.amphur_name}</option>
+                                    </c:forEach>
+                                    <script>
+                                        $("#amphur-list").val(${ann.amphur});
+                                    </script>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">* ตำบล/แขวง : </label>
                             <div class="col-md-3">
-                                <select class="form-control" name="district" id="district-list" required disabled>
-                                    <option selected>[เลือก ตำบล/แขวง]</option>
+                                <select class="form-control" name="district" id="district-list" required>
+                                    <sql:query var="district_rows" dataSource="${dataSource}">
+                                        SELECT * FROM district WHERE amphur_id = ?
+                                        <sql:param value="${ann.amphur == null ? 1 : ann.amphur}"/>
+                                    </sql:query>
+                                    <c:forEach var="district_row" items="${district_rows.rows}">
+                                        <option value="${district_row.district_id}" >${district_row.district_name}</option>
+                                    </c:forEach>
+                                    <script>
+                                        $("#district-list").val(${ann.district});
+                                    </script>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">ชื่อโครงการ : </label>
                             <div class="col-md-4">
-                                <input class="form-control" name="property_name" type="text">
+                                <input class="form-control" name="name" type="text" value="${ann.name}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">เลขที่ : </label>
                             <div class="col-md-1">
-                                <input class="form-control" name="property_number" type="text">
+                                <input class="form-control" name="number" type="text" value="${ann.number}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">ถนน : </label>
                             <div class="col-md-4">
-                                <input class="form-control" name="property_road" type="text">
+                                <input class="form-control" name="road" type="text" value="${ann.road}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">รหัสไปรษณีย์ : </label>
                             <div class="col-md-2">
-                                <input class="form-control" name="property_postcode" type="text">
+                                <input class="form-control" name="postcode" type="text" value="${ann.postcode}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -122,7 +144,7 @@
                                         <div class="btn btn-default image-preview-input">
                                             <span class="glyphicon glyphicon-folder-open"></span>
                                             <span class="image-preview-input-title">Browse</span>
-                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="property_map"/> <!-- rename it -->
+                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="map"/> <!-- rename it -->
                                         </div>
                                     </span>
                                 </div><!-- /input-group image-preview [TO HERE]--> 
@@ -135,7 +157,7 @@
                             <label class="col-md-4 control-label">ราคา : </label>
                             <div class="col-md-3">
                                 <div class="input-group">
-                                    <input class="form-control" type="number" min="0" step="1" name="property_price">
+                                    <input class="form-control" type="number" min="0" step="1" name="price" value="${ann.price}">
                                     <span class="input-group-addon" id="price-unit">บาท</span>
                                 </div>
                             </div>
@@ -147,7 +169,7 @@
                             <label class="col-md-4 control-label">พื้นที่ใช้สอย : </label>
                             <div class="col-md-4">
                                 <div class="input-group">
-                                    <input class="form-control" type="number" min="0" name="property_area">
+                                    <input class="form-control" type="number" min="0" name="area" value="${ann.area}">
                                     <span class="input-group-addon">ตารางเมตร</span>
                                 </div>
                             </div>
@@ -156,9 +178,9 @@
                             <label class="col-md-4 control-label">ขนาดพื้นที่ : </label>
                             <div class="col-md-4">
                                 <div class="input-group">
-                                    <input class="form-control" type="number" min="0" name="property_sizew">
+                                    <input class="form-control" type="number" min="0" name="width" value="${ann.width}">
                                     <span class="input-group-addon">x</span>
-                                    <input class="form-control" type="number" min="0" name="property_sizeh">
+                                    <input class="form-control" type="number" min="0" name="height" value="${ann.height}">
                                     <span class="input-group-addon">เมตร</span>
                                 </div>
                             </div>
@@ -170,14 +192,43 @@
             </div>       
 
             <div class="panel-footer text-center">
-                <button type="submit" class="btn btn-primary">ถัดไป</button>
+                <input type="submit" name="submit" class="btn btn-primary" value="ถัดไป"/>
+                <!-- <input type="button" class="btn btn-success value="บันทึก" /> -->
+
+                <input type="hidden" name="process" class="btn btn-primary" value="basic"/>
+                <input type="hidden" name="process_id" class="btn btn-primary" value="${param.process_id}"/>
             </div>  
 
         </div>
     </form>
 </div>
-<!-- /.container -->
-
-<jsp:include page="templates/footer.jsp" />
 
 <script src="/RETS/assets/js/upload-single-image.js"></script>
+<script>
+    function getAmphur(val) {
+        $.ajax({
+            type: "POST",
+            url: "/RETS/searchbox/get_amphur.jsp",
+            data: {province_id: val, specific: true},
+            success: function (data) {
+                $("#amphur-list").html(data);
+                getDistrict($("#amphur-list").val());
+                $(".selectpicker").selectpicker('refresh');
+            }
+        });
+    }
+
+    function getDistrict(val) {
+        $.ajax({
+            type: "POST",
+            url: "/RETS/searchbox/get_district.jsp",
+            data: {amphur_id: val, specific: true},
+            success: function (data) {
+                $("#district-list").html(data);
+                $(".selectpicker").selectpicker('refresh');
+            }
+        });
+    }
+</script>
+
+<jsp:include page="/footer" />

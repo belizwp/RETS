@@ -17,6 +17,22 @@
         <res-sharing-scope>Shareable</res-sharing-scope>
     </resource-ref>
     <servlet>
+        <servlet-name>headerURL</servlet-name>
+        <jsp-file>/templates/header.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>headerURL</servlet-name>
+        <url-pattern>/header</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>footerURL</servlet-name>
+        <jsp-file>/templates/footer.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>footerURL</servlet-name>
+        <url-pattern>/footer</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>registerURL</servlet-name>
         <jsp-file>/register.jsp</jsp-file>
     </servlet>
