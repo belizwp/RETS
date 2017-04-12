@@ -1,4 +1,3 @@
-<%@taglib prefix="rets" tagdir="/WEB-INF/tags/"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="/header" />
 
@@ -9,7 +8,16 @@
                 <h2>ลงประกาศใหม่</h2>
             </div>
 
-            <rets:tabnav/>
+            <div class="panel-body">
+                <a type="button" class="btn btn-default">ข้อมูลทั่วไป</a>
+                <span class="glyphicon glyphicon-menu-right"></span>
+                <a type="button" class="btn btn-default">รายละเอียดเพิ่มเติม</a>
+                <span class="glyphicon glyphicon-menu-right"></span>
+                <a type="button" class="btn btn-primary">รูปภาพ</a>
+                <span class="glyphicon glyphicon-menu-right"></span>
+                <a type="button" class="btn btn-default">สรุป</a>
+                <h6 class="pull-right" style="color: red">* ข้อมูลที่จำเป็นต้องใช้</h6>
+            </div>
 
             <div class="panel-body">
                 <div class="row">
