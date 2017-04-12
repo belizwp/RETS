@@ -1,6 +1,6 @@
 package model;
 
-import javax.servlet.http.HttpServletRequest;
+import java.awt.Image;
 
 public class Announce {
 
@@ -19,7 +19,7 @@ public class Announce {
     private String number;
     private String road;
     private String postcode;
-    // private Image map;
+    private Image map;
 
     // price
     private Long price;
@@ -45,45 +45,6 @@ public class Announce {
 
     // ====== Media Value ======
     // private Image[] image; 
-    public void saveBasicVal(HttpServletRequest request) {
-        type = request.getParameter("type") != null ? Short.parseShort(request.getParameter("type")) : null;
-        propType = request.getParameter("propType") != null ? Short.parseShort(request.getParameter("propType")) : null;
-        province = request.getParameter("province") != null ? Short.parseShort(request.getParameter("province")) : null;
-        amphur = request.getParameter("amphur") != null ? Short.parseShort(request.getParameter("amphur")) : null;
-        district = request.getParameter("district") != null ? Short.parseShort(request.getParameter("district")) : null;
-
-        title = request.getParameter("title") != null ? request.getParameter("title") : null;
-        detail = request.getParameter("detail") != null ? request.getParameter("detail") : null;
-        name = request.getParameter("name") != null ? request.getParameter("name") : null;
-        number = request.getParameter("number") != null ? request.getParameter("number") : null;
-        road = request.getParameter("road") != null ? request.getParameter("road") : null;
-        postcode = request.getParameter("postcode") != null ? request.getParameter("postcode") : null;
-
-        price = !request.getParameter("price").equals("") ? Long.parseLong(request.getParameter("price")) : null;
-
-        area = !request.getParameter("area").equals("") ? Integer.parseInt(request.getParameter("area")) : null;
-        width = !request.getParameter("width").equals("") ? Integer.parseInt(request.getParameter("width")) : null;
-        height = !request.getParameter("height").equals("") ? Integer.parseInt(request.getParameter("height")) : null;
-    }
-
-    public void saveDetailVal(HttpServletRequest request) {
-        floor = !request.getParameter("floor").equals("") ? Short.parseShort(request.getParameter("floor")) : null;
-        electricity = !request.getParameter("electricity").equals("") ? Integer.parseInt(request.getParameter("electricity")) : null;
-        water = !request.getParameter("water").equals("") ? Integer.parseInt(request.getParameter("water")) : null;
-
-        internet = request.getParameter("internet") != null ? request.getParameter("internet") : null;
-        security = request.getParameter("security") != null ? request.getParameter("security") : null;
-        swimPool = request.getParameter("swimPool") != null ? request.getParameter("swimPool") : null;
-        laundry = request.getParameter("laundry") != null ? request.getParameter("laundry") : null;
-        cam = request.getParameter("cam") != null ? request.getParameter("cam") : null;
-        parklot = request.getParameter("parklot") != null ? request.getParameter("parklot") : null;
-
-    }
-
-    public void saveMediaVal(HttpServletRequest request) {
-
-    }
-
     /**
      * @return the type
      */
@@ -418,6 +379,20 @@ public class Announce {
      */
     public void setParklot(String parklot) {
         this.parklot = parklot;
+    }
+
+    /**
+     * @return the map
+     */
+    public Image getMap() {
+        return map;
+    }
+
+    /**
+     * @param map the map to set
+     */
+    public void setMap(Image map) {
+        this.map = map;
     }
 
 }

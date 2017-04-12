@@ -6,7 +6,7 @@
 <c:set var="ann" value="${sessionScope[param.process_id]}"/>
 
 <div class="container">
-    <form class="create-info form-horizontal" action="/RETS/NewAnnounce" method="POST">
+    <form class="create-info form-horizontal" action="/RETS/NewAnnounce" enctype="multipart/form-data" method="POST">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>ลงประกาศใหม่</h2>
@@ -28,11 +28,11 @@
                     <fieldset>
 
                         <legend>ใส่ข้อมูลทั่วไป</legend>
-                        <div class="form-group" required>
-                            <label class="col-md-4 control-label" for="title">* ประกาศสำหรับ : </label>  
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="type">* ประกาศสำหรับ : </label>  
                             <div class="col-md-2">
-                                <label class="radio-inline"><input type="radio" name="type" value="1" ${ann.type == 1 ? 'checked' : ''}>ขาย</label>
-                                <label class="radio-inline"><input type="radio" name="type" value="2" ${ann.type == 2 ? 'checked' : ''}>เช่า</label>
+                                <label class="radio-inline"><input type="radio" name="type" value="1" ${ann.type == 1 ? 'checked' : ''} required>ขาย</label>
+                                <label class="radio-inline"><input type="radio" name="type" value="2" ${ann.type == 2 ? 'checked' : ''} required>เช่า</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -152,12 +152,17 @@
                                         <div class="btn btn-default image-preview-input">
                                             <span class="glyphicon glyphicon-folder-open"></span>
                                             <span class="image-preview-input-title">Browse</span>
-                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="map"/> <!-- rename it -->
+                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="map" size="50"/> <!-- rename it -->
                                         </div>
                                     </span>
                                 </div><!-- /input-group image-preview [TO HERE]--> 
                             </div>
                         </div>
+
+                        <c:if test="${ann.map != null}">
+                            <img class="img-responsive" src="/RETS/image/?process_id=${param.process_id}" alt="map" style="max-width:75%; margin: 0 auto;">         
+                        </c:if>
+
                         <br>
 
                         <legend>ข้อมูลด้านราคา</legend>
