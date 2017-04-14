@@ -152,15 +152,15 @@
                                         <div class="btn btn-default image-preview-input">
                                             <span class="glyphicon glyphicon-folder-open"></span>
                                             <span class="image-preview-input-title">Browse</span>
-                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="map" size="50"/> <!-- rename it -->
+                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="map" size="10"/> <!-- rename it -->
                                         </div>
                                     </span>
                                 </div><!-- /input-group image-preview [TO HERE]--> 
                             </div>
                         </div>
 
-                        <c:if test="${ann.map != null}">
-                            <img class="img-responsive" src="/RETS/image/?process_id=${param.process_id}" alt="map" style="max-width:75%; margin: 0 auto;">         
+                        <c:if test="${ann.mapImage != null}">
+                            <img class="img-responsive" src="/RETS/image/?type=map&process_id=${param.process_id}" alt="map" style="max-width:75%; margin: 0 auto;">         
                         </c:if>
 
                         <br>

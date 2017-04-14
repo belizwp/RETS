@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Image;
+import java.util.LinkedList;
 
 public class Announce {
 
@@ -19,7 +20,7 @@ public class Announce {
     private String number;
     private String road;
     private String postcode;
-    private Image map;
+    private Image mapImage;
 
     // price
     private Long price;
@@ -44,7 +45,12 @@ public class Announce {
     private String parklot;
 
     // ====== Media Value ======
-    // private Image[] image; 
+    private LinkedList<FileMeta> files;
+
+    public Announce() {
+        files = new LinkedList<>();
+    }
+
     /**
      * @return the type
      */
@@ -384,15 +390,29 @@ public class Announce {
     /**
      * @return the map
      */
-    public Image getMap() {
-        return map;
+    public Image getMapImage() {
+        return mapImage;
     }
 
     /**
-     * @param map the map to set
+     * @param mapImage the map to set
      */
-    public void setMap(Image map) {
-        this.map = map;
+    public void setMapImage(Image mapImage) {
+        this.mapImage = mapImage;
+    }
+
+    /**
+     * @return the images
+     */
+    public LinkedList<FileMeta> getFiles() {
+        return files;
+    }
+
+    /**
+     * @param files the images to set
+     */
+    public void setFiles(LinkedList<FileMeta> files) {
+        this.files = files;
     }
 
 }

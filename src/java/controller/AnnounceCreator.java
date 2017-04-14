@@ -5,6 +5,7 @@
  */
 package controller;
 
+import java.awt.Image;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
@@ -24,7 +25,7 @@ import model.Announce;
  */
 @WebServlet(name = "NewAnnounce", urlPatterns = {"/NewAnnounce"})
 @MultipartConfig
-public class NewAnnounce extends HttpServlet {
+public class AnnounceCreator extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -175,7 +176,8 @@ public class NewAnnounce extends HttpServlet {
             Part filePart = request.getPart("map");
             if (filePart.getSize() > 0) {
                 InputStream fileContent = filePart.getInputStream();
-                ann.setMap(ImageIO.read(fileContent));
+                Image img = ImageIO.read(fileContent);
+                ann.setMapImage(img);
             }
         } catch (IOException | ServletException e) {
         }
