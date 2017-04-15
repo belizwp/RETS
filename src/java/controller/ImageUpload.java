@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import model.Announce;
-import model.FileMeta;
+import model.ImageMeta;
 
 /**
  *
@@ -26,7 +27,7 @@ import model.FileMeta;
  */
 @WebServlet(name = "FileUpload", urlPatterns = {"/upload"})
 @MultipartConfig
-public class FileUpload extends HttpServlet {
+public class ImageUpload extends HttpServlet {
 
     //  upload an image 
     @Override
@@ -43,22 +44,21 @@ public class FileUpload extends HttpServlet {
 
             if (type.equals("images")) {
 
-                List<FileMeta> files = ann.getFiles();
+                List<ImageMeta> files = ann.getFiles();
 
                 Collection<Part> parts = request.getParts();
 
-                FileMeta temp = null;
+                ImageMeta temp = null;
 
                 for (Part part : parts) {
 
                     if (part.getContentType() != null) {
-                        temp = new FileMeta();
+                        temp = new ImageMeta();
                         temp.setFileName(getFilename(part));
                         temp.setFileSize(part.getSize() / 1024 + " Kb");
                         temp.setFileType(part.getContentType());
-                        temp.setContent(part.getInputStream());
+                        temp.setImg(ImageIO.read(part.getInputStream()));
                         files.add(temp);
-
                     }
                 }
 

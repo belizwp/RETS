@@ -45,7 +45,7 @@ public class Announce {
     private String parklot;
 
     // ====== Media Value ======
-    private LinkedList<FileMeta> files;
+    private LinkedList<ImageMeta> files;
 
     public Announce() {
         files = new LinkedList<>();
@@ -404,14 +404,14 @@ public class Announce {
     /**
      * @return the images
      */
-    public LinkedList<FileMeta> getFiles() {
+    public LinkedList<ImageMeta> getFiles() {
         return files;
     }
 
     /**
      * @param files the images to set
      */
-    public void setFiles(LinkedList<FileMeta> files) {
+    public void setFiles(LinkedList<ImageMeta> files) {
         this.files = files;
     }
 

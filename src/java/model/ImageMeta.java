@@ -1,16 +1,15 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.io.InputStream;
-
-@JsonIgnoreProperties({"content"})
-public class FileMeta {
+import java.awt.Image;
+@JsonIgnoreProperties({"img"})
+public class ImageMeta {
 
     private String fileName;
     private String fileSize;
     private String fileType;
 
-    private InputStream content;
+    private Image img;
 
     @Override
     public String toString() {
@@ -61,17 +60,17 @@ public class FileMeta {
     }
 
     /**
-     * @return the content
+     * @return the img
      */
-    public InputStream getContent() {
-        return content;
+    public Image getImg() {
+        return img;
     }
 
     /**
-     * @param content the content to set
+     * @param img the img to set
      */
-    public void setContent(InputStream content) {
-        this.content = content;
+    public void setImg(Image img) {
+        this.img = img;
     }
 
 }

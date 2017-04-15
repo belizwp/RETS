@@ -13,13 +13,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Announce;
-import model.FileMeta;
+import model.ImageMeta;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -66,15 +67,15 @@ public class ImageFinder extends HttpServlet {
             } else if (type.equals("preview")) {
                 int index = Integer.parseInt(request.getParameter("index"));
 
-                LinkedList<FileMeta> files = ann.getFiles();
-                FileMeta file = files.get(index);
-                InputStream is = file.getContent();
+                ImageMeta meta = ann.getFiles().get(index);
+                Image img = meta.getImg();
 
-                byte[] imageBytes = IOUtils.toByteArray(is);
+                Dimension imgSize = new Dimension(img.getWidth(null), img.getHeight(null));
+                Dimension boundary = new Dimension(320, 320);
+                Dimension scaledDimension = getScaledDimension(imgSize, boundary);
 
-                response.setContentType("image/png");
-                response.setContentLength(imageBytes.length);
-                response.getOutputStream().write(imageBytes);
+                response.setContentType(meta.getFileType());
+                ImageIO.write(toBufferedImage(img.getScaledInstance(scaledDimension.width, scaledDimension.height, Image.SCALE_FAST)), "png", response.getOutputStream());
             }
         }
 
