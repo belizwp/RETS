@@ -24,18 +24,11 @@ import model.FileMeta;
  *
  * @author Belize
  */
-@WebServlet(name = "ImageUpload", urlPatterns = {"/ImageUpload"})
+@WebServlet(name = "FileUpload", urlPatterns = {"/upload"})
 @MultipartConfig
-public class ImageUpload extends HttpServlet {
+public class FileUpload extends HttpServlet {
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    //  upload an image 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -75,6 +68,14 @@ public class ImageUpload extends HttpServlet {
 
             } else if (type.equals("map")) {
 
+            } else if (type.equals("remove")) {
+                try {
+                    int index = Integer.parseInt(request.getParameter("index"));
+                    ann.getFiles().remove(index);
+
+                } catch (NumberFormatException e) {
+
+                }
             }
         }
     }

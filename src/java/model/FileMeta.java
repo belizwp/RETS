@@ -9,7 +9,7 @@ public class FileMeta {
     private String fileName;
     private String fileSize;
     private String fileType;
-    
+
     private InputStream content;
 
     @Override

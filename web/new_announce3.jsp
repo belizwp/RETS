@@ -4,6 +4,7 @@
 
 <c:set var="ann" value="${sessionScope[param.process_id]}"/>
 
+<link rel="stylesheet" href="/RETS/assets/css/jquery.fileupload.css">
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -25,35 +26,33 @@
 
             <legend>ใส่รูปภาพ</legend>
 
-            <!-- Standar Form -->
-            <h4>Select files from your computer</h4>
-            <!--            <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">-->
-            <div class="form-inline">
-                <div class="form-group">
-                    <input type="file" name="files[]" id="js-upload-files" data-url="/RETS/ImageUpload?process_id=${param.process_id}&type=images" multiple>
-                </div>
-                <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>
-            </div>
-            <!--            </form>-->
+            <span class="btn btn-success fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Select files...</span>
+                <!-- The file input field used as target for the file upload widget -->
+                <input id="fileupload" name="files[]" type="file" accept="image/png, image/jpeg, image/gif" multiple>
+            </span>
 
-            <!-- Drop Zone -->
-            <h4>Or drag and drop files below</h4>
-            <div class="upload-drop-zone" id="drop-zone">
-                Just drag and drop files here
+            <br>
+            <br>
+
+            <!-- The global progress bar -->
+            <div id="progress" class="progress">
+                <div class="progress-bar progress-bar-success"></div>
             </div>
 
-            <!-- Progress Bar -->
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-                </div>
-            </div>
-
-            <!-- Upload Finished -->
-            <div class="js-upload-finished">
-                <h3>Processed files</h3>
-                <div class="list-group">
-                    <!-- <a href="#" class="list-group-item list-group-item-success" style="padding: 5px;"><span class="badge alert-success pull-right">Success</span>image-01.jpg</a> -->
-                </div>
+            <!-- img preview thumbnail -->
+            <div class='list-group gallery' id='preview'>
+                <c:if test="${ann.files.size() > 0}">
+                    <c:forEach var="file" items="${ann.files}" varStatus="index">
+                        <div class="thumbnail img-wrap col-sm-4 col-xs-6 col-md-3 col-lg-3">
+                            <img class="img-responsive" src="/RETS/image/?process_id=${param.process_id}&type=preview&index=${index.index}">
+                            <button class="btn btn-danger remove" onclick="removePreview(${index.index}, this);">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </div>
+                    </c:forEach>
+                </c:if>
             </div>
 
             <table id="uploaded-files" class="table">
@@ -72,7 +71,7 @@
                                 ${file.fileSize}
                             </td>
                             <td>
-                                ${feil.fileType}
+                                ${file.fileType}
                             </td>
                         </tr>
                     </c:forEach>
@@ -95,38 +94,88 @@
     </div>
 </div>
 
-<!--<script src="/RETS/assets/js/upload-multi-file.js"></script>-->
 <script src="/RETS/assets/js/vendor/jquery.ui.widget.js"></script>
 <script src="/RETS/assets/js/jquery.iframe-transport.js"></script>
 <script src="/RETS/assets/js/jquery.fileupload.js"></script>
 
 <script>
     $(function () {
-        $('#js-upload-files').fileupload({
+        var url = "/RETS/upload?process_id=${param.process_id}&type=images";
+        $('#fileupload').fileupload({
+            url: url,
             dataType: 'json',
-
             done: function (e, data) {
                 $("tr:has(td)").remove();
+                $('.gallery').empty();
                 $.each(data.result, function (index, file) {
-
                     $("#uploaded-files").append(
                             $('<tr/>')
                             .append($('<td/>').text(file.fileName))
                             .append($('<td/>').text(file.fileSize))
                             .append($('<td/>').text(file.fileType))
-
-                            )//end $("#uploaded-files").append()
+                            );//end $("#uploaded-files").append()
+                    addPreview(index, '/RETS/image/?process_id=${param.process_id}&type=preview&index=' + index);
                 });
             },
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('.progress .progress-bar').css(
+                $('#progress .progress-bar').css(
                         'width',
                         progress + '%'
                         );
             }
-        });
+        }).prop('disabled', !$.support.fileInput)
+                .parent().addClass($.support.fileInput ? undefined : 'disabled');
     });
+
+    function addPreview(index, src) {
+        var thumb = document.createElement('div');
+        var img = document.createElement('img');
+        var removebtn = document.createElement('button');
+
+        thumb.className = 'thumbnail img-wrap col-sm-4 col-xs-6 col-md-3 col-lg-3';
+        img.className = 'img-responsive';
+        img.src = src; // src
+        removebtn.className = 'btn btn-danger remove';
+        removebtn.innerHTML = '<span class="glyphicon glyphicon-trash"></span>';
+        removebtn.onclick = function () {
+            removePreview(index, this);
+        }
+
+        thumb.appendChild(img);
+        thumb.appendChild(removebtn);
+
+        document.getElementById('preview').appendChild(thumb);
+    }
+
+    function removePreview(index, input) {
+        document.getElementById('preview').removeChild(input.parentNode);
+        
+        $.ajax({
+            type: "POST",
+            url: "/RETS/upload",
+            data: {process_id: '${param.process_id}', type: 'remove', index: index},
+            success: function (data) {
+            }
+        });
+    }
+    
+//    $(document).ready( function () {
+//        for (var i = 0; i < '${ann.files.size()}'; i++) {
+//            addPreview(i, '/RETS/image/?process_id=${param.process_id}&type=preview&index=' + i);
+//        }
+//    });
 </script>
+<style>
+    .img-wrap {
+        position: relative;
+    }
+    .img-wrap .remove {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        z-index: 100;
+    }
+</style>
 
 <jsp:include page="/footer" />
