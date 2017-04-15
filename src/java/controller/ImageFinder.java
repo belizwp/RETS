@@ -10,10 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.LinkedList;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Announce;
 import model.ImageMeta;
-import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -53,17 +49,14 @@ public class ImageFinder extends HttpServlet {
             Announce ann = (Announce) request.getSession().getAttribute(process_id);
 
             if (type.equals("map")) {
-                try {
+                Image map = ann.getMapImage().getImg();
+                Dimension imgSize = new Dimension(map.getWidth(null), map.getHeight(null));
+                Dimension boundary = new Dimension(850, 400);
+                Dimension scaledDimension = getScaledDimension(imgSize, boundary);
 
-                    Image map = ann.getMapImage();
-                    Dimension imgSize = new Dimension(map.getWidth(null), map.getHeight(null));
-                    Dimension boundary = new Dimension(850, 400);
-                    Dimension scaledDimension = getScaledDimension(imgSize, boundary);
+                response.setContentType("image/png");
+                ImageIO.write(toBufferedImage(map.getScaledInstance(scaledDimension.width, scaledDimension.height, Image.SCALE_DEFAULT)), "png", response.getOutputStream());
 
-                    response.setContentType("image/png");
-                    ImageIO.write(toBufferedImage(map.getScaledInstance(scaledDimension.width, scaledDimension.height, Image.SCALE_DEFAULT)), "png", response.getOutputStream());
-                } catch (IOException e) {
-                }
             } else if (type.equals("preview")) {
                 int index = Integer.parseInt(request.getParameter("index"));
 

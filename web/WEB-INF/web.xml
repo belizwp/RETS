@@ -6,19 +6,19 @@
     </listener>
     <servlet-mapping>
         <servlet-name>basic</servlet-name>
-        <url-pattern>/new_announce/basic</url-pattern>
+        <url-pattern>/basic</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>detail</servlet-name>
-        <url-pattern>/new_announce/detail</url-pattern>
+        <url-pattern>/detail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>media</servlet-name>
-        <url-pattern>/new_announce/media</url-pattern>
+        <url-pattern>/media</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>summary</servlet-name>
-        <url-pattern>/new_announce/summary</url-pattern>
+        <url-pattern>/summary</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

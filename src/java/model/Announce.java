@@ -20,7 +20,7 @@ public class Announce {
     private String number;
     private String road;
     private String postcode;
-    private Image mapImage;
+    private ImageMeta mapImage;
 
     // price
     private Long price;
@@ -390,14 +390,14 @@ public class Announce {
     /**
      * @return the map
      */
-    public Image getMapImage() {
+    public ImageMeta getMapImage() {
         return mapImage;
     }
 
     /**
      * @param mapImage the map to set
      */
-    public void setMapImage(Image mapImage) {
+    public void setMapImage(ImageMeta mapImage) {
         this.mapImage = mapImage;
     }
 

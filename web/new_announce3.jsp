@@ -28,9 +28,9 @@
 
             <span class="btn btn-success fileinput-button">
                 <i class="glyphicon glyphicon-plus"></i>
-                <span>Select files...</span>
+                <span> เลือกไฟล์</span>
                 <!-- The file input field used as target for the file upload widget -->
-                <input id="fileupload" name="files[]" type="file" accept="image/png, image/jpeg, image/gif" multiple>
+                <input id="fileupload" name="files[]" type="file" accept="image/png, image/jpeg, image/gif" multiple/>
             </span>
 
             <br>
@@ -54,30 +54,7 @@
                     </c:forEach>
                 </c:if>
             </div>
-
-            <table id="uploaded-files" class="table">
-                <tr>
-                    <th>File Name</th>
-                    <th>File Size</th>
-                    <th>File Type</th>
-                </tr>
-                <c:if test="${ann.files.size() > 0}">
-                    <c:forEach var="file" items="${ann.files}">
-                        <tr>
-                            <td>
-                                ${file.fileName}
-                            </td>
-                            <td>
-                                ${file.fileSize}
-                            </td>
-                            <td>
-                                ${file.fileType}
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </c:if>
-            </table>
-
+            
         </div>       
 
         <div class="panel-footer text-center">
@@ -105,15 +82,8 @@
             url: url,
             dataType: 'json',
             done: function (e, data) {
-                $("tr:has(td)").remove();
                 $('.gallery').empty();
                 $.each(data.result, function (index, file) {
-                    $("#uploaded-files").append(
-                            $('<tr/>')
-                            .append($('<td/>').text(file.fileName))
-                            .append($('<td/>').text(file.fileSize))
-                            .append($('<td/>').text(file.fileType))
-                            );//end $("#uploaded-files").append()
                     addPreview(index, '/RETS/image/?process_id=${param.process_id}&type=preview&index=' + index);
                 });
             },
@@ -159,23 +129,6 @@
             }
         });
     }
-    
-//    $(document).ready( function () {
-//        for (var i = 0; i < '${ann.files.size()}'; i++) {
-//            addPreview(i, '/RETS/image/?process_id=${param.process_id}&type=preview&index=' + i);
-//        }
-//    });
 </script>
-<style>
-    .img-wrap {
-        position: relative;
-    }
-    .img-wrap .remove {
-        position: absolute;
-        top: 2px;
-        right: 2px;
-        z-index: 100;
-    }
-</style>
 
 <jsp:include page="/footer" />

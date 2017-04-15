@@ -5,6 +5,7 @@
 
 <c:set var="ann" value="${sessionScope[param.process_id]}"/>
 
+<link rel="stylesheet" href="/RETS/assets/css/jquery.fileupload.css">
 <div class="container">
     <form class="create-info form-horizontal" action="/RETS/NewAnnounce" enctype="multipart/form-data" method="POST">
         <div class="panel panel-default">
@@ -139,29 +140,33 @@
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">รูปแผนที่ : </label>
-                            <div class="col-md-4">
-                                <!-- image-preview-filename input [CUT FROM HERE]-->
-                                <div class="input-group image-preview">
-                                    <input type="text" class="form-control image-preview-filename" disabled="disabled">
-                                    <span class="input-group-btn">
-                                        <!-- image-preview-clear button -->
-                                        <button type="button" class="btn btn-default image-preview-clear" style="display:none; margin: 0px;">
-                                            <span class="glyphicon glyphicon-remove"></span> Clear
-                                        </button>
-                                        <!-- image-preview-input -->
-                                        <div class="btn btn-default image-preview-input">
-                                            <span class="glyphicon glyphicon-folder-open"></span>
-                                            <span class="image-preview-input-title">Browse</span>
-                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="map" size="10"/> <!-- rename it -->
-                                        </div>
-                                    </span>
-                                </div><!-- /input-group image-preview [TO HERE]--> 
+                            <div class="col-md-2">
+                                <span class="btn btn-default fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span> เลือกไฟล์</span>
+                                    <!-- The file input field used as target for the file upload widget -->
+                                    <input id="fileupload" name="files" type="file" accept="image/png, image/jpeg, image/gif"/>
+                                    <!-- The global progress bar -->
+                                    <div id="progress" class="progress" style="padding: 0px; margin: 0px; height: 5px;">
+                                        <div class="progress-bar progress-bar-success"></div>
+                                    </div>
+                                </span>
                             </div>
                         </div>
 
-                        <c:if test="${ann.mapImage != null}">
-                            <img class="img-responsive" src="/RETS/image/?type=map&process_id=${param.process_id}" alt="map" style="max-width:75%; margin: 0 auto;">         
-                        </c:if>
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-md-8">
+                            <div id="map-preview" class="map-preview" >
+                                <c:if test="${ann.mapImage != null}">
+                                    <div class="img-wrap" id="img-wrap">
+                                        <img class="img-responsive" src="/RETS/image/?type=map&process_id=${param.process_id}">
+                                        <button class="btn btn-danger remove" onclick="removePreview();">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </div>
 
                         <br>
 
@@ -216,7 +221,9 @@
     </form>
 </div>
 
-<script src="/RETS/assets/js/upload-single-image.js"></script>
+<script src="/RETS/assets/js/vendor/jquery.ui.widget.js"></script>
+<script src="/RETS/assets/js/jquery.iframe-transport.js"></script>
+<script src="/RETS/assets/js/jquery.fileupload.js"></script>
 <script>
     function getAmphur(val) {
         $.ajax({
@@ -239,6 +246,59 @@
             success: function (data) {
                 $("#district-list").html(data);
                 $(".selectpicker").selectpicker('refresh');
+            }
+        });
+    }
+
+    $(function () {
+        var url = "/RETS/upload?process_id=${param.process_id}&type=map";
+        $('#fileupload').fileupload({
+            url: url,
+            dataType: 'json',
+            done: function (e, data) {
+                $('#map-preview:has(div)').empty();
+                addPreview('/RETS/image/?type=map&process_id=${param.process_id}');
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .progress-bar').css('width', progress + '%');
+            }
+        }).prop('disabled', !$.support.fileInput)
+                .parent().addClass($.support.fileInput ? undefined : 'disabled');
+    });
+
+    function addPreview(src) {
+        var wrap = document.createElement('div');
+        var img = document.createElement('img');
+        var removebtn = document.createElement('button');
+
+        wrap.className = 'img-wrap';
+        img.className = 'img-responsive';
+        img.src = src; // src
+        removebtn.className = 'btn btn-danger remove';
+        removebtn.innerHTML = '<span class="glyphicon glyphicon-trash"></span>';
+        removebtn.onclick = function () {
+            removePreview();
+        }
+
+        wrap.appendChild(img);
+        wrap.appendChild(removebtn);
+
+        document.getElementById('map-preview').appendChild(wrap);
+    }
+
+    function removePreview() {
+        $('#map-preview:has(div)').empty();
+        $('#progress .progress-bar').css(
+                'width',
+                0 + '%'
+                );
+
+        $.ajax({
+            type: "POST",
+            url: "/RETS/upload",
+            data: {process_id: '${param.process_id}', type: 'remove_map'},
+            success: function (data) {
             }
         });
     }

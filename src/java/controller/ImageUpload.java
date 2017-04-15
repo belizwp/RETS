@@ -68,6 +68,32 @@ public class ImageUpload extends HttpServlet {
 
             } else if (type.equals("map")) {
 
+                Collection<Part> parts = request.getParts();
+
+                ImageMeta temp = null;
+
+                for (Part part : parts) {
+                    if (part.getContentType() != null) {
+                        temp = new ImageMeta();
+                        temp.setFileName(getFilename(part));
+                        temp.setFileSize(part.getSize() / 1024 + " Kb");
+                        temp.setFileType(part.getContentType());
+                        temp.setImg(ImageIO.read(part.getInputStream()));
+                        ann.setMapImage(temp);
+                    }
+                }
+
+                response.setContentType("application/json");
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.writeValue(response.getOutputStream(), temp);
+
+            } else if (type.equals("remove_map")) {
+                try {
+                    ann.setMapImage(null);
+
+                } catch (NumberFormatException e) {
+
+                }
             } else if (type.equals("remove")) {
                 try {
                     int index = Integer.parseInt(request.getParameter("index"));
@@ -81,7 +107,7 @@ public class ImageUpload extends HttpServlet {
     }
 
     // this method is used to get file name out of request headers
-    private static String getFilename(Part part) {
+    private String getFilename(Part part) {
         for (String cd : part.getHeader("content-disposition").split(";")) {
             if (cd.trim().startsWith("filename")) {
                 String filename = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");

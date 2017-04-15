@@ -5,10 +5,7 @@
  */
 package controller;
 
-import java.awt.Image;
 import java.io.IOException;
-import java.io.InputStream;
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 import model.Announce;
 
 /**
@@ -71,23 +67,22 @@ public class AnnounceCreator extends HttpServlet {
         Announce announce = (Announce) session.getAttribute(process_id);
 
         if (process == null) {
-            response.sendRedirect("new_announce/basic?process_id=" + process_id);
+            response.sendRedirect("basic?process_id=" + process_id);
         } else if (submit.equals("ถัดไป")) {
             switch (process) {
                 case "basic":
                     saveBasicVal(request, announce);
-                    response.sendRedirect("new_announce/detail?process_id=" + process_id);
+                    response.sendRedirect("detail?process_id=" + process_id);
                     break;
                 case "detail":
                     saveDetailVal(request, announce);
-                    response.sendRedirect("new_announce/media?process_id=" + process_id);
+                    response.sendRedirect("media?process_id=" + process_id);
                     break;
                 case "media":
-                    saveMediaVal(request, announce);
-                    response.sendRedirect("new_announce/summary?process_id=" + process_id);
+                    response.sendRedirect("summary?process_id=" + process_id);
                     break;
                 default:
-                    response.sendRedirect("new_announce/basic?process_id=" + process_id);
+                    response.sendRedirect("basic?process_id=" + process_id);
                     break;
             }
 
@@ -95,17 +90,16 @@ public class AnnounceCreator extends HttpServlet {
             switch (process) {
                 case "detail":
                     saveDetailVal(request, announce);
-                    response.sendRedirect("new_announce/basic?process_id=" + process_id);
+                    response.sendRedirect("basic?process_id=" + process_id);
                     break;
                 case "media":
-                    saveMediaVal(request, announce);
-                    response.sendRedirect("new_announce/detail?process_id=" + process_id);
+                    response.sendRedirect("detail?process_id=" + process_id);
                     break;
                 case "summary":
-                    response.sendRedirect("new_announce/media?process_id=" + process_id);
+                    response.sendRedirect("media?process_id=" + process_id);
                     break;
                 default:
-                    response.sendRedirect("new_announce/basic?process_id=" + process_id);
+                    response.sendRedirect("basic?process_id=" + process_id);
                     break;
             }
         } else if (submit.equals("บันทึก")) {
@@ -149,8 +143,6 @@ public class AnnounceCreator extends HttpServlet {
         ann.setArea(!request.getParameter("area").equals("") ? Integer.parseInt(request.getParameter("area")) : null);
         ann.setWidth(!request.getParameter("width").equals("") ? Integer.parseInt(request.getParameter("width")) : null);
         ann.setHeight(!request.getParameter("height").equals("") ? Integer.parseInt(request.getParameter("height")) : null);
-
-        saveMap(request, ann);
     }
 
     private void saveDetailVal(HttpServletRequest request, Announce ann) {
@@ -165,22 +157,6 @@ public class AnnounceCreator extends HttpServlet {
         ann.setCam(request.getParameter("cam") != null ? request.getParameter("cam") : null);
         ann.setParklot(request.getParameter("parklot") != null ? request.getParameter("parklot") : null);
 
-    }
-
-    private void saveMediaVal(HttpServletRequest request, Announce ann) {
-
-    }
-
-    private void saveMap(HttpServletRequest request, Announce ann) {
-        try {
-            Part filePart = request.getPart("map");
-            if (filePart.getSize() > 0) {
-                InputStream fileContent = filePart.getInputStream();
-                Image img = ImageIO.read(fileContent);
-                ann.setMapImage(img);
-            }
-        } catch (IOException | ServletException e) {
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
