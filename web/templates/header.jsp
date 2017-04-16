@@ -1,8 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="SITE_URL" value="${pageContext.request.contextPath}" scope="request"/>
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,11 +8,11 @@
 
         <title>RETS | Real Estate Trading System</title>
 
-        <link href="${SITE_URL}/assets/css/bootstrap.min.css" rel="stylesheet">
-        <link href="${SITE_URL}/assets/css/style.css" rel="stylesheet">
+        <link href="/RETS/assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/RETS/assets/css/style.css" rel="stylesheet">
 
-        <script src="${SITE_URL}/assets/js/jquery-3.2.0.min.js"></script>
-        <script src="${SITE_URL}/assets/js/bootstrap.min.js"></script>
+        <script src="/RETS/assets/js/jquery-3.2.0.min.js"></script>
+        <script src="/RETS/assets/js/bootstrap.min.js"></script>
     </head>
     <body>
 
@@ -33,19 +31,19 @@
                     <div id="navbar" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li><a href="/RETS">หน้าหลัก</a></li>
-                            <li><a href="#">ขาย</a></li>
-                            <li><a href="#">เช่า</a></li>
-                            <li><a href="#">ลงประกาศ</a></li>
+                            <li><a href="/RETS/search?announce_type=1">ขาย</a></li>
+                            <li><a href="/RETS/search?announce_type=2">เช่า</a></li>
+                            <li><a href="/RETS/NewAnnounce" >ลงประกาศ</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="register">ลงทะเบียน</a></li>
+                            <li><a href="/RETS/register">ลงทะเบียน</a></li>
                             <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown">เข้าสู่ระบบ <b class="caret"></b></a>
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown">เข้าสู่ระบบ <b class="caret"></b></a>
                                 <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
                                     <li>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <form action="Login" class="form" role="form" method="post" action="login" id="login-nav">
+                                                <form action="/RETS/Login" class="form" role="form" method="post" action="login" id="login-nav">
                                                     <div class="form-group">
                                                         <input type="email" class="form-control" placeholder="อีเมล" required>
                                                     </div>

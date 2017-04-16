@@ -2,17 +2,17 @@
 <jsp:include page="templates/header.jsp" />
 
 <div class="container">
-    <form class="register form-horizontal" action="Register" method="POST">
+    <form class="register form-horizontal" action="/RETS/Register" method="POST">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>ลงทะเบียน สมาชิก</h2>
             </div>
             <div class="panel-body">
-                <h6 class="pull-right" style="color: red">* ข้อมูลที่จำเป็นต้องใช้</h6>
                 <div class="row">
                     <fieldset>
 
-                        <legend>กรอกรายละเอียด</legend>
+                        <legend>กรอกรายละเอียด<span><h6 class="pull-right" style="color: red">* ข้อมูลที่จำเป็นต้องใช้</h6></span></legend>
+                        
                         <div class="form-group">
                             <label class="col-md-5 control-label">* ชื่อ : </label>
                             <div class="col-md-4">

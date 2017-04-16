@@ -4,6 +4,22 @@
         <description>ServletContextListener</description>
         <listener-class>listener.Init</listener-class>
     </listener>
+    <servlet-mapping>
+        <servlet-name>basic</servlet-name>
+        <url-pattern>/basic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>detail</servlet-name>
+        <url-pattern>/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>media</servlet-name>
+        <url-pattern>/media</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>summary</servlet-name>
+        <url-pattern>/summary</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -17,11 +33,67 @@
         <res-sharing-scope>Shareable</res-sharing-scope>
     </resource-ref>
     <servlet>
+        <servlet-name>headerURL</servlet-name>
+        <jsp-file>/templates/header.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>basic</servlet-name>
+        <jsp-file>/new_announce1.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>detail</servlet-name>
+        <jsp-file>/new_announce2.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>media</servlet-name>
+        <jsp-file>/new_announce3.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>summary</servlet-name>
+        <jsp-file>/new_announce4.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>headerURL</servlet-name>
+        <url-pattern>/header</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>footerURL</servlet-name>
+        <jsp-file>/templates/footer.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>footerURL</servlet-name>
+        <url-pattern>/footer</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>registerURL</servlet-name>
         <jsp-file>/register.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>registerURL</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>loginURL</servlet-name>
+        <jsp-file>/login.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginURL</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>searchboxURL</servlet-name>
+        <jsp-file>/searchbox/searchbox.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchboxURL</servlet-name>
+        <url-pattern>/searchbox</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>searchURL</servlet-name>
+        <jsp-file>/search.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchURL</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
 </web-app>
