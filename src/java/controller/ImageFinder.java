@@ -41,9 +41,6 @@ public class ImageFinder extends HttpServlet {
         String process_id = request.getParameter("process_id");
         String type = request.getParameter("type");
 
-        System.out.println(process_id);
-        System.out.println(type);
-
         if (process_id != null) {
 
             Announce ann = (Announce) request.getSession().getAttribute(process_id);
@@ -69,6 +66,14 @@ public class ImageFinder extends HttpServlet {
 
                 response.setContentType(meta.getFileType());
                 ImageIO.write(toBufferedImage(img.getScaledInstance(scaledDimension.width, scaledDimension.height, Image.SCALE_FAST)), "png", response.getOutputStream());
+
+            } else if (type.equals("thumbnail")) {
+
+                ImageMeta meta = ann.getFiles().get(0);
+                Image img = meta.getImg();
+
+                response.setContentType(meta.getFileType());
+                ImageIO.write(toBufferedImage(img.getScaledInstance(200, 200, Image.SCALE_FAST)), "png", response.getOutputStream());
             }
         }
 

@@ -72,8 +72,12 @@
 </div>
 
 <script src="/RETS/assets/js/vendor/jquery.ui.widget.js"></script>
+<script src="/RETS/assets/js/load-image.all.min.js"></script>
+<script src="/RETS/assets/js/canvas-to-blob.min.js"></script>
 <script src="/RETS/assets/js/jquery.iframe-transport.js"></script>
 <script src="/RETS/assets/js/jquery.fileupload.js"></script>
+<script src="/RETS/assets/js/jquery.fileupload-process.js"></script>
+<script src="/RETS/assets/js/jquery.fileupload-image.js"></script>
 
 <script>
     $(function () {
@@ -81,6 +85,9 @@
         $('#fileupload').fileupload({
             url: url,
             dataType: 'json',
+            disableImageResize: false,
+            imageMaxWidth: 1000,
+            imageMaxHeight: 1000,
             done: function (e, data) {
                 $('.gallery').empty();
                 $.each(data.result, function (index, file) {

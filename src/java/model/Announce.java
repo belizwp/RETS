@@ -1,9 +1,12 @@
 package model;
 
-import java.awt.Image;
+import java.text.NumberFormat;
 import java.util.LinkedList;
 
 public class Announce {
+
+    // ref id
+    private String id;
 
     // ====== Basic Value =======
     // general
@@ -24,6 +27,7 @@ public class Announce {
 
     // price
     private Long price;
+    private String priceFormat;
 
     // area
     private Integer area;
@@ -413,6 +417,31 @@ public class Announce {
      */
     public void setFiles(LinkedList<ImageMeta> files) {
         this.files = files;
+    }
+
+    /**
+     * @return the priceFormat
+     */
+    public String getPriceFormat() {
+        try {
+            return NumberFormat.getIntegerInstance().format(this.price);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
 }

@@ -222,8 +222,13 @@
 </div>
 
 <script src="/RETS/assets/js/vendor/jquery.ui.widget.js"></script>
+<script src="/RETS/assets/js/load-image.all.min.js"></script>
+<script src="/RETS/assets/js/canvas-to-blob.min.js"></script>
 <script src="/RETS/assets/js/jquery.iframe-transport.js"></script>
 <script src="/RETS/assets/js/jquery.fileupload.js"></script>
+<script src="/RETS/assets/js/jquery.fileupload-process.js"></script>
+<script src="/RETS/assets/js/jquery.fileupload-image.js"></script>
+
 <script>
     function getAmphur(val) {
         $.ajax({
@@ -255,6 +260,9 @@
         $('#fileupload').fileupload({
             url: url,
             dataType: 'json',
+            disableImageResize: false,
+            imageMaxWidth: 1000,
+            imageMaxHeight: 1000,
             done: function (e, data) {
                 $('#map-preview:has(div)').empty();
                 addPreview('/RETS/image/?type=map&process_id=${param.process_id}');
