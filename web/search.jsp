@@ -18,8 +18,19 @@
 
     <div class="row">
         <div class="col-md-9">
-            <!-- search result -->
-            <jsp:include page="result.jsp"/>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>ผลการค้นหา 12,345 ประกาศ</h4>
+                    <!-- search result -->
+
+                    <div id="result">
+                        <jsp:include page='<%= "result?" + request.getQueryString() + "&page=1" %>' />
+                    </div>
+
+                    <div id="page-selection" class="text-center"></div>
+
+                </div> <!-- /panel-body-->
+            </div> <!-- /panel-->
         </div>
         <div class="col-md-3">
             <!-- advertise -->
@@ -27,5 +38,22 @@
         </div>
     </div>
 </div>
+
+<script src="/RETS/assets/js/jquery.bootpag.min.js"></script>
+<script>
+    $('#page-selection').bootpag({
+        total: 5, // total pages
+        page : 1,
+        maxVisible: 10
+    }).on("page", function (event, num) {
+        $.ajax({
+            type: "POST",
+            url: "/RETS/result?" + '<%= request.getQueryString()%>' + '&page=' + num,
+            success: function (data) {
+                $("#result").html(data);
+            }
+        });
+    });
+</script>
 
 <jsp:include page="templates/footer.jsp" />
