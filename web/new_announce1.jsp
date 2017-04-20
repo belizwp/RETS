@@ -5,7 +5,6 @@
 
 <c:set var="ann" value="${sessionScope[param.process_id]}"/>
 
-<link rel="stylesheet" href="/RETS/assets/css/jquery.fileupload.css">
 <div class="container">
     <form class="create-info form-horizontal" action="/RETS/NewAnnounce" enctype="multipart/form-data" method="POST">
         <div class="panel panel-default">
@@ -32,8 +31,8 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="type">* ประกาศสำหรับ : </label>  
                             <div class="col-md-2">
-                                <label class="radio-inline"><input type="radio" name="type" value="1" ${ann.type == 'ขาย' ? 'checked' : ''} required>ขาย</label>
-                                <label class="radio-inline"><input type="radio" name="type" value="2" ${ann.type == 'เช่า' ? 'checked' : ''} required>เช่า</label>
+                                <label class="radio-inline"><input type="radio" name="type" value="ขาย" ${ann.type == 'ขาย' ? 'checked' : ''} required>ขาย</label>
+                                <label class="radio-inline"><input type="radio" name="type" value="เช่า" ${ann.type == 'เช่า' ? 'checked' : ''} required>เช่า</label>
                             </div>
                         </div>
                         <div class="form-group">
