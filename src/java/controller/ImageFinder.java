@@ -16,7 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Announce;
+import model.Residential;
 import model.ImageMeta;
 
 /**
@@ -43,18 +43,9 @@ public class ImageFinder extends HttpServlet {
 
         if (process_id != null) {
 
-            Announce ann = (Announce) request.getSession().getAttribute(process_id);
+            Residential ann = (Residential) request.getSession().getAttribute(process_id);
 
-            if (type.equals("map")) {
-                Image map = ann.getMapImage().getImg();
-                Dimension imgSize = new Dimension(map.getWidth(null), map.getHeight(null));
-                Dimension boundary = new Dimension(850, 400);
-                Dimension scaledDimension = getScaledDimension(imgSize, boundary);
-
-                response.setContentType("image/png");
-                ImageIO.write(toBufferedImage(map.getScaledInstance(scaledDimension.width, scaledDimension.height, Image.SCALE_DEFAULT)), "png", response.getOutputStream());
-
-            } else if (type.equals("preview")) {
+            if (type.equals("preview")) {
                 int index = Integer.parseInt(request.getParameter("index"));
 
                 ImageMeta meta = ann.getFiles().get(index);

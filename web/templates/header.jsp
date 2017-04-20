@@ -31,8 +31,8 @@
                     <div id="navbar" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li><a href="/RETS">หน้าหลัก</a></li>
-                            <li><a href="/RETS/search?announce_type=1">ขาย</a></li>
-                            <li><a href="/RETS/search?announce_type=2">เช่า</a></li>
+                            <li><a href="/RETS/search?announce_type=ขาย">ขาย</a></li>
+                            <li><a href="/RETS/search?announce_type=เช่า">เช่า</a></li>
                             <li><a href="/RETS/NewAnnounce" >ลงประกาศ</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">

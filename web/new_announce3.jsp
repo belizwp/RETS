@@ -46,7 +46,7 @@
                 <c:if test="${ann.files.size() > 0}">
                     <c:forEach var="file" items="${ann.files}" varStatus="index">
                         <div class="thumbnail img-wrap col-sm-4 col-xs-6 col-md-3 col-lg-3">
-                            <img class="img-responsive" src="/RETS/image/?process_id=${param.process_id}&type=preview&index=${index.index}">
+                            <img id="preview-img" class="img-responsive" src="/RETS/image/?process_id=${param.process_id}&type=preview&index=${index.index}">
                             <button class="btn btn-danger remove" onclick="removePreview(${index.index}, this);">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </button>
@@ -133,6 +133,7 @@
             url: "/RETS/upload",
             data: {process_id: '${param.process_id}', type: 'remove', index: index},
             success: function (data) {
+                location.reload();
             }
         });
     }

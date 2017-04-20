@@ -63,24 +63,18 @@
                     </select>
 
                     <select name="announce_type" id="announce-type-list" class="selectpicker col-md-*" title="ประกาศสำหรับ">
-                        <option value="0">ทั้งหมด</option>
-                        <option value="1">ขาย</option>
-                        <option value="2">เช่า</option>
-                        <c:if test="${param.announce_type != null}">
-                            <script>$("#announce-type-list").val(${param.announce_type});</script>
-                        </c:if>
+                        <option value="ทั้งหมด" ${param.announce_type == "ทั้งหมด" ? 'selected' : ''}>ทั้งหมด</option>
+                        <option value="ขาย" ${param.announce_type == "ขาย" ? 'selected' : ''}>ขาย</option>
+                        <option value="เช่า" ${param.announce_type == "เช่า" ? 'selected' : ''}>เช่า</option>
                     </select>
 
                     <select name="property_type" id="property-type-list" class="selectpicker col-md-*" title="ประเภท">
-                        <option value="0">ทั้งหมด</option>
-                        <option value="1">บ้านเดี่ยว</option>
-                        <option value="2">คอนโด</option>
-                        <option value="3">ทาวน์เฮ้าส์</option>
-                        <option value="4">ที่ดิน</option>
-                        <option value="5">อพาร์ทเม้น</option>
-                        <c:if test="${param.property_type != null}">
-                            <script>$("#property-type-list").val(${param.property_type});</script>
-                        </c:if>
+                        <option value="ทั้งหมด" ${param.property_type == "ทั้งหมด" ? 'selected' : ''}>ทั้งหมด</option>
+                        <option value="บ้านเดี่ยว" ${param.property_type == "บ้านเดี่ยว" ? 'selected' : ''}>บ้านเดี่ยว</option>
+                        <option value="คอนโด" ${param.property_type == "คอนโด" ? 'selected' : ''}>คอนโด</option>
+                        <option value="ทาวน์เฮ้าส์" ${param.property_type == "ทาวน์เฮ้าส์" ? 'selected' : ''}>ทาวน์เฮ้าส์</option>
+                        <option value="ที่ดิน" ${param.property_type == "ที่ดิน" ? 'selected' : ''}>ที่ดิน</option>
+                        <option value="อพาร์ทเม้น" ${param.property_type == "อพาร์ทเม้น" ? 'selected' : ''}>อพาร์ทเม้น</option>
                     </select>
 
                     <div id="price_dropdown" class="dropdown btn-group col-md-*" style="padding: 0;">
