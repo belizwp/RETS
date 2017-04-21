@@ -102,6 +102,32 @@ public class AnnounceCreator extends HttpServlet {
                     response.sendRedirect("basic?process_id=" + process_id);
                     break;
             }
+        } else if (submit.equals("ข้อมูลทั่วไป") || submit.equals("รายละเอียดเพิ่มเติม") || submit.equals("รูปภาพ") || submit.equals("สรุป")) {
+
+            if (process.equals("basic")) {
+                saveBasicVal(request, announce);
+            } else if (process.equals("detail")) {
+                saveDetailVal(request, announce);
+            }
+
+            switch (submit) {
+                case "ข้อมูลทั่วไป":
+                    response.sendRedirect("basic?process_id=" + process_id);
+                    break;
+                case "รายละเอียดเพิ่มเติม":
+                    response.sendRedirect("detail?process_id=" + process_id);
+                    break;
+                case "รูปภาพ":
+                    response.sendRedirect("media?process_id=" + process_id);
+                    break;
+                case "สรุป":
+                    response.sendRedirect("summary?process_id=" + process_id);
+                    break;
+                default:
+                    response.sendRedirect("basic?process_id=" + process_id);
+                    break;
+            }
+
         } else if (submit.equals("บันทึก")) {
             updateAnnounce();
         } else if (submit.equals("ลงประกาศ")) {

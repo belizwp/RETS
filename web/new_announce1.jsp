@@ -13,13 +13,13 @@
             </div>
 
             <div class="panel-body">
-                <a type="button" class="btn btn-primary">ข้อมูลทั่วไป</a>
+                <input type="submit" name="submit" class="btn btn-primary" value="ข้อมูลทั่วไป">
                 <span class="glyphicon glyphicon-menu-right"></span>
-                <a type="button" class="btn btn-default">รายละเอียดเพิ่มเติม</a>
+                <input type="submit" name="submit" class="btn btn-default" value="รายละเอียดเพิ่มเติม">
                 <span class="glyphicon glyphicon-menu-right"></span>
-                <a type="button" class="btn btn-default">รูปภาพ</a>
+                <input type="submit" name="submit" class="btn btn-default" value="รูปภาพ">
                 <span class="glyphicon glyphicon-menu-right"></span>
-                <a type="button" class="btn btn-default">สรุป</a>
+                <input type="submit" name="submit" class="btn btn-default" value="สรุป">
                 <h6 class="pull-right" style="color: red">* ข้อมูลที่จำเป็นต้องใช้</h6>
             </div>
 
@@ -155,11 +155,11 @@
             </div>       
 
             <div class="panel-footer text-center">
-                <input type="submit" name="submit" class="btn btn-primary" value="ถัดไป"/>
-                <!-- <input type="button" class="btn btn-success value="บันทึก" /> -->
+                <input type="submit" name="submit" class="btn btn-primary" value="ถัดไป">
+                <!-- <input type="button" class="btn btn-success value="บันทึก" > -->
 
-                <input type="hidden" name="process" class="btn btn-primary" value="basic"/>
-                <input type="hidden" name="process_id" class="btn btn-primary" value="${param.process_id}"/>
+                <input type="hidden" name="process" class="btn btn-primary" value="basic">
+                <input type="hidden" name="process_id" class="btn btn-primary" value="${param.process_id}">
             </div>  
 
         </div>
