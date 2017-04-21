@@ -252,19 +252,19 @@ DROP TABLE IF EXISTS `employees`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employees` (
-  `Emp_num` int(11) NOT NULL,
+  `Emp_num` int auto_increment,
   `Fname` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `Lname` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `Dep_code` int(11) NOT NULL,
-  `Employees_Emp_num` int(11) NOT NULL,
+  `Dep_code` int(11),
+  `Employees_Emp_num` int(11),
   PRIMARY KEY (`Emp_num`),
   UNIQUE KEY `Emp_num_UNIQUE` (`Emp_num`),
   KEY `fk_Employees_Department1_idx` (`Dep_code`),
   KEY `fk_Employees_Employees1_idx` (`Employees_Emp_num`),
-  CONSTRAINT `fk_Employees_Department1` FOREIGN KEY (`Dep_code`) REFERENCES `department` (`Dep_code`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Employees_Employees1` FOREIGN KEY (`Employees_Emp_num`) REFERENCES `employees` (`Emp_num`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  FOREIGN KEY (`Dep_code`) REFERENCES `department` (`Dep_code`) ,
+  FOREIGN KEY (`Employees_Emp_num`) REFERENCES `employees` (`Emp_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

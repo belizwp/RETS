@@ -46,8 +46,14 @@ public class Register extends HttpServlet {
             Connection conn = (Connection) ctx.getAttribute("connection");
             Statement statement = conn.createStatement();
             
-            int reg_val = statement.executeUpdate("insert into members values('"
-            + emp_num + "', '" + fname + "', '" + lname + "', '" + phone + "', '" + email + "', '" + pass + "')");
+            String sql = ("insert into employees(Fname, Lname, phone, email) "
+                    + "values('" + fname + "', '" + lname + "', '" + phone + "', '" + email + "')");
+            statement.executeQuery(sql);
+            
+            String sql2 = ("insert into member(password) values('" + pass + "')");
+            statement.executeQuery(sql2);
+                        
+            
         } catch (Exception e) {
             System.err.println(e);
         }
