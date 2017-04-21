@@ -3,10 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/dell/Documents/GitHub/RETS/src/java/controller/ImageUpload.java</file>
-            <file>file:/C:/Users/dell/Documents/GitHub/RETS/web/searchbox/searchbox.jsp</file>
-            <file>file:/C:/Users/dell/Documents/GitHub/RETS/src/java/controller/Login.java</file>
-            <file>file:/C:/Users/dell/Documents/GitHub/RETS/web/login.jsp</file>
+            <file>file:/C:/Users/dell/Documents/GitHub/RETS/web/register.jsp</file>
+            <file>file:/C:/Users/dell/Documents/GitHub/RETS/src/java/listener/Init.java</file>
             <file>file:/C:/Users/dell/Documents/GitHub/RETS/src/java/controller/Register.java</file>
         </group>
     </open-files>

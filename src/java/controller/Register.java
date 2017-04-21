@@ -63,7 +63,7 @@ public class Register extends HttpServlet {
             
             out.println("<h1>Registeration Successful</h1>");
             
-            response.sendRedirect("thankyou.html");
+            response.sendRedirect("index.jsp");
         }
     }
 
