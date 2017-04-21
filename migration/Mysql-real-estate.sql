@@ -169,8 +169,7 @@ CREATE TABLE `details` (
   `price` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `water_bill` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `electric_bill` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `facilities` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `facilities` varchar(150) COLLATE utf8_unicode_ci DEFAULT NULL,
   `remark` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `Res_id` int(11) NOT NULL,
   PRIMARY KEY (`details_id`,`Res_id`),
@@ -257,7 +256,7 @@ CREATE TABLE `employees` (
   `Fname` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `Lname` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `position` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `Dep_code` int(11) NOT NULL,
   `Employees_Emp_num` int(11) NOT NULL,
   PRIMARY KEY (`Emp_num`),
@@ -315,7 +314,6 @@ DROP TABLE IF EXISTS `location`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `location` (
   `Loc_id` int(11) NOT NULL,
-  `zone` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `address` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `province_id` int(11) NOT NULL,
   `amphur_id` int(11) NOT NULL,
@@ -454,6 +452,7 @@ DROP TABLE IF EXISTS `residential`;
 CREATE TABLE `residential` (
   `Res_id` int(11) NOT NULL,
   `Res_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `announce_for` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `member_id` int(11) NOT NULL,
   `Owner_Own_id` int(11) NOT NULL,
   `Loc_id` int(11) NOT NULL,

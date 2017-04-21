@@ -7,6 +7,9 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.Statement;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,17 +35,29 @@ public class Register extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        try {
+            String fname = request.getParameter("first_name");
+            String lname = request.getParameter("last_name");
+            String phone = request.getParameter("phone");
+            String email = request.getParameter("email");
+            String pass = request.getParameter("password");
+            
+            ServletContext ctx = getServletContext();
+            Connection conn = (Connection) ctx.getAttribute("connection");
+            Statement statement = conn.createStatement();
+            
+            int reg_val = statement.executeUpdate("insert into members values('"
+            + emp_num + "', '" + fname + "', '" + lname + "', '" + phone + "', '" + email + "', '" + pass + "')");
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Register</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Register at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            
+            out.println("<h1>Registeration Successful</h1>");
+            
+            response.sendRedirect("thankyou.html");
         }
     }
 
