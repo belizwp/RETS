@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import model.Announce;
+import model.Residential;
 import model.ImageMeta;
 
 /**
@@ -40,7 +40,7 @@ public class ImageUpload extends HttpServlet {
         if (process_id != null) {
             HttpSession session = request.getSession();
 
-            Announce ann = (Announce) session.getAttribute(process_id);
+            Residential ann = (Residential) session.getAttribute(process_id);
 
             if (type.equals("images")) {
 
@@ -66,34 +66,6 @@ public class ImageUpload extends HttpServlet {
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.writeValue(response.getOutputStream(), files);
 
-            } else if (type.equals("map")) {
-
-                Collection<Part> parts = request.getParts();
-
-                ImageMeta temp = null;
-
-                for (Part part : parts) {
-                    if (part.getContentType() != null) {
-                        temp = new ImageMeta();
-                        temp.setFileName(getFilename(part));
-                        temp.setFileSize(part.getSize() / 1024 + " Kb");
-                        temp.setFileType(part.getContentType());
-                        temp.setImg(ImageIO.read(part.getInputStream()));
-                        ann.setMapImage(temp);
-                    }
-                }
-
-                response.setContentType("application/json");
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.writeValue(response.getOutputStream(), temp);
-
-            } else if (type.equals("remove_map")) {
-                try {
-                    ann.setMapImage(null);
-
-                } catch (NumberFormatException e) {
-
-                }
             } else if (type.equals("remove")) {
                 try {
                     int index = Integer.parseInt(request.getParameter("index"));

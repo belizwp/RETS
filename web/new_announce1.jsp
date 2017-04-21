@@ -5,7 +5,6 @@
 
 <c:set var="ann" value="${sessionScope[param.process_id]}"/>
 
-<link rel="stylesheet" href="/RETS/assets/css/jquery.fileupload.css">
 <div class="container">
     <form class="create-info form-horizontal" action="/RETS/NewAnnounce" enctype="multipart/form-data" method="POST">
         <div class="panel panel-default">
@@ -14,13 +13,13 @@
             </div>
 
             <div class="panel-body">
-                <a type="button" class="btn btn-primary">ข้อมูลทั่วไป</a>
+                <input type="submit" name="submit" class="btn btn-primary" value="ข้อมูลทั่วไป">
                 <span class="glyphicon glyphicon-menu-right"></span>
-                <a type="button" class="btn btn-default">รายละเอียดเพิ่มเติม</a>
+                <input type="submit" name="submit" class="btn btn-default" value="รายละเอียดเพิ่มเติม">
                 <span class="glyphicon glyphicon-menu-right"></span>
-                <a type="button" class="btn btn-default">รูปภาพ</a>
+                <input type="submit" name="submit" class="btn btn-default" value="รูปภาพ">
                 <span class="glyphicon glyphicon-menu-right"></span>
-                <a type="button" class="btn btn-default">สรุป</a>
+                <input type="submit" name="submit" class="btn btn-default" value="สรุป">
                 <h6 class="pull-right" style="color: red">* ข้อมูลที่จำเป็นต้องใช้</h6>
             </div>
 
@@ -32,19 +31,19 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="type">* ประกาศสำหรับ : </label>  
                             <div class="col-md-2">
-                                <label class="radio-inline"><input type="radio" name="type" value="1" ${ann.type == 1 ? 'checked' : ''} required>ขาย</label>
-                                <label class="radio-inline"><input type="radio" name="type" value="2" ${ann.type == 2 ? 'checked' : ''} required>เช่า</label>
+                                <label class="radio-inline"><input type="radio" name="type" value="ขาย" ${ann.type == 'ขาย' ? 'checked' : ''} required>ขาย</label>
+                                <label class="radio-inline"><input type="radio" name="type" value="เช่า" ${ann.type == 'เช่า' ? 'checked' : ''} required>เช่า</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">* ประเภท :</label>
                             <div class="col-md-3">
                                 <select class="form-control" name="propType" required>
-                                    <option value="1" ${ann.propType == 1 ? 'selected' : ''}>บ้านเดี่ยว</option>
-                                    <option value="2" ${ann.propType == 2 ? 'selected' : ''}>คอนโด</option>
-                                    <option value="3" ${ann.propType == 3 ? 'selected' : ''}>ทาวน์เฮ้าส์</option>
-                                    <option value="4" ${ann.propType == 4 ? 'selected' : ''}>ที่ดิน</option>
-                                    <option value="5" ${ann.propType == 5 ? 'selected' : ''}>อพาร์ทเม้น</option>
+                                    <option value="1" ${ann.propType == 'บ้านเดี่ยว' ? 'selected' : ''}>บ้านเดี่ยว</option>
+                                    <option value="2" ${ann.propType == 'คอนโด' ? 'selected' : ''}>คอนโด</option>
+                                    <option value="3" ${ann.propType == 'ทาวน์เฮ้าส์' ? 'selected' : ''}>ทาวน์เฮ้าส์</option>
+                                    <option value="4" ${ann.propType == 'ที่ดิน' ? 'selected' : ''}>ที่ดิน</option>
+                                    <option value="5" ${ann.propType == 'อพาร์ทเม้น' ? 'selected' : ''}>อพาร์ทเม้น</option>
                                 </select>
                             </div>
                         </div>
@@ -138,37 +137,6 @@
                                 <input class="form-control" name="postcode" type="text" value="${ann.postcode}">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">รูปแผนที่ : </label>
-                            <div class="col-md-2">
-                                <span class="btn btn-default fileinput-button">
-                                    <i class="glyphicon glyphicon-plus"></i>
-                                    <span> เลือกไฟล์</span>
-                                    <!-- The file input field used as target for the file upload widget -->
-                                    <input id="fileupload" name="files" type="file" accept="image/png, image/jpeg, image/gif"/>
-                                    <!-- The global progress bar -->
-                                    <div id="progress" class="progress" style="padding: 0px; margin: 0px; height: 5px;">
-                                        <div class="progress-bar progress-bar-success"></div>
-                                    </div>
-                                </span>
-                            </div>
-                        </div>
-
-                        <label class="col-md-4 control-label"></label>
-                        <div class="col-md-8">
-                            <div id="map-preview" class="map-preview" >
-                                <c:if test="${ann.mapImage != null}">
-                                    <div class="img-wrap" id="img-wrap">
-                                        <img class="img-responsive" src="/RETS/image/?type=map&process_id=${param.process_id}">
-                                        <button class="btn btn-danger remove" onclick="removePreview();">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </button>
-                                    </div>
-                                </c:if>
-                            </div>
-                        </div>
-
-                        <br>
 
                         <legend>ข้อมูลด้านราคา</legend>
                         <div class="form-group">
@@ -182,52 +150,21 @@
                         </div>
                         <br>
 
-                        <legend>ขนาดเพิ่มเติม</legend>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">พื้นที่ใช้สอย : </label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input class="form-control" type="number" min="0" name="area" value="${ann.area}">
-                                    <span class="input-group-addon">ตารางเมตร</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">ขนาดพื้นที่ : </label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input class="form-control" type="number" min="0" name="width" value="${ann.width}">
-                                    <span class="input-group-addon">x</span>
-                                    <input class="form-control" type="number" min="0" name="height" value="${ann.height}">
-                                    <span class="input-group-addon">เมตร</span>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-
                     </fieldset>
                 </div>
             </div>       
 
             <div class="panel-footer text-center">
-                <input type="submit" name="submit" class="btn btn-primary" value="ถัดไป"/>
-                <!-- <input type="button" class="btn btn-success value="บันทึก" /> -->
+                <input type="submit" name="submit" class="btn btn-primary" value="ถัดไป">
+                <!-- <input type="button" class="btn btn-success value="บันทึก" > -->
 
-                <input type="hidden" name="process" class="btn btn-primary" value="basic"/>
-                <input type="hidden" name="process_id" class="btn btn-primary" value="${param.process_id}"/>
+                <input type="hidden" name="process" class="btn btn-primary" value="basic">
+                <input type="hidden" name="process_id" class="btn btn-primary" value="${param.process_id}">
             </div>  
 
         </div>
     </form>
 </div>
-
-<script src="/RETS/assets/js/vendor/jquery.ui.widget.js"></script>
-<script src="/RETS/assets/js/load-image.all.min.js"></script>
-<script src="/RETS/assets/js/canvas-to-blob.min.js"></script>
-<script src="/RETS/assets/js/jquery.iframe-transport.js"></script>
-<script src="/RETS/assets/js/jquery.fileupload.js"></script>
-<script src="/RETS/assets/js/jquery.fileupload-process.js"></script>
-<script src="/RETS/assets/js/jquery.fileupload-image.js"></script>
 
 <script>
     function getAmphur(val) {
@@ -251,62 +188,6 @@
             success: function (data) {
                 $("#district-list").html(data);
                 $(".selectpicker").selectpicker('refresh');
-            }
-        });
-    }
-
-    $(function () {
-        var url = "/RETS/upload?process_id=${param.process_id}&type=map";
-        $('#fileupload').fileupload({
-            url: url,
-            dataType: 'json',
-            disableImageResize: false,
-            imageMaxWidth: 1000,
-            imageMaxHeight: 1000,
-            done: function (e, data) {
-                $('#map-preview:has(div)').empty();
-                addPreview('/RETS/image/?type=map&process_id=${param.process_id}');
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#progress .progress-bar').css('width', progress + '%');
-            }
-        }).prop('disabled', !$.support.fileInput)
-                .parent().addClass($.support.fileInput ? undefined : 'disabled');
-    });
-
-    function addPreview(src) {
-        var wrap = document.createElement('div');
-        var img = document.createElement('img');
-        var removebtn = document.createElement('button');
-
-        wrap.className = 'img-wrap';
-        img.className = 'img-responsive';
-        img.src = src; // src
-        removebtn.className = 'btn btn-danger remove';
-        removebtn.innerHTML = '<span class="glyphicon glyphicon-trash"></span>';
-        removebtn.onclick = function () {
-            removePreview();
-        }
-
-        wrap.appendChild(img);
-        wrap.appendChild(removebtn);
-
-        document.getElementById('map-preview').appendChild(wrap);
-    }
-
-    function removePreview() {
-        $('#map-preview:has(div)').empty();
-        $('#progress .progress-bar').css(
-                'width',
-                0 + '%'
-                );
-
-        $.ajax({
-            type: "POST",
-            url: "/RETS/upload",
-            data: {process_id: '${param.process_id}', type: 'remove_map'},
-            success: function (data) {
             }
         });
     }

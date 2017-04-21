@@ -3,15 +3,16 @@ package model;
 import java.text.NumberFormat;
 import java.util.LinkedList;
 
-public class Announce {
+public class Residential {
 
     // ref id
     private String id;
+    private String owner_id;
 
     // ====== Basic Value =======
     // general
-    private Short type;
-    private Short propType;
+    private String type;
+    private String propType;
     private String title;
     private String detail;
 
@@ -23,63 +24,50 @@ public class Announce {
     private String number;
     private String road;
     private String postcode;
-    private ImageMeta mapImage;
 
     // price
     private Long price;
     private String priceFormat;
-
-    // area
-    private Integer area;
-    private Integer width;
-    private Integer height;
 
     // ====== Detail Value =======
     // more detail
     private Short floor;
     private Integer electricity;
     private Integer water;
-
-    // facilities
-    private String internet;
-    private String security;
-    private String swimPool;
-    private String laundry;
-    private String cam;
-    private String parklot;
+    private String facilities;
 
     // ====== Media Value ======
     private LinkedList<ImageMeta> files;
 
-    public Announce() {
+    public Residential() {
         files = new LinkedList<>();
     }
 
     /**
      * @return the type
      */
-    public Short getType() {
+    public String getType() {
         return type;
     }
 
     /**
      * @param type the type to set
      */
-    public void setType(Short type) {
+    public void setType(String type) {
         this.type = type;
     }
 
     /**
      * @return the propType
      */
-    public Short getPropType() {
+    public String getPropType() {
         return propType;
     }
 
     /**
      * @param propType the propType to set
      */
-    public void setPropType(Short propType) {
+    public void setPropType(String propType) {
         this.propType = propType;
     }
 
@@ -224,48 +212,6 @@ public class Announce {
     }
 
     /**
-     * @return the area
-     */
-    public Integer getArea() {
-        return area;
-    }
-
-    /**
-     * @param area the area to set
-     */
-    public void setArea(Integer area) {
-        this.area = area;
-    }
-
-    /**
-     * @return the width
-     */
-    public Integer getWidth() {
-        return width;
-    }
-
-    /**
-     * @param width the width to set
-     */
-    public void setWidth(Integer width) {
-        this.width = width;
-    }
-
-    /**
-     * @return the height
-     */
-    public Integer getHeight() {
-        return height;
-    }
-
-    /**
-     * @param height the height to set
-     */
-    public void setHeight(Integer height) {
-        this.height = height;
-    }
-
-    /**
      * @return the floor
      */
     public Short getFloor() {
@@ -308,104 +254,6 @@ public class Announce {
     }
 
     /**
-     * @return the internet
-     */
-    public String getInternet() {
-        return internet;
-    }
-
-    /**
-     * @param internet the internet to set
-     */
-    public void setInternet(String internet) {
-        this.internet = internet;
-    }
-
-    /**
-     * @return the security
-     */
-    public String getSecurity() {
-        return security;
-    }
-
-    /**
-     * @param security the security to set
-     */
-    public void setSecurity(String security) {
-        this.security = security;
-    }
-
-    /**
-     * @return the swimPool
-     */
-    public String getSwimPool() {
-        return swimPool;
-    }
-
-    /**
-     * @param swimPool the swimPool to set
-     */
-    public void setSwimPool(String swimPool) {
-        this.swimPool = swimPool;
-    }
-
-    /**
-     * @return the laundry
-     */
-    public String getLaundry() {
-        return laundry;
-    }
-
-    /**
-     * @param laundry the laundry to set
-     */
-    public void setLaundry(String laundry) {
-        this.laundry = laundry;
-    }
-
-    /**
-     * @return the cam
-     */
-    public String getCam() {
-        return cam;
-    }
-
-    /**
-     * @param cam the cam to set
-     */
-    public void setCam(String cam) {
-        this.cam = cam;
-    }
-
-    /**
-     * @return the parklot
-     */
-    public String getParklot() {
-        return parklot;
-    }
-
-    /**
-     * @param parklot the parklot to set
-     */
-    public void setParklot(String parklot) {
-        this.parklot = parklot;
-    }
-
-    /**
-     * @return the map
-     */
-    public ImageMeta getMapImage() {
-        return mapImage;
-    }
-
-    /**
-     * @param mapImage the map to set
-     */
-    public void setMapImage(ImageMeta mapImage) {
-        this.mapImage = mapImage;
-    }
-
-    /**
      * @return the images
      */
     public LinkedList<ImageMeta> getFiles() {
@@ -424,7 +272,7 @@ public class Announce {
      */
     public String getPriceFormat() {
         try {
-            return NumberFormat.getIntegerInstance().format(this.price);
+            return NumberFormat.getIntegerInstance().format(this.getPrice());
         } catch (Exception e) {
             return "";
         }
@@ -442,6 +290,41 @@ public class Announce {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    /**
+     * @return the owner_id
+     */
+    public String getOwner_id() {
+        return owner_id;
+    }
+
+    /**
+     * @param owner_id the owner_id to set
+     */
+    public void setOwner_id(String owner_id) {
+        this.owner_id = owner_id;
+    }
+
+    /**
+     * @param priceFormat the priceFormat to set
+     */
+    public void setPriceFormat(String priceFormat) {
+        this.priceFormat = priceFormat;
+    }
+
+    /**
+     * @return the facilities
+     */
+    public String getFacilities() {
+        return facilities;
+    }
+
+    /**
+     * @param facilities the facilities to set
+     */
+    public void setFacilities(String facilities) {
+        this.facilities = facilities;
     }
 
 }
