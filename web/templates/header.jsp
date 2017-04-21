@@ -36,29 +36,47 @@
                             <li><a href="/RETS/NewAnnounce" >ลงประกาศ</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/RETS/register">ลงทะเบียน</a></li>
-                            <li class="dropdown">
-                                <a href="" class="dropdown-toggle" data-toggle="dropdown">เข้าสู่ระบบ <b class="caret"></b></a>
-                                <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <form action="/RETS/Login" class="form" role="form" method="post" action="login" id="login-nav">
-                                                    <div class="form-group">
-                                                        <input type="email" class="form-control" placeholder="อีเมล" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input type="password" class="form-control" placeholder="รหัสผ่าน" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <button type="submit" class="btn btn-success btn-block">เข้าสู่ระบบ</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
+
+                            <c:choose>
+                                <c:when test="${sessionScope.employee.flag > 0}">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> ${sessionScope.employee.fname} <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="/RETS/menu">เมนูสมาชิก</a></li>
+                                            <li><a href="/RETS/edit_profile">แก้ไขบัญชี</a></li>
+                                            <li><a href="/RETS/menu?tab=announce">ประกาศของฉัน</a></li>
+                                            <li><a href="/RETS/menu?tab=contact">รายการผู้ติดต่อ</a></li>
+                                            <li><a href="/RETS/Logout">ออกจากระบบ</a></li>
+                                        </ul>
                                     </li>
-                                </ul>
-                            </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="/RETS/register">ลงทะเบียน</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">เข้าสู่ระบบ <b class="caret"></b></a>
+                                        <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <form action="/RETS/Login" class="form" role="form" method="post" action="login" id="login-nav">
+                                                            <div class="form-group">
+                                                                <input name="email" type="email" class="form-control" placeholder="อีเมล" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input name="password" type="password" class="form-control" placeholder="รหัสผ่าน" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <button type="submit" class="btn btn-success btn-block">เข้าสู่ระบบ</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                                    
                         </ul> <!-- /nav-right -->
                     </div><!--/.nav-collapse -->
                 </div>

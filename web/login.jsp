@@ -12,12 +12,12 @@
                     <fieldset>
                         <div class="form-group">
                             <div class="col-md-4 col-md-offset-4">
-                                <input type="email" class="form-control" placeholder="อีเมล์" required>
+                                <input name="email" type="email" class="form-control" placeholder="อีเมล์" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 col-md-offset-4">
-                                <input type="password" class="form-control" placeholder="รหัสผ่าน" required>
+                                <input name="password" type="password" class="form-control" placeholder="รหัสผ่าน" required>
                             </div>
                         </div>
                         <div class="form-group">

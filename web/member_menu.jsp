@@ -19,7 +19,7 @@
     <div class="panel panel-default"> 
         <div class="panel-body">
             <h4>สวัสดีคุณ Nakarin Kakanumporn &nbsp;
-                <span><small><a href="edit_account.html"> แก้ไขข้อมูลสมาชิก </a> | <a href="index.html"> ออกจากระบบ </a></small></span>
+                <span><small><a href="/RETS/edit_profile"> แก้ไขข้อมูลสมาชิก </a> | <a href="/RETS/Logout"> ออกจากระบบ </a></small></span>
             </h4>
         </div>
     </div>
@@ -27,15 +27,15 @@
     <div class="panel with-nav-tabs panel-default">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1default" data-toggle="tab">ประกาศของฉัน</a></li>
-                <li><a href="#tab2default" data-toggle="tab">รายชื่อผู้ติดต่อ</a></li>
-                <li><a href="#tab3default" data-toggle="tab">ข่าวของฉัน</a></li>
+                <li ${param.tab == 'announce' || param.tab == null ? 'class="active"' : ''}><a href="#announce" data-toggle="tab">ประกาศของฉัน</a></li>
+                <li ${param.tab == 'contact' ? 'class="active"' : ''}><a href="#contact" data-toggle="tab">รายชื่อผู้ติดต่อ</a></li>
+                <li ${param.tab == 'ads' ? 'class="active"' : ''}><a href="#ads" data-toggle="tab">ข่าวของฉัน</a></li>
             </ul>
         </div>
         <div class="panel-body">
             <div class="tab-content">
 
-                <div class="tab-pane fade in active" id="tab1default">
+                <div class="tab-pane fade in active" id="announce">
                     <table id="announce-table" class="table table-bordred table-striped display" cellspacing="0" width="100%">
                         <thead>
                         <th>รหัส</th>
@@ -56,7 +56,7 @@
                     </table>
                 </div>
 
-                <div class="tab-pane fade" id="tab2default">
+                <div class="tab-pane fade" id="contact">
                     <table id="contact-table" class="table table-bordred table-striped display" cellspacing="0" width="100%">
                         <thead>
                         <th>รหัสประกาศ</th>
@@ -83,7 +83,7 @@
                     </table>
                 </div>
 
-                <div class="tab-pane fade" id="tab3default">
+                <div class="tab-pane fade" id="ads">
                     <table id="ads-table" class="table table-bordred table-striped display" cellspacing="0" width="100%">
                         <thead>
                         <th>รหัส</th>

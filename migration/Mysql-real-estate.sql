@@ -374,7 +374,7 @@ DROP TABLE IF EXISTS `member`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `member` (
-  `member_id` int(11) NOT NULL,
+  `member_id` int(11) NOT NULL auto_increment,
   `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`member_id`),

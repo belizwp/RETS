@@ -8,6 +8,14 @@
         <servlet-name>result</servlet-name>
         <jsp-file>/result.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>menu</servlet-name>
+        <jsp-file>/member_menu.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>edit_profile</servlet-name>
+        <jsp-file>/edit_profile.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>basic</servlet-name>
         <url-pattern>/basic</url-pattern>
@@ -27,6 +35,14 @@
     <servlet-mapping>
         <servlet-name>result</servlet-name>
         <url-pattern>/result</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>menu</servlet-name>
+        <url-pattern>/menu</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>edit_profile</servlet-name>
+        <url-pattern>/edit_profile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

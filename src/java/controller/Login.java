@@ -6,12 +6,17 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Employee;
 
 /**
  *
@@ -31,9 +36,42 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            
+
+        try {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            Connection connection = (Connection) getServletContext().getAttribute("connection");
+
+            String sql = "SELECT member_id, Emp_num, Fname, Lname, phone, email FROM employees JOIN member WHERE email = ? AND password = ?;";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, email);
+            stm.setString(2, password);
+
+            ResultSet rs = stm.executeQuery();
+
+            if (rs.next()) {
+                Employee emp = new Employee();
+                emp.setMember_id(rs.getInt("member_id"));
+                emp.setNumber(rs.getInt("Emp_num"));
+                emp.setFname(rs.getString("Fname"));
+                emp.setLname(rs.getString("Lname"));
+                emp.setPhone(rs.getString("phone"));
+                emp.setEmail(rs.getString("email"));
+
+                emp.setFlag(1); // login flag
+
+                HttpSession session = request.getSession(true);
+                session.setAttribute("employee", emp);
+
+                response.sendRedirect("/RETS");
+            } else {
+                response.sendRedirect("/RETS/login?error=");
+            }
+
+        } catch (IOException | SQLException e) {
+            response.sendRedirect("/RETS/login?error=");
         }
     }
 

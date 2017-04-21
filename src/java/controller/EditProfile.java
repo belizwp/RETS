@@ -6,9 +6,7 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Belizwp
+ * @author Belize
  */
-@WebServlet(name = "Register", urlPatterns = {"/Register"})
-public class Register extends HttpServlet {
+@WebServlet(name = "EditProfile", urlPatterns = {"/EditProfile"})
+public class EditProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,37 +31,18 @@ public class Register extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        try {
-            String fname = request.getParameter("first_name");
-            String lname = request.getParameter("last_name");
-            String phone = request.getParameter("phone");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-
-            Connection connection = (Connection) getServletContext().getAttribute("connection");
-
-            String sql1 = "INSERT INTO employees(Fname, Lname, phone) VALUES (?, ?, ?);";
-            String sql2 = "INSERT INTO member(email, password) VALUES (?, ?);";
-
-            PreparedStatement stm1 = connection.prepareStatement(sql1);
-            stm1.setString(1, fname);
-            stm1.setString(2, lname);
-            stm1.setString(3, phone);
-
-            PreparedStatement stm2 = connection.prepareCall(sql2);
-            stm2.setString(1, email);
-            stm2.setString(2, password);
-
-            int row1 = stm1.executeUpdate();
-            int row2 = stm2.executeUpdate();
-
-            if (row1 > 0 && row2 > 0) {
-                response.sendRedirect("/RETS/login");
-            }
-
-        } catch (IOException | SQLException e) {
-            response.sendRedirect("/RETS/register?error=");
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet EditProfile</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet EditProfile at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

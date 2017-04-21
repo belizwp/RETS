@@ -50,7 +50,7 @@ public class AnnounceCreator extends HttpServlet {
 
     private void newAnnounce(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
 
         Residential announce = new Residential();
         String process_id = genProcessID(request);
