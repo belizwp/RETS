@@ -45,8 +45,7 @@ public class Register extends HttpServlet {
 
             Connection connection = (Connection) getServletContext().getAttribute("connection");
 
-            String sql1 = "INSERT INTO employees(Fname, Lname, phone, email) VALUES (?, ?, ?, ?);";
-            String sql2 = "INSERT INTO member(password) VALUES (?);";
+            String sql1 = "INSERT INTO employees(Fname, Lname, phone, email, password) VALUES (?, ?, ?, ?);";
 
             PreparedStatement stm1 = connection.prepareStatement(sql1);
             stm1.setString(1, fname);
@@ -54,13 +53,9 @@ public class Register extends HttpServlet {
             stm1.setString(3, phone);
             stm1.setString(4, email);
 
-            PreparedStatement stm2 = connection.prepareCall(sql2);
-            stm2.setString(1, password);
-
             int row1 = stm1.executeUpdate();
-            int row2 = stm2.executeUpdate();
 
-            if (row1 > 0 && row2 > 0) {
+            if (row1 > 0) {
                 response.sendRedirect("/RETS/login");
             }
 

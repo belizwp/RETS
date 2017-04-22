@@ -229,8 +229,8 @@ CREATE TABLE `edit_post` (
   `edit_date` date NOT NULL,
   `edit_desc` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`Emp_num`,`Res_id`),
-  KEY `fk_Member_has_Residential_Residential1_idx` (`Res_id`),
-  KEY `fk_Member_has_Residential_Employee_idx` (`Emp_num`),
+  KEY `fk_Emplotee_has_Residential_Residential1_idx` (`Res_id`),
+  KEY `fk_Employee_has_Residential_Employee_idx` (`Emp_num`),
   CONSTRAINT `fk_Member_has_Residential_Employee` FOREIGN KEY (`Emp_num`) REFERENCES `employees` (`Emp_num`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Member_has_Residential_Residential1` FOREIGN KEY (`Res_id`) REFERENCES `residential` (`Res_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -258,6 +258,7 @@ CREATE TABLE `employees` (
   `Lname` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL unique,
+  `password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `Dep_code` int(11),
   `Employees_Emp_num` int(11),
   PRIMARY KEY (`Emp_num`),
