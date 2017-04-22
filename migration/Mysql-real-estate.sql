@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `advertised`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `advertised` (
-  `Ads_id` int(11) NOT NULL,
+  `Ads_id` int(11) NOT NULL auto_increment,
   `image` mediumblob,
   `topic` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `present_date` datetime NOT NULL,
@@ -112,7 +112,7 @@ DROP TABLE IF EXISTS `customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customer` (
-  `Cus_id` int(11) NOT NULL,
+  `Cus_id` int(11) NOT NULL auto_increment,
   `Fname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `Lname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
@@ -163,7 +163,7 @@ DROP TABLE IF EXISTS `details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `details` (
-  `details_id` int(11) NOT NULL,
+  `details_id` int(11) NOT NULL auto_increment,
   `buliding_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `types` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `floor` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -287,7 +287,7 @@ DROP TABLE IF EXISTS `image of detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `image of detail` (
-  `image_id` int(11) NOT NULL,
+  `image_id` int(11) NOT NULL auto_increment,
   `image` mediumblob NOT NULL,
   `details_id` int(11) NOT NULL,
   `Res_id` int(11) NOT NULL,
@@ -315,7 +315,7 @@ DROP TABLE IF EXISTS `location`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `location` (
-  `Loc_id` int(11) NOT NULL,
+  `Loc_id` int(11) NOT NULL auto_increment,
   `address` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `province_id` int(11) NOT NULL,
   `amphur_id` int(11) NOT NULL,
@@ -348,7 +348,7 @@ DROP TABLE IF EXISTS `owner`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `owner` (
-  `Own_id` int(11) NOT NULL,
+  `Own_id` int(11) NOT NULL auto_increment,
   `Fname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `Lname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -399,7 +399,7 @@ DROP TABLE IF EXISTS `residential`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `residential` (
-  `Res_id` int(11) NOT NULL,
+  `Res_id` int(11) NOT NULL auto_increment,
   `Res_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `announce_for` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `Emp_num` int(11) NOT NULL,
