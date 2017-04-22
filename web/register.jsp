@@ -14,42 +14,42 @@
                         <legend>กรอกรายละเอียด<span><h6 class="pull-right" style="color: red">* ข้อมูลที่จำเป็นต้องใช้</h6></span></legend>
                         
                         <div class="form-group">
-                            <label class="col-md-5 control-label">* ชื่อ : </label>
+                            <label class="col-md-4 control-label">* ชื่อ : </label>
                             <div class="col-md-4">
                                 <input name="first_name" id="first_name" class="form-control" type="text" maxlength="40" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-5 control-label">* นามสกุล : </label>
+                            <label class="col-md-4 control-label">* นามสกุล : </label>
                             <div class="col-md-4">
                                 <input name="last_name" id="last_name" class="form-control" type="text" maxlength="40" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-5 control-label">* เบอร์โทรศัพท์ : </label>
+                            <label class="col-md-4 control-label">* เบอร์โทรศัพท์ : </label>
                             <div class="col-md-4">
                                 <input name="phone" id="phone" class="form-control" type="text" maxlength="10" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-5 control-label">* อีเมล : </label>
+                            <label class="col-md-4 control-label">* อีเมล : </label>
                             <div class="col-md-4">
                                 <input name="email" id="email" class="form-control" type="email" maxlength="25" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-5 control-label">* รหัสผ่าน : </label>
+                            <label class="col-md-4 control-label">* รหัสผ่าน : </label>
                             <div class="col-md-4">
                                 <input name="password" id="password" class="form-control" type="password" maxlength="30" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-5 control-label">* ยืนยันระหัสผ่าน : </label>
+                            <label class="col-md-4 control-label">* ยืนยันระหัสผ่าน : </label>
                             <div class="col-md-4">
                                 <input name="password_confirmation" id="password_confirmation" class="form-control" type="password" maxlength="30" required>
                             </div>

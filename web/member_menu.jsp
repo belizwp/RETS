@@ -18,7 +18,7 @@
 <div class="container">
     <div class="panel panel-default"> 
         <div class="panel-body">
-            <h4>สวัสดีคุณ Nakarin Kakanumporn &nbsp;
+            <h4><small>สวัสดีคุณ</small> ${sessionScope.employee.fname} ${sessionScope.employee.lname}&nbsp;
                 <span><small><a href="/RETS/edit_profile"> แก้ไขข้อมูลสมาชิก </a> | <a href="/RETS/Logout"> ออกจากระบบ </a></small></span>
             </h4>
         </div>

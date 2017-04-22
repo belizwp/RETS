@@ -256,6 +256,7 @@ CREATE TABLE `employees` (
   `Fname` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `Lname` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL unique,
   `Dep_code` int(11),
   `Employees_Emp_num` int(11),
   PRIMARY KEY (`Emp_num`),
@@ -375,7 +376,6 @@ DROP TABLE IF EXISTS `member`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `member` (
   `member_id` int(11) NOT NULL auto_increment,
-  `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`member_id`),
   UNIQUE KEY `member_id_UNIQUE` (`member_id`)
