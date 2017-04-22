@@ -3,26 +3,12 @@ package model;
 public class Employee {
 
     private int flag;
-    private int member_id;
     private int number;
     private String fname;
     private String lname;
     private String phone;
     private String email;
-
-    /**
-     * @return the member_id
-     */
-    public int getMember_id() {
-        return member_id;
-    }
-
-    /**
-     * @param member_id the member_id to set
-     */
-    public void setMember_id(int member_id) {
-        this.member_id = member_id;
-    }
+    private String password;
 
     /**
      * @return the number
@@ -106,6 +92,20 @@ public class Employee {
      */
     public void setFlag(int flag) {
         this.flag = flag;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

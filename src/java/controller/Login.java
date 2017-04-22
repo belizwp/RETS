@@ -45,7 +45,7 @@ public class Login extends HttpServlet {
 
             Connection connection = (Connection) getServletContext().getAttribute("connection");
 
-            String sql = "SELECT member_id, Emp_num, Fname, Lname, phone, email FROM employees JOIN member WHERE email = ? AND password = ?;";
+            String sql = "SELECT Emp_num, Fname, Lname, phone FROM employees WHERE email = ? AND password = ?;";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
@@ -55,12 +55,12 @@ public class Login extends HttpServlet {
 
             if (rs.next()) {
                 Employee emp = new Employee();
-                emp.setMember_id(rs.getInt("member_id"));
                 emp.setNumber(rs.getInt("Emp_num"));
                 emp.setFname(rs.getString("Fname"));
                 emp.setLname(rs.getString("Lname"));
                 emp.setPhone(rs.getString("phone"));
-                emp.setEmail(rs.getString("email"));
+                emp.setEmail(email);
+                emp.setPassword(password);
 
                 emp.setFlag(1); // login flag
 

@@ -45,17 +45,18 @@ public class Register extends HttpServlet {
 
             Connection connection = (Connection) getServletContext().getAttribute("connection");
 
-            String sql1 = "INSERT INTO employees(Fname, Lname, phone, email, password) VALUES (?, ?, ?, ?);";
+            String sql = "INSERT INTO employees(Fname, Lname, phone, email, password) VALUES (?, ?, ?, ?, ?);";
 
-            PreparedStatement stm1 = connection.prepareStatement(sql1);
-            stm1.setString(1, fname);
-            stm1.setString(2, lname);
-            stm1.setString(3, phone);
-            stm1.setString(4, email);
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, fname);
+            stm.setString(2, lname);
+            stm.setString(3, phone);
+            stm.setString(4, email);
+            stm.setString(5, password);
 
-            int row1 = stm1.executeUpdate();
+            int row = stm.executeUpdate();
 
-            if (row1 > 0) {
+            if (row > 0) {
                 response.sendRedirect("/RETS/login");
             }
 
