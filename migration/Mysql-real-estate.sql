@@ -26,6 +26,7 @@ DROP TABLE IF EXISTS `advertised`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `advertised` (
   `Ads_id` int(11) NOT NULL,
+  `image` mediumblob,
   `topic` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `present_date` datetime NOT NULL,
   `Res_id` int(11) NOT NULL,
@@ -286,7 +287,7 @@ DROP TABLE IF EXISTS `image of detail`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `image of detail` (
   `image_id` int(11) NOT NULL,
-  `image` blob NOT NULL,
+  `image` mediumblob NOT NULL,
   `details_id` int(11) NOT NULL,
   `Res_id` int(11) NOT NULL,
   PRIMARY KEY (`image_id`,`details_id`,`Res_id`),
