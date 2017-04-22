@@ -30,12 +30,12 @@ CREATE TABLE `advertised` (
   `topic` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `present_date` datetime NOT NULL,
   `Res_id` int(11) NOT NULL,
-  `Member_member_id` int(11) NOT NULL,
+  `Emp_num` int(11) NOT NULL,
   PRIMARY KEY (`Ads_id`),
   UNIQUE KEY `idAdvertised_UNIQUE` (`Ads_id`),
   KEY `fk_Advertised_Residential1_idx` (`Res_id`),
-  KEY `fk_Advertised_Member1_idx` (`Member_member_id`),
-  CONSTRAINT `fk_Advertised_Member1` FOREIGN KEY (`Member_member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_Advertised_Employee_idx` (`Emp_num`),
+  CONSTRAINT `fk_Advertised_Employee` FOREIGN KEY (`Emp_num`) REFERENCES `employees` (`Emp_num`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Advertised_Residential1` FOREIGN KEY (`Res_id`) REFERENCES `residential` (`Res_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -224,14 +224,14 @@ DROP TABLE IF EXISTS `edit_post`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `edit_post` (
-  `member_id` int(11) NOT NULL,
+  `Emp_num` int(11) NOT NULL,
   `Res_id` int(11) NOT NULL,
   `edit_date` date NOT NULL,
   `edit_desc` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`member_id`,`Res_id`),
+  PRIMARY KEY (`Emp_num`,`Res_id`),
   KEY `fk_Member_has_Residential_Residential1_idx` (`Res_id`),
-  KEY `fk_Member_has_Residential_Member_idx` (`member_id`),
-  CONSTRAINT `fk_Member_has_Residential_Member` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_Member_has_Residential_Employee_idx` (`Emp_num`),
+  CONSTRAINT `fk_Member_has_Residential_Employee` FOREIGN KEY (`Emp_num`) REFERENCES `employees` (`Emp_num`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Member_has_Residential_Residential1` FOREIGN KEY (`Res_id`) REFERENCES `residential` (`Res_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -340,59 +340,6 @@ LOCK TABLES `location` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `manage_member`
---
-
-DROP TABLE IF EXISTS `manage_member`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `manage_member` (
-  `member_id` int(11) NOT NULL,
-  `Emp_num` int(11) NOT NULL,
-  `edit_date` date NOT NULL,
-  `edit_desc` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`member_id`,`Emp_num`),
-  KEY `fk_Member_has_Employees_Employees1_idx` (`Emp_num`),
-  KEY `fk_Member_has_Employees_Member1_idx` (`member_id`),
-  CONSTRAINT `fk_Member_has_Employees_Employees1` FOREIGN KEY (`Emp_num`) REFERENCES `employees` (`Emp_num`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Member_has_Employees_Member1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `manage_member`
---
-
-LOCK TABLES `manage_member` WRITE;
-/*!40000 ALTER TABLE `manage_member` DISABLE KEYS */;
-/*!40000 ALTER TABLE `manage_member` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `member`
---
-
-DROP TABLE IF EXISTS `member`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `member` (
-  `member_id` int(11) NOT NULL auto_increment,
-  `password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`member_id`),
-  UNIQUE KEY `member_id_UNIQUE` (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `member`
---
-
-LOCK TABLES `member` WRITE;
-/*!40000 ALTER TABLE `member` DISABLE KEYS */;
-/*!40000 ALTER TABLE `member` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `owner`
 --
 
@@ -454,16 +401,16 @@ CREATE TABLE `residential` (
   `Res_id` int(11) NOT NULL,
   `Res_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `announce_for` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `member_id` int(11) NOT NULL,
+  `Emp_num` int(11) NOT NULL,
   `Owner_Own_id` int(11) NOT NULL,
   `Loc_id` int(11) NOT NULL,
   PRIMARY KEY (`Res_id`),
   UNIQUE KEY `Res_id_UNIQUE` (`Res_id`),
-  KEY `fk_Residential_Member1_idx` (`member_id`),
+  KEY `fk_Residential_Member1_idx` (`Emp_num`),
   KEY `fk_Residential_Owner1_idx` (`Owner_Own_id`),
   KEY `fk_Residential_Location1_idx` (`Loc_id`),
   CONSTRAINT `fk_Residential_Location1` FOREIGN KEY (`Loc_id`) REFERENCES `location` (`Loc_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Residential_Member1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Residential_Employee1` FOREIGN KEY (`Emp_num`) REFERENCES `employees` (`Emp_num`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Residential_Owner1` FOREIGN KEY (`Owner_Own_id`) REFERENCES `owner` (`Own_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
