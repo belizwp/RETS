@@ -114,38 +114,56 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-4 control-label">ชื่อโครงการ : </label>
+                            <label class="col-md-4 control-label">* ชื่อโครงการ : </label>
                             <div class="col-md-4">
-                                <input class="form-control" name="name" type="text" value="${ann.name}">
+                                <input class="form-control" name="name" type="text" value="${ann.name}" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-4 control-label">เลขที่ : </label>
-                            <div class="col-md-1">
-                                <input class="form-control" name="number" type="text" value="${ann.number}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">ถนน : </label>
+                            <label class="col-md-4 control-label">* ที่อยู่ : </label>
                             <div class="col-md-4">
-                                <input class="form-control" name="road" type="text" value="${ann.road}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">รหัสไปรษณีย์ : </label>
-                            <div class="col-md-2">
-                                <input class="form-control" name="postcode" type="text" value="${ann.postcode}">
+                                <textarea class="form-control" name="address" type="text" required>${ann.address}</textarea>
                             </div>
                         </div>
 
                         <legend>ข้อมูลด้านราคา</legend>
                         <div class="form-group">
-                            <label class="col-md-4 control-label">ราคา : </label>
+                            <label class="col-md-4 control-label">* ราคา : </label>
                             <div class="col-md-3">
                                 <div class="input-group">
-                                    <input class="form-control" type="number" min="0" step="1" name="price" value="${ann.price}">
+                                    <input class="form-control" type="number" min="0" step="1" name="price" value="${ann.price}" required>
                                     <span class="input-group-addon" id="price-unit">บาท</span>
                                 </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <legend>ข้อมูลเจ้าของ</legend>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">* ชื่อ : </label>
+                            <div class="col-md-4">
+                                <input name="first_name" id="first_name" class="form-control" type="text" maxlength="40" required value="${ann.fname}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">* นามสกุล : </label>
+                            <div class="col-md-4">
+                                <input name="last_name" id="last_name" class="form-control" type="text" maxlength="40" required value="${ann.lname}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">* เบอร์โทรศัพท์ : </label>
+                            <div class="col-md-4">
+                                <input name="phone" id="phone" class="form-control" type="text" maxlength="10" required value="${ann.phone}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">อีเมล : </label>
+                            <div class="col-md-4">
+                                <input name="email" id="email" class="form-control" type="email" maxlength="25" value="${ann.email}">
                             </div>
                         </div>
                         <br>

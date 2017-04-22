@@ -6,8 +6,15 @@ import java.util.LinkedList;
 public class Residential {
 
     // ref id
-    private String id;
-    private String owner_id;
+    private int id;
+    private int emp_num;
+    private int owner_id;
+
+    // owner info
+    private String fname;
+    private String lname;
+    private String phone;
+    private String email;
 
     // ====== Basic Value =======
     // general
@@ -21,12 +28,10 @@ public class Residential {
     private Short amphur;
     private Short district;
     private String name;
-    private String number;
-    private String road;
-    private String postcode;
+    private String address;
 
     // price
-    private Long price;
+    private int price;
     private String priceFormat;
 
     // ====== Detail Value =======
@@ -156,58 +161,16 @@ public class Residential {
     }
 
     /**
-     * @return the number
-     */
-    public String getNumber() {
-        return number;
-    }
-
-    /**
-     * @param number the number to set
-     */
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    /**
-     * @return the road
-     */
-    public String getRoad() {
-        return road;
-    }
-
-    /**
-     * @param road the road to set
-     */
-    public void setRoad(String road) {
-        this.road = road;
-    }
-
-    /**
-     * @return the postcode
-     */
-    public String getPostcode() {
-        return postcode;
-    }
-
-    /**
-     * @param postcode the postcode to set
-     */
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
-    }
-
-    /**
      * @return the price
      */
-    public Long getPrice() {
+    public int getPrice() {
         return price;
     }
 
     /**
      * @param price the price to set
      */
-    public void setPrice(Long price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -279,34 +242,6 @@ public class Residential {
     }
 
     /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the owner_id
-     */
-    public String getOwner_id() {
-        return owner_id;
-    }
-
-    /**
-     * @param owner_id the owner_id to set
-     */
-    public void setOwner_id(String owner_id) {
-        this.owner_id = owner_id;
-    }
-
-    /**
      * @param priceFormat the priceFormat to set
      */
     public void setPriceFormat(String priceFormat) {
@@ -325,6 +260,118 @@ public class Residential {
      */
     public void setFacilities(String facilities) {
         this.facilities = facilities;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the emp_num
+     */
+    public int getEmp_num() {
+        return emp_num;
+    }
+
+    /**
+     * @param emp_num the emp_num to set
+     */
+    public void setEmp_num(int emp_num) {
+        this.emp_num = emp_num;
+    }
+
+    /**
+     * @return the owner_id
+     */
+    public int getOwner_id() {
+        return owner_id;
+    }
+
+    /**
+     * @param owner_id the owner_id to set
+     */
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
+    }
+
+    /**
+     * @return the fname
+     */
+    public String getFname() {
+        return fname;
+    }
+
+    /**
+     * @param fname the fname to set
+     */
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    /**
+     * @return the lname
+     */
+    public String getLname() {
+        return lname;
+    }
+
+    /**
+     * @param lname the lname to set
+     */
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    /**
+     * @return the phone
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * @param phone the phone to set
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the address to set
+     */
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }

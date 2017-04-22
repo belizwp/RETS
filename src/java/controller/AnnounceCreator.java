@@ -6,6 +6,9 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Employee;
 import model.Residential;
 
 /**
@@ -65,6 +69,7 @@ public class AnnounceCreator extends HttpServlet {
         HttpSession session = request.getSession();
 
         Residential announce = (Residential) session.getAttribute(process_id);
+        Employee emp = (Employee) session.getAttribute("employee");
 
         if (process == null) {
             response.sendRedirect("basic?process_id=" + process_id);
@@ -129,19 +134,84 @@ public class AnnounceCreator extends HttpServlet {
             }
 
         } else if (submit.equals("บันทึก")) {
-            updateAnnounce();
+            updateAnnounce(announce);
         } else if (submit.equals("ลงประกาศ")) {
-            announce();
+            try {
+                announce(announce, emp, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendRedirect("/RETS/error");
+            }
+
         }
     }
 
     // update announce record
-    private void updateAnnounce() {
+    private void updateAnnounce(Residential announce) {
 
     }
 
     // create a new record of announce
-    private void announce() {
+    private void announce(Residential ann, Employee emp, HttpServletResponse response) throws SQLException, IOException {
+
+        Connection connection = (Connection) getServletContext().getAttribute("connection");
+
+        String sql1 = "INSERT INTO owner(Fname, Lname, email, phone) VALUES(?, ?, ?, ?);";
+        String sql2 = "SET @owner_id := LAST_INSERT_ID();";
+        String sql3 = "INSERT INTO location(address, province_id, amphur_id, district_id) VALUES(?, ?, ?, ?);";
+        String sql4 = "SET @loc_id := LAST_INSERT_ID();";
+        String sql5 = "INSERT INTO residential(Res_name, announce_for, Emp_num, Owner_Own_id, Loc_id) VALUES(?, ?, ?, @owner_id, @loc_id);";
+        String sql6 = "SET @res_id := LAST_INSERT_ID();";
+        String sql7 = "INSERT INTO details(buliding_name, types, floor, price, water_bill, electric_bill, facilities, remark, Res_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, @res_id);";
+
+        PreparedStatement stm1 = connection.prepareCall(sql1);
+        // owner info
+        stm1.setString(1, ann.getFname());
+        stm1.setString(2, ann.getLname());
+        stm1.setString(3, ann.getEmail());
+        stm1.setString(4, ann.getPhone());
+        stm1.executeUpdate();
+
+        PreparedStatement stm2 = connection.prepareCall(sql2);
+        stm2.executeQuery();
+
+        PreparedStatement stm3 = connection.prepareCall(sql3);
+        // location info
+        stm3.setString(1, ann.getAddress());
+        stm3.setInt(2, ann.getProvince());
+        stm3.setInt(3, ann.getAmphur());
+        stm3.setInt(4, ann.getDistrict());
+        stm3.executeUpdate();
+
+        PreparedStatement stm4 = connection.prepareCall(sql4);
+        stm4.executeQuery();
+
+        PreparedStatement stm5 = connection.prepareCall(sql5);
+        // resident info
+        stm5.setString(1, ann.getTitle());
+        stm5.setString(2, ann.getType());
+        stm5.setInt(3, emp.getNumber());
+        stm5.executeUpdate();
+
+        PreparedStatement stm6 = connection.prepareCall(sql6);
+        stm6.executeQuery();
+
+        PreparedStatement stm7 = connection.prepareCall(sql7);
+        // detail info
+        stm7.setString(1, ann.getName());
+        stm7.setString(2, ann.getPropType());
+        stm7.setString(3, ann.getFloor() + "");
+        stm7.setInt(4, ann.getPrice());
+        stm7.setString(5, ann.getWater() + "");
+        stm7.setString(6, ann.getElectricity() + "");
+        stm7.setString(7, ann.getFacilities());
+        stm7.setString(8, ann.getDetail());
+
+        int row = stm7.executeUpdate();
+
+        if (row > 0) {
+            response.sendRedirect("/RETS/menu?tab=announce");
+        }
 
     }
 
@@ -160,11 +230,14 @@ public class AnnounceCreator extends HttpServlet {
         ann.setTitle(request.getParameter("title") != null ? request.getParameter("title") : null);
         ann.setDetail(request.getParameter("detail") != null ? request.getParameter("detail") : null);
         ann.setName(request.getParameter("name") != null ? request.getParameter("name") : null);
-        ann.setNumber(request.getParameter("number") != null ? request.getParameter("number") : null);
-        ann.setRoad(request.getParameter("road") != null ? request.getParameter("road") : null);
-        ann.setPostcode(request.getParameter("postcode") != null ? request.getParameter("postcode") : null);
+        ann.setAddress(request.getParameter("address") != null ? request.getParameter("address") : null);
 
-        ann.setPrice(!request.getParameter("price").equals("") ? Long.parseLong(request.getParameter("price")) : null);
+        ann.setFname(request.getParameter("first_name") != null ? request.getParameter("first_name") : null);
+        ann.setLname(request.getParameter("last_name") != null ? request.getParameter("last_name") : null);
+        ann.setPhone(request.getParameter("phone") != null ? request.getParameter("phone") : null);
+        ann.setEmail(request.getParameter("email") != null ? request.getParameter("email") : null);
+
+        ann.setPrice(!request.getParameter("price").equals("") ? Integer.parseInt(request.getParameter("price")) : null);
     }
 
     private void saveDetailVal(HttpServletRequest request, Residential ann) {
