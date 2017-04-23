@@ -71,8 +71,8 @@
 
             <div class="panel-footer text-center">
                 <input type="submit" name="submit" class="btn btn-default" value="กลับ" >
-                <!-- <input type="button" class="btn btn-success value="บันทึก" > -->
-                <input type="submit" name="submit" class="btn btn-danger" value="ลงประกาศ" >
+                ${ann.edit ? '<input type="submit" name="submit" class="btn btn-success" value="บันทึก" >' : ''}
+                ${ann.edit ? '' : '<input type="submit" name="submit" class="btn btn-danger" value="ลงประกาศ" >'}
 
                 <input type="hidden" name="process" class="btn btn-primary" value="summary">
                 <input type="hidden" name="process_id" class="btn btn-primary" value="${param.process_id}"/>

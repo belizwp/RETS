@@ -173,8 +173,8 @@
             </div>       
 
             <div class="panel-footer text-center">
+                ${ann.edit ? '<input type="submit" name="submit" class="btn btn-success" value="บันทึก" >' : ''}
                 <input type="submit" name="submit" class="btn btn-primary" value="ถัดไป">
-                <!-- <input type="button" class="btn btn-success value="บันทึก" > -->
 
                 <input type="hidden" name="process" class="btn btn-primary" value="basic">
                 <input type="hidden" name="process_id" class="btn btn-primary" value="${param.process_id}">

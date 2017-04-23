@@ -136,7 +136,20 @@ public class AnnounceCreator extends HttpServlet {
             }
 
         } else if (submit.equals("บันทึก")) {
-            updateAnnounce(announce);
+            try {
+                switch (process) {
+                    case "basic":
+                        saveBasicVal(request, announce);
+                        break;
+                    case "detail":
+                        saveDetailVal(request, announce);
+                        break;
+                }
+                updateAnnounce(announce, emp, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendRedirect("/RETS/error");
+            }
         } else if (submit.equals("ลงประกาศ")) {
             try {
                 announce(announce, emp, response);
@@ -149,7 +162,87 @@ public class AnnounceCreator extends HttpServlet {
     }
 
     // update announce record
-    private void updateAnnounce(Residential announce) {
+    private void updateAnnounce(Residential res, Employee emp, HttpServletResponse response) throws SQLException, IOException {
+
+        Connection connection = (Connection) getServletContext().getAttribute("connection");
+
+        String sql1 = "UPDATE residential SET Res_name = ?, announce_for = ? WHERE Res_id = ?";
+        String sql2 = "UPDATE owner SET Fname = ?, Lname = ?, phone = ?, email = ? WHERE Own_id = ?";
+        String sql3 = "UPDATE location SET address = ?, province_id = ?, amphur_id = ?, district_id = ? WHERE Loc_id = ?";
+        String sql4 = "UPDATE details SET "
+                + "buliding_name = ?, "
+                + "types = ?, "
+                + "floor = ?, "
+                + "price = ?, "
+                + "water_bill = ?, "
+                + "electric_bill = ?, "
+                + "facilities = ?, "
+                + "remark = ? "
+                + "WHERE details_id = ?";
+        String sql5 = "DELETE FROM `image of detail` WHERE Res_id = ?";
+        String sql6 = "INSERT INTO `image of detail`(image, details_id, Res_id) VALUES (?, ?, ?);";
+
+        PreparedStatement stm1 = connection.prepareStatement(sql1);
+        PreparedStatement stm2 = connection.prepareStatement(sql2);
+        PreparedStatement stm3 = connection.prepareStatement(sql3);
+        PreparedStatement stm4 = connection.prepareStatement(sql4);
+        PreparedStatement stm5 = connection.prepareStatement(sql5);
+
+        stm1.setString(1, res.getTitle());
+        stm1.setString(2, res.getType());
+        stm1.setInt(3, res.getId());
+
+        stm2.setString(1, res.getFname());
+        stm2.setString(2, res.getLname());
+        stm2.setString(3, res.getPhone());
+        stm2.setString(4, res.getEmail());
+        stm2.setInt(5, res.getOwner_id());
+
+        stm3.setString(1, res.getAddress());
+        stm3.setInt(2, res.getProvince());
+        stm3.setInt(3, res.getAmphur());
+        stm3.setInt(4, res.getDistrict());
+        stm3.setInt(5, res.getOwner_id());
+
+        stm4.setString(1, res.getName());
+        stm4.setString(2, res.getPropType());
+        stm4.setString(3, res.getFloor());
+        stm4.setInt(4, res.getPrice());
+        stm4.setString(5, res.getWater());
+        stm4.setString(6, res.getElectricity());
+        stm4.setString(7, res.getFacilities());
+        stm4.setString(8, res.getDetail());
+        stm4.setInt(9, res.getDetails_id());
+
+        stm5.setInt(1, res.getId());
+
+        stm1.executeUpdate();
+        stm2.executeUpdate();
+        stm3.executeUpdate();
+        stm4.executeUpdate();
+        stm5.executeUpdate();
+
+        // image file
+        PreparedStatement stm6 = connection.prepareStatement(sql6);
+
+        LinkedList<ImageMeta> files = res.getFiles();
+
+        int i = 0;
+
+        for (ImageMeta file : files) {
+            stm6.setBlob(1, file.getInputStream());
+            stm6.setInt(2, res.getDetails_id());
+            stm6.setInt(3, res.getId());
+
+            stm6.addBatch();
+            i++;
+
+            if (i % 100 == 0 || i == files.size()) {
+                stm6.executeBatch(); // Execute every 100 items.
+            }
+        }
+
+        response.sendRedirect("/RETS/menu?tab=announce");
 
     }
 
@@ -168,7 +261,7 @@ public class AnnounceCreator extends HttpServlet {
         String sql8 = "SET @detail_id := LAST_INSERT_ID();";
         String sql9 = "INSERT INTO `image of detail`(image, details_id, Res_id) VALUES (?, @detail_id, @res_id);";
 
-        PreparedStatement stm1 = connection.prepareCall(sql1);
+        PreparedStatement stm1 = connection.prepareStatement(sql1);
         // owner info
         stm1.setString(1, ann.getFname());
         stm1.setString(2, ann.getLname());
@@ -177,10 +270,10 @@ public class AnnounceCreator extends HttpServlet {
         stm1.executeUpdate();
 
         // owner id
-        PreparedStatement stm2 = connection.prepareCall(sql2);
+        PreparedStatement stm2 = connection.prepareStatement(sql2);
         stm2.executeQuery();
 
-        PreparedStatement stm3 = connection.prepareCall(sql3);
+        PreparedStatement stm3 = connection.prepareStatement(sql3);
         // location info
         stm3.setString(1, ann.getAddress());
         stm3.setInt(2, ann.getProvince());
@@ -189,10 +282,10 @@ public class AnnounceCreator extends HttpServlet {
         stm3.executeUpdate();
 
         // loc id
-        PreparedStatement stm4 = connection.prepareCall(sql4);
+        PreparedStatement stm4 = connection.prepareStatement(sql4);
         stm4.executeQuery();
 
-        PreparedStatement stm5 = connection.prepareCall(sql5);
+        PreparedStatement stm5 = connection.prepareStatement(sql5);
         // resident info
         stm5.setString(1, ann.getTitle());
         stm5.setString(2, ann.getType());
@@ -200,10 +293,10 @@ public class AnnounceCreator extends HttpServlet {
         stm5.executeUpdate();
 
         // res id
-        PreparedStatement stm6 = connection.prepareCall(sql6);
+        PreparedStatement stm6 = connection.prepareStatement(sql6);
         stm6.executeQuery();
 
-        PreparedStatement stm7 = connection.prepareCall(sql7);
+        PreparedStatement stm7 = connection.prepareStatement(sql7);
         // detail info
         stm7.setString(1, ann.getName());
         stm7.setString(2, ann.getPropType());
@@ -216,11 +309,11 @@ public class AnnounceCreator extends HttpServlet {
         int row = stm7.executeUpdate();
 
         // detail id
-        PreparedStatement stm8 = connection.prepareCall(sql8);
+        PreparedStatement stm8 = connection.prepareStatement(sql8);
         stm8.executeQuery();
 
         // image file
-        PreparedStatement stm9 = connection.prepareCall(sql9);
+        PreparedStatement stm9 = connection.prepareStatement(sql9);
 
         LinkedList<ImageMeta> files = ann.getFiles();
 
@@ -243,7 +336,7 @@ public class AnnounceCreator extends HttpServlet {
     }
 
     //  generate by current epoch hex time combine with 4 first session_id
-    private String genProcessID(HttpServletRequest request) {
+    public static String genProcessID(HttpServletRequest request) {
         return Long.toHexString(System.currentTimeMillis() / 1000L) + request.getSession().getId().substring(0, 4);
     }
 

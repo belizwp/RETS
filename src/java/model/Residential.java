@@ -9,6 +9,11 @@ public class Residential {
     private int id;
     private int emp_num;
     private int owner_id;
+    private int loc_id;
+    private int details_id;
+
+    // status
+    private boolean edit;
 
     // owner info
     private String fname;
@@ -27,11 +32,11 @@ public class Residential {
     private int province;
     private int amphur;
     private int district;
-    
+
     private String provinceName;
     private String amphurName;
     private String districtName;
-    
+
     private String name;
     private String address;
 
@@ -48,7 +53,7 @@ public class Residential {
 
     // ====== Media Value ======
     private LinkedList<ImageMeta> files;
-    
+
     private String dt_time;
 
     public Residential() {
@@ -442,6 +447,48 @@ public class Residential {
      */
     public void setDistrictName(String districtName) {
         this.districtName = districtName;
+    }
+
+    /**
+     * @return the edit
+     */
+    public boolean isEdit() {
+        return edit;
+    }
+
+    /**
+     * @param edit the edit to set
+     */
+    public void setEdit(boolean edit) {
+        this.edit = edit;
+    }
+
+    /**
+     * @return the loc_id
+     */
+    public int getLoc_id() {
+        return loc_id;
+    }
+
+    /**
+     * @param loc_id the loc_id to set
+     */
+    public void setLoc_id(int loc_id) {
+        this.loc_id = loc_id;
+    }
+
+    /**
+     * @return the details_id
+     */
+    public int getDetails_id() {
+        return details_id;
+    }
+
+    /**
+     * @param details_id the details_id to set
+     */
+    public void setDetails_id(int details_id) {
+        this.details_id = details_id;
     }
 
 }

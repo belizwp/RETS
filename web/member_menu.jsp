@@ -151,9 +151,15 @@
 <script src="/RETS/assets/js/dataTables.bootstrap.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#announce-table').DataTable();
-        $('#contact-table').DataTable();
-        $('#ads-table').DataTable();
+        $('#announce-table').DataTable({
+            "order": [[2, "desc"]]
+        });
+        $('#contact-table').DataTable({
+            "order": [[0, "desc"]]
+        });
+        $('#ads-table').DataTable({
+            "order": [[2, "desc"]]
+        });
     });
 </script>
 

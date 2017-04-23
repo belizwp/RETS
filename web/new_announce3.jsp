@@ -60,7 +60,7 @@
 
             <div class="panel-footer text-center">
                 <input type="submit" name="submit" class="btn btn-default" value="กลับ" >
-                <!-- <input type="button" class="btn btn-success value="บันทึก" > -->
+                ${ann.edit ? '<input type="submit" name="submit" class="btn btn-success" value="บันทึก" >' : ''}
                 <input type="submit" name="submit" class="btn btn-primary" value="ถัดไป">
 
                 <input type="hidden" name="process" class="btn btn-primary" value="media">
