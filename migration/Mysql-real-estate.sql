@@ -405,6 +405,7 @@ CREATE TABLE `residential` (
   `Emp_num` int(11) NOT NULL,
   `Owner_Own_id` int(11) NOT NULL,
   `Loc_id` int(11) NOT NULL,
+  `dt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Res_id`),
   UNIQUE KEY `Res_id_UNIQUE` (`Res_id`),
   KEY `fk_Residential_Member1_idx` (`Emp_num`),
