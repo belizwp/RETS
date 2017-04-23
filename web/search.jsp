@@ -1,6 +1,11 @@
 <%@ taglib prefix="rets" tagdir="/WEB-INF/tags/"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
+
+<sql:query var="num_rows" dataSource="${dataSource}">
+    SELECT Res_id FROM residential;
+</sql:query>
 
 <div class="container">
     <div class="panel panel-default">
@@ -20,11 +25,11 @@
         <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h4>ผลการค้นหา 12,345 ประกาศ</h4>
+                    <h4>ผลการค้นหา ${num_rows.getRowCount()} ประกาศ</h4>
                     <!-- search result -->
 
                     <div id="result">
-                        <jsp:include page='<%= "result?" + request.getQueryString() + "&page=1" %>' />
+                        <jsp:include page='<%= "result?" + request.getQueryString() + "&page=1"%>' />
                     </div>
 
                     <div id="page-selection" class="text-center"></div>
@@ -42,8 +47,8 @@
 <script src="/RETS/assets/js/jquery.bootpag.min.js"></script>
 <script>
     $('#page-selection').bootpag({
-        total: 5, // total pages
-        page : 1,
+        total: Math.ceil('${num_rows.getRowCount()}' / 10), // total pages
+        page: 1,
         maxVisible: 10
     }).on("page", function (event, num) {
         $.ajax({

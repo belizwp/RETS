@@ -10,6 +10,10 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,6 +44,7 @@ public class ImageFinder extends HttpServlet {
 
         String process_id = request.getParameter("process_id");
         String type = request.getParameter("type");
+        String id = request.getParameter("id");
 
         if (process_id != null) {
 
@@ -66,6 +71,31 @@ public class ImageFinder extends HttpServlet {
                 response.setContentType(meta.getFileType());
                 ImageIO.write(toBufferedImage(img.getScaledInstance(200, 200, Image.SCALE_FAST)), "png", response.getOutputStream());
             }
+        } else if (id != null) {
+            if (type.equals("thumbnail")) {
+                try {
+                    Connection connection = (Connection) getServletContext().getAttribute("connection");
+
+                    String sql = "SELECT image FROM `image of detail` WHERE Res_id = ? LIMIT 1";
+
+                    PreparedStatement stm = connection.prepareStatement(sql);
+                    stm.setInt(1, Integer.parseInt(id));
+                    ResultSet rs = stm.executeQuery();
+
+                    if (rs.next()) {
+                        Blob imageBlob = rs.getBlob("image");
+                        Image img = ImageIO.read(imageBlob.getBinaryStream());
+                        response.setContentType("image/jpeg");
+                        ImageIO.write(toBufferedImage(img.getScaledInstance(200, 200, Image.SCALE_FAST)), "png", response.getOutputStream());
+                    } else {
+                        response.sendRedirect("/RETS/assets/img/no-photo-placeholder.png");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
 
     }
