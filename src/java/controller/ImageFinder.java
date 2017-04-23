@@ -94,6 +94,62 @@ public class ImageFinder extends HttpServlet {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else if (type.equals("gallery")) {
+                try {
+                    Connection connection = (Connection) getServletContext().getAttribute("connection");
+
+                    String sql = "SELECT image FROM `image of detail` WHERE image_id = ?";
+
+                    PreparedStatement stm = connection.prepareStatement(sql);
+                    stm.setInt(1, Integer.parseInt(id));
+                    ResultSet rs = stm.executeQuery();
+
+                    if (rs.next()) {
+                        Blob imageBlob = rs.getBlob("image");
+                        Image img = ImageIO.read(imageBlob.getBinaryStream());
+
+                        Dimension imgSize = new Dimension(img.getWidth(null), img.getHeight(null));
+                        Dimension boundary = new Dimension(850, 400);
+                        Dimension scaledDimension = getScaledDimension(imgSize, boundary);
+
+                        response.setContentType("image/jpeg");
+
+                        ImageIO.write(toBufferedImage(img.getScaledInstance(scaledDimension.width, scaledDimension.height, Image.SCALE_FAST)), "png", response.getOutputStream());
+                    } else {
+                        response.sendRedirect("/RETS/assets/img/no-photo-placeholder.png");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (type.equals("nav")) {
+                try {
+                    Connection connection = (Connection) getServletContext().getAttribute("connection");
+
+                    String sql = "SELECT image FROM `image of detail` WHERE image_id = ?";
+
+                    PreparedStatement stm = connection.prepareStatement(sql);
+                    stm.setInt(1, Integer.parseInt(id));
+                    ResultSet rs = stm.executeQuery();
+
+                    if (rs.next()) {
+                        Blob imageBlob = rs.getBlob("image");
+                        Image img = ImageIO.read(imageBlob.getBinaryStream());
+
+                        Dimension imgSize = new Dimension(img.getWidth(null), img.getHeight(null));
+                        Dimension boundary = new Dimension(100, 50);
+                        Dimension scaledDimension = getScaledDimension(imgSize, boundary);
+
+                        response.setContentType("image/jpeg");
+
+                        ImageIO.write(toBufferedImage(img.getScaledInstance(scaledDimension.width, scaledDimension.height, Image.SCALE_FAST)), "png", response.getOutputStream());
+                    } else {
+                        response.sendRedirect("/RETS/assets/img/no-photo-placeholder.png");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
         }

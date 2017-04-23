@@ -39,11 +39,11 @@
                             <label class="col-md-4 control-label">* ประเภท :</label>
                             <div class="col-md-3">
                                 <select class="form-control" name="propType" required>
-                                    <option value="1" ${ann.propType == 'บ้านเดี่ยว' ? 'selected' : ''}>บ้านเดี่ยว</option>
-                                    <option value="2" ${ann.propType == 'คอนโด' ? 'selected' : ''}>คอนโด</option>
-                                    <option value="3" ${ann.propType == 'ทาวน์เฮ้าส์' ? 'selected' : ''}>ทาวน์เฮ้าส์</option>
-                                    <option value="4" ${ann.propType == 'ที่ดิน' ? 'selected' : ''}>ที่ดิน</option>
-                                    <option value="5" ${ann.propType == 'อพาร์ทเม้น' ? 'selected' : ''}>อพาร์ทเม้น</option>
+                                    <option value="บ้านเดี่ยว" ${ann.propType == 'บ้านเดี่ยว' ? 'selected' : ''}>บ้านเดี่ยว</option>
+                                    <option value="คอนโด" ${ann.propType == 'คอนโด' ? 'selected' : ''}>คอนโด</option>
+                                    <option value="ทาวน์เฮ้าส์" ${ann.propType == 'ทาวน์เฮ้าส์' ? 'selected' : ''}>ทาวน์เฮ้าส์</option>
+                                    <option value="ที่ดิน" ${ann.propType == 'ที่ดิน' ? 'selected' : ''}>ที่ดิน</option>
+                                    <option value="อพาร์ทเม้น" ${ann.propType == 'อพาร์ทเม้น' ? 'selected' : ''}>อพาร์ทเม้น</option>
                                 </select>
                             </div>
                         </div>

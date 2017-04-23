@@ -54,9 +54,9 @@
                             <c:forEach var="ann_row" items="${ann_rows.rows}">
                                 <tr>
                                     <td>${ann_row.Res_id}</td>
-                                    <td><a href="/RETS/residential?id=">${ann_row.Res_name}</a></td>
+                                    <td><a href="/RETS/residential?id=${ann_row.Res_id}">${ann_row.Res_name}</a></td>
                                     <td>${ann_row.dt_modified}</td>
-                                    <td><p data-placement="top" title="Edit"><a href="edit_announce.html" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
+                                    <td><p data-placement="top" title="Edit"><a href="/RETS/edit_announce?id=${ann_row.Res_id}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
                                     <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
                                 </tr>
                             </c:forEach>

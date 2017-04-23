@@ -24,9 +24,14 @@ public class Residential {
     private String detail;
 
     // place
-    private Short province;
-    private Short amphur;
-    private Short district;
+    private int province;
+    private int amphur;
+    private int district;
+    
+    private String provinceName;
+    private String amphurName;
+    private String districtName;
+    
     private String name;
     private String address;
 
@@ -36,13 +41,15 @@ public class Residential {
 
     // ====== Detail Value =======
     // more detail
-    private Short floor;
-    private Integer electricity;
-    private Integer water;
+    private String floor;
+    private String electricity;
+    private String water;
     private String facilities;
 
     // ====== Media Value ======
     private LinkedList<ImageMeta> files;
+    
+    private String dt_time;
 
     public Residential() {
         files = new LinkedList<>();
@@ -107,35 +114,35 @@ public class Residential {
     /**
      * @return the province
      */
-    public Short getProvince() {
+    public int getProvince() {
         return province;
     }
 
     /**
      * @param province the province to set
      */
-    public void setProvince(Short province) {
+    public void setProvince(int province) {
         this.province = province;
     }
 
     /**
      * @return the amphur
      */
-    public Short getAmphur() {
+    public int getAmphur() {
         return amphur;
     }
 
     /**
      * @param amphur the amphur to set
      */
-    public void setAmphur(Short amphur) {
+    public void setAmphur(int amphur) {
         this.amphur = amphur;
     }
 
     /**
      * @return the district
      */
-    public Short getDistrict() {
+    public int getDistrict() {
         return district;
     }
 
@@ -143,7 +150,7 @@ public class Residential {
      * @param district the district to set
      */
     public void setDistrict(Short district) {
-        this.district = district;
+        this.setDistrict((int) district);
     }
 
     /**
@@ -177,42 +184,42 @@ public class Residential {
     /**
      * @return the floor
      */
-    public Short getFloor() {
+    public String getFloor() {
         return floor;
     }
 
     /**
      * @param floor the floor to set
      */
-    public void setFloor(Short floor) {
+    public void setFloor(String floor) {
         this.floor = floor;
     }
 
     /**
      * @return the electricity
      */
-    public Integer getElectricity() {
+    public String getElectricity() {
         return electricity;
     }
 
     /**
      * @param electricity the electricity to set
      */
-    public void setElectricity(Integer electricity) {
+    public void setElectricity(String electricity) {
         this.electricity = electricity;
     }
 
     /**
      * @return the water
      */
-    public Integer getWater() {
+    public String getWater() {
         return water;
     }
 
     /**
      * @param water the water to set
      */
-    public void setWater(Integer water) {
+    public void setWater(String water) {
         this.water = water;
     }
 
@@ -372,6 +379,69 @@ public class Residential {
      */
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    /**
+     * @param district the district to set
+     */
+    public void setDistrict(int district) {
+        this.district = district;
+    }
+
+    /**
+     * @return the dt_time
+     */
+    public String getDt_time() {
+        return dt_time;
+    }
+
+    /**
+     * @param dt_time the dt_time to set
+     */
+    public void setDt_time(String dt_time) {
+        this.dt_time = dt_time;
+    }
+
+    /**
+     * @return the provinceName
+     */
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    /**
+     * @param provinceName the provinceName to set
+     */
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    /**
+     * @return the amphurName
+     */
+    public String getAmphurName() {
+        return amphurName;
+    }
+
+    /**
+     * @param amphurName the amphurName to set
+     */
+    public void setAmphurName(String amphurName) {
+        this.amphurName = amphurName;
+    }
+
+    /**
+     * @return the districtName
+     */
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    /**
+     * @param districtName the districtName to set
+     */
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 
 }

@@ -20,10 +20,6 @@
         <servlet-name>error</servlet-name>
         <jsp-file>/error.jsp</jsp-file>
     </servlet>
-    <servlet>
-        <servlet-name>residential</servlet-name>
-        <jsp-file>/residential.jsp</jsp-file>
-    </servlet>
     <servlet-mapping>
         <servlet-name>basic</servlet-name>
         <url-pattern>/basic</url-pattern>
@@ -55,10 +51,6 @@
     <servlet-mapping>
         <servlet-name>error</servlet-name>
         <url-pattern>/error/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>residential</servlet-name>
-        <url-pattern>/residential</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

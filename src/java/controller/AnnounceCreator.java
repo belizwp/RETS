@@ -268,9 +268,9 @@ public class AnnounceCreator extends HttpServlet {
     }
 
     private void saveDetailVal(HttpServletRequest request, Residential ann) {
-        ann.setFloor(!request.getParameter("floor").equals("") ? Short.parseShort(request.getParameter("floor")) : null);
-        ann.setElectricity(!request.getParameter("electricity").equals("") ? Integer.parseInt(request.getParameter("electricity")) : null);
-        ann.setWater(!request.getParameter("water").equals("") ? Integer.parseInt(request.getParameter("water")) : null);
+        ann.setFloor(request.getParameter("floor") != null ? request.getParameter("floor") : null);
+        ann.setElectricity(request.getParameter("electricity") != null ? request.getParameter("electricity") : null);
+        ann.setWater(request.getParameter("water") != null ? request.getParameter("water") : null);
         ann.setFacilities(request.getParameter("facilities") != null ? request.getParameter("facilities") : null);
     }
 
