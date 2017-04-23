@@ -42,19 +42,19 @@ public class DeleteAnnounce extends HttpServlet {
             String sql1 = "DELETE FROM `image of detail` WHERE Res_id = ?";
             PreparedStatement stm1 = conn.prepareCall(sql1);
             stm1.setInt(1, id);
-            int row1 = stm1.executeUpdate();
+            stm1.executeUpdate();
 
             String sql2 = "DELETE FROM `details` WHERE Res_id = ?";
             PreparedStatement stm2 = conn.prepareCall(sql2);
             stm2.setInt(1, id);
-            int row2 = stm2.executeUpdate();
+            stm2.executeUpdate();
 
             String sql3 = "DELETE FROM `residential` WHERE Res_id = ?";
             PreparedStatement stm3 = conn.prepareCall(sql3);
             stm3.setInt(1, id);
-            int row3 = stm3.executeUpdate();
+            int row = stm3.executeUpdate();
 
-            if (row1 > 0 && row2 > 0 && row3 > 0) {
+            if (row > 0) {
                 response.sendRedirect("/RETS/menu?tab=announce");
             } else {
                 response.sendRedirect("/RETS/error");
