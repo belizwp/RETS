@@ -57,7 +57,7 @@
                                     <td><a href="/RETS/residential?id=${ann_row.Res_id}">${ann_row.Res_name}</a></td>
                                     <td>${ann_row.dt_modified}</td>
                                     <td><p data-placement="top" title="Edit"><a href="/RETS/edit_announce?id=${ann_row.Res_id}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
-                                    <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                                    <td><p data-placement="top" title="Delete"><a href="/RETS/DeleteAnnounce?id=${ann_row.Res_id}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a></p></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -131,21 +131,6 @@
     </div>
 
 </div><!-- /container -->
-
-<!-- modal delete confirmation -->
-<div class="modal fade item-delete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                คุณแน่ใจหรือ
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">ลบ</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="/RETS/assets/js/jquery.dataTables.min.js"></script>
 <script src="/RETS/assets/js/dataTables.bootstrap.min.js"></script>
