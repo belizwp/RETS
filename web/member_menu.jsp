@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="header" />
 
@@ -45,13 +47,19 @@
                         <th>ลบ</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>000000</td>
-                                <td><a href="property.html">ที่สุดแห่งทำเลทอง ITKMITL</a></td>
-                                <td>31/3/2017 23:59:59</td>
-                                <td><p data-placement="top" title="Edit"><a href="edit_announce.html" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
-                                <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
-                            </tr>
+                            <sql:query var="ann_rows" dataSource="${dataSource}">
+                                SELECT Res_id, Res_name, dt_modified FROM residential WHERE Emp_num = ?;
+                                <sql:param value="${sessionScope.employee.number}"/>
+                            </sql:query>
+                            <c:forEach var="ann_row" items="${ann_rows.rows}">
+                                <tr>
+                                    <td>${ann_row.Res_id}</td>
+                                    <td><a href="/RETS/residential?id=">${ann_row.Res_name}</a></td>
+                                    <td>${ann_row.dt_modified}</td>
+                                    <td><p data-placement="top" title="Edit"><a href="edit_announce.html" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
+                                    <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -59,8 +67,6 @@
                 <div class="tab-pane fade" id="contact">
                     <table id="contact-table" class="table table-bordred table-striped display" cellspacing="0" width="100%">
                         <thead>
-                        <th>รหัสประกาศ</th>
-                        <th>ชื่อประกาศ</th>
                         <th>วันที่ส่งมา</th>
                         <th>ชื่อ</th>
                         <th>เบอร์โทร</th>
@@ -69,16 +75,24 @@
                         <th>ลบ</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>000000</td>
-                                <td><a href="property.html">ที่สุดแห่งทำเลทอง ITKMITL</a></td>
-                                <td>31/3/2017 23:59:59</td>
-                                <td>สมชาย ใจดี</td>
-                                <td>089-9999-9999</td>
-                                <td>somchai@somchai.com</td>
-                                <td>I’m interested in this property. Please contact me, thanks!</td>
-                                <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
-                            </tr>
+                            <sql:query var="cont_rows" dataSource="${dataSource}">
+                                SELECT Cus_id, cont_desc, cont_date FROM contact WHERE Emp_num = ?;
+                                <sql:param value="${sessionScope.employee.number}"/>
+                            </sql:query>
+                            <c:forEach var="cont_row" items="${cont_rows.rows}">
+                                <sql:query var="cus_rows" dataSource="${dataSource}">
+                                    SELECT Fname, Lname, phone, email FROM contact WHERE Cus_id = ?;
+                                    <sql:param value="${cont_row.Cus_id}"/>
+                                </sql:query>
+                                <tr>
+                                    <td>${cont_row.cont_date}</td>
+                                    <td>${cus_rows.rows.Fname} ${cus_rows.rows.Lname}</td>
+                                    <td>${cus_rows.rows.phone}</td>
+                                    <td>${cus_rows.rows.email}</td>
+                                    <td>${cont_row.cont_desc}</td>
+                                    <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -93,13 +107,19 @@
                         <th>ลบ</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>000000</td>
-                                <td><a href="property.html">ที่สุดแห่งทำเลทอง ITKMITL</a></td>
-                                <td>31/3/2017 23:59:59</td>
-                                <td><p data-placement="top" title="show"><a class="btn btn-success btn-sm" data-toggle="modal" data-target=".item-show"><span class="glyphicon glyphicon-bullhorn"></span></a></p></td>
-                                <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
-                            </tr>
+                            <sql:query var="ads_rows" dataSource="${dataSource}">
+                                SELECT Ads_id, topic, present_date FROM advertised WHERE Emp_num = ?;
+                                <sql:param value="${sessionScope.employee.number}"/>
+                            </sql:query>
+                            <c:forEach var="ads_row" items="${ads_rows.rows}">
+                                <tr>
+                                    <td>${ads_row.Ads_id}</td>
+                                    <td><a href="property.html">${ads_row.Res_id}</a></td>
+                                    <td>${ads_row.present_date}</td>
+                                    <td><p data-placement="top" title="show"><a class="btn btn-success btn-sm" data-toggle="modal" data-target=".item-show"><span class="glyphicon glyphicon-bullhorn"></span></a></p></td>
+                                    <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
