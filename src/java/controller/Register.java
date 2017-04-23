@@ -42,10 +42,11 @@ public class Register extends HttpServlet {
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            String role = "employee";
 
             Connection connection = (Connection) getServletContext().getAttribute("connection");
 
-            String sql = "INSERT INTO employees(Fname, Lname, phone, email, password) VALUES (?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO employees(Fname, Lname, phone, email, password, role) VALUES (?, ?, ?, ?, ?, ?);";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, fname);
@@ -53,6 +54,7 @@ public class Register extends HttpServlet {
             stm.setString(3, phone);
             stm.setString(4, email);
             stm.setString(5, password);
+            stm.setString(6, role);
 
             int row = stm.executeUpdate();
 

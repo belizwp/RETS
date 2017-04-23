@@ -27,7 +27,7 @@
 </style>
 
 <div class="container">
-    <form class="register form-horizontal" action="#" enctype="multipart/form-data" method="POST">
+    <form class="register form-horizontal" action="/RETS/InsertAdvertise" enctype="multipart/form-data" method="POST">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>สร้างข่าวประชาสัมพันธ์</h2>
@@ -87,7 +87,7 @@
 
             <div class="panel-footer text-center">
                 <input type="submit" class="btn btn-success" value="บันทึก" />
-                <input type="submit" class="btn btn-primary" value="นำเสนอ" />
+                <input type="submit" class="btn btn-danger" value="นำเสนอ" />
             </div>  
 
         </div>
