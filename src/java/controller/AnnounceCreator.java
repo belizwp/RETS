@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Employee;
+import model.ImageMeta;
 import model.Residential;
 
 /**
@@ -163,6 +165,8 @@ public class AnnounceCreator extends HttpServlet {
         String sql5 = "INSERT INTO residential(Res_name, announce_for, Emp_num, Owner_Own_id, Loc_id) VALUES(?, ?, ?, @owner_id, @loc_id);";
         String sql6 = "SET @res_id := LAST_INSERT_ID();";
         String sql7 = "INSERT INTO details(buliding_name, types, floor, price, water_bill, electric_bill, facilities, remark, Res_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, @res_id);";
+        String sql8 = "SET @detail_id := LAST_INSERT_ID();";
+        String sql9 = "INSERT INTO `image of detail`(image, details_id, Res_id) VALUES (?, @detail_id, @res_id);";
 
         PreparedStatement stm1 = connection.prepareCall(sql1);
         // owner info
@@ -172,6 +176,7 @@ public class AnnounceCreator extends HttpServlet {
         stm1.setString(4, ann.getPhone());
         stm1.executeUpdate();
 
+        // owner id
         PreparedStatement stm2 = connection.prepareCall(sql2);
         stm2.executeQuery();
 
@@ -183,6 +188,7 @@ public class AnnounceCreator extends HttpServlet {
         stm3.setInt(4, ann.getDistrict());
         stm3.executeUpdate();
 
+        // loc id
         PreparedStatement stm4 = connection.prepareCall(sql4);
         stm4.executeQuery();
 
@@ -193,6 +199,7 @@ public class AnnounceCreator extends HttpServlet {
         stm5.setInt(3, emp.getNumber());
         stm5.executeUpdate();
 
+        // res id
         PreparedStatement stm6 = connection.prepareCall(sql6);
         stm6.executeQuery();
 
@@ -206,13 +213,33 @@ public class AnnounceCreator extends HttpServlet {
         stm7.setString(6, ann.getElectricity() + "");
         stm7.setString(7, ann.getFacilities());
         stm7.setString(8, ann.getDetail());
-
         int row = stm7.executeUpdate();
+
+        // detail id
+        PreparedStatement stm8 = connection.prepareCall(sql8);
+        stm8.executeQuery();
+
+        // image file
+        PreparedStatement stm9 = connection.prepareCall(sql9);
+
+        LinkedList<ImageMeta> files = ann.getFiles();
+
+        int i = 0;
+
+        for (ImageMeta file : files) {
+            stm9.setBlob(1, file.getInputStream());
+
+            stm9.addBatch();
+            i++;
+
+            if (i % 100 == 0 || i == files.size()) {
+                stm9.executeBatch(); // Execute every 100 items.
+            }
+        }
 
         if (row > 0) {
             response.sendRedirect("/RETS/menu?tab=announce");
         }
-
     }
 
     //  generate by current epoch hex time combine with 4 first session_id

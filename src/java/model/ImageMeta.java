@@ -2,7 +2,14 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.awt.Image;
-@JsonIgnoreProperties({"img"})
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
+
+@JsonIgnoreProperties({"img", "inputStream"})
 public class ImageMeta {
 
     private String fileName;
@@ -15,6 +22,14 @@ public class ImageMeta {
     public String toString() {
         return "FileMeta [fileName=" + getFileName() + ", fileSize=" + getFileSize()
                 + ", fileType=" + getFileType() + "]";
+    }
+
+    public InputStream getInputStream() throws IOException {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write((RenderedImage) this.img, "png", os);
+        InputStream fis = new ByteArrayInputStream(os.toByteArray());
+
+        return fis;
     }
 
     /**
