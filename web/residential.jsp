@@ -79,32 +79,38 @@
 
             <div class="panel panel-default hidden-md hidden-lg">
                 <div class="panel-body">
-                    <form class="contact form-horizontal">
+                    <form action="/RETS/Contact" class="contact form-horizontal">
+                        <input type="hidden" name="id" value="${res.id}">
+                        <input type="hidden" name="emp_num" value="${emp.number}">
                         <h4>${emp.fname} ${emp.lname}</h4>
                         <p class="pull-right"><small>โทร.</small> ${emp.phone}</p>
                         <br>
-                        <input class="contact-name form-control" type="text" placeholder="ชื่อ" required>
-                        <input class="contact-tel form-control" type="text" maxlength="10" placeholder="หมายเลขโทรศัพท์" required>
-                        <input class="contact-email form-control" type="email" placeholder="อีเมล" required>
-                        <textarea class="contact-ms form-control">I’m interested in this property. Please contact me, thanks!</textarea>
-                        <a type="submit" class="btn btn-danger" data-toggle="modal" data-target=".contact-succeed" style="width: 100%">ส่งข้อความถึงตัวแทน</a>
+                        <input name="fname" class="contact-fname form-control" type="text" placeholder="ชื่อ" required>
+                        <input name="lname" class="contact-lname form-control" type="text" placeholder="นามสกุล" required>
+                        <input name="phone" class="contact-tel form-control" type="text" maxlength="10" placeholder="หมายเลขโทรศัพท์" required>
+                        <input name="email" class="contact-email form-control" type="email" placeholder="อีเมล" >
+                        <textarea name="desc" class="contact-ms form-control">I’m interested in this property. Please contact me, thanks!</textarea>
+                        <input type="submit" class="btn btn-danger form-control" value="ส่งข้อความถึงตัวแทน" >
                     </form>
                 </div>
             </div>
 
         </div>  <!-- /col -->
         <div class="col-md-3"> <!-- contact form -->
-            <div class="panel panel-default" data-spy="affix">
+            <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="contact form-horizontal">
+                    <form action="/RETS/Contact" class="contact form-horizontal">
+                        <input type="hidden" name="id" value="${res.id}">
+                        <input type="hidden" name="emp_num" value="${emp.number}">
                         <h4>${emp.fname} ${emp.lname}</h4>
                         <p class="pull-right"><small>โทร.</small> ${emp.phone}</p>
                         <br>
-                        <input class="contact-name form-control" type="text" placeholder="ชื่อ" required>
-                        <input class="contact-tel form-control" type="text" maxlength="10" placeholder="หมายเลขโทรศัพท์" required>
-                        <input class="contact-email form-control" type="email" placeholder="อีเมล" required>
-                        <textarea class="contact-ms form-control">I’m interested in this property. Please contact me, thanks!</textarea>
-                        <a type="submit" class="btn btn-danger" data-toggle="modal" data-target=".contact-succeed" style="width: 100%">ส่งข้อความถึงตัวแทน</a>
+                        <input name="fname" class="contact-fname form-control" type="text" placeholder="ชื่อ" required>
+                        <input name="lname" class="contact-lname form-control" type="text" placeholder="นามสกุล" required>
+                        <input name="phone" class="contact-tel form-control" type="text" maxlength="10" placeholder="หมายเลขโทรศัพท์" required>
+                        <input name="email" class="contact-email form-control" type="email" placeholder="อีเมล" >
+                        <textarea name="desc" class="contact-ms form-control" required>I’m interested in this property. Please contact me, thanks!</textarea>
+                        <input type="submit" class="btn btn-danger form-control" value="ส่งข้อความถึงตัวแทน" >
                     </form>
                 </div>
             </div>
@@ -112,24 +118,13 @@
     </div>
 </div> <!-- /content -->
 
-<!-- modal sent contact info -->
-<div class="modal fade contact-succeed" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                ส่งข้อความสำเร็จ
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">ตกลง</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     $(document).ready(function () {
-        $(".contact-name").keyup(function () {
-            $(".contact-name").val($(this).val());
+        $(".contact-fname").keyup(function () {
+            $(".contact-fname").val($(this).val());
+        });
+        $(".contact-lname").keyup(function () {
+            $(".contact-lname").val($(this).val());
         });
         $(".contact-tel").keyup(function () {
             $(".contact-tel").val($(this).val());

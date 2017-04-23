@@ -37,7 +37,7 @@
         <div class="panel-body">
             <div class="tab-content">
 
-                <div class="tab-pane fade in active" id="announce">
+                <div class="tab-pane fade ${param.tab == 'announce' || param.tab == null ? 'in active' : ''}" id="announce">
                     <table id="announce-table" class="table table-bordred table-striped display" cellspacing="0" width="100%">
                         <thead>
                         <th>รหัส</th>
@@ -64,7 +64,7 @@
                     </table>
                 </div>
 
-                <div class="tab-pane fade" id="contact">
+                <div class="tab-pane fade ${param.tab == 'contact' ? 'in active' : ''}" id="contact">
                     <table id="contact-table" class="table table-bordred table-striped display" cellspacing="0" width="100%">
                         <thead>
                         <th>วันที่ส่งมา</th>
@@ -91,7 +91,7 @@
                                         <td>${cus.phone}</td>
                                         <td>${cus.email}</td>
                                         <td>${cont_row.cont_desc}</td>
-                                        <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                                        <td><p data-placement="top" title="Delete"><a href="/RETS/DeleteContact?id=${cont_row.Cus_id}" class="btn btn-danger btn-sm" ><span class="glyphicon glyphicon-trash"></span></a></p></td>
                                     </tr>
                                 </c:forEach>
                             </c:forEach>
@@ -99,7 +99,7 @@
                     </table>
                 </div>
 
-                <div class="tab-pane fade" id="ads">
+                <div class="tab-pane fade ${param.tab == 'ads' ? 'in active' : ''}" id="ads">
                     <table id="ads-table" class="table table-bordred table-striped display" cellspacing="0" width="100%">
                         <thead>
                         <th>รหัส</th>
