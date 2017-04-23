@@ -260,7 +260,7 @@ CREATE TABLE `employees` (
   `phone` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL unique,
   `password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `role` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `role` varchar(45) COLLATE utf8_unicode_ci,
   `Dep_code` int(11),
   `Employees_Emp_num` int(11),
   PRIMARY KEY (`Emp_num`),
