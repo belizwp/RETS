@@ -28,6 +28,7 @@ CREATE TABLE `advertised` (
   `Ads_id` int(11) NOT NULL auto_increment,
   `image` mediumblob,
   `topic` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `detail` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `present_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Res_id` int(11) NOT NULL,
   `Emp_num` int(11) NOT NULL,
