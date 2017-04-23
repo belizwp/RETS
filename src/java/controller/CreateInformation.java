@@ -94,8 +94,8 @@ public class CreateInformation extends HttpServlet {
     }
 
     private void saveDetailVal(HttpServletRequest request, Information info) {
-        info.setFloor(!request.getParameter("d.floor").equals("") ? Short.parseShort(request.getParameter("floor")) : null);
-        info.setElectricity(!request.getParameter("d.electrict_bill").equals("") ? Integer.parseInt(request.getParameter("electrict_bill")) : null);
+        info.setFloor(!request.getParameter("d.floor").equals("") ? Short.parseShort(request.getParameter("d.floor")) : null);
+        info.setElectricity(!request.getParameter("d.electrict_bill").equals("") ? Integer.parseInt(request.getParameter("d.electrict_bill")) : null);
         info.setWater(!request.getParameter("d.water_bill").equals("") ? Integer.parseInt(request.getParameter("d.water_bill")) : null);
         info.setFacilities(request.getParameter("d.facilities") != null ? request.getParameter("d.facilities") : null);
         info.setRemark(request.getParameter("d.remark") != null ? request.getParameter("d.remark") : null);
