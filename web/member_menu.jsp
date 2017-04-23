@@ -81,17 +81,19 @@
                             </sql:query>
                             <c:forEach var="cont_row" items="${cont_rows.rows}">
                                 <sql:query var="cus_rows" dataSource="${dataSource}">
-                                    SELECT Fname, Lname, phone, email FROM contact WHERE Cus_id = ?;
+                                    SELECT Fname, Lname, phone, email FROM customer WHERE Cus_id = ?;
                                     <sql:param value="${cont_row.Cus_id}"/>
                                 </sql:query>
-                                <tr>
-                                    <td>${cont_row.cont_date}</td>
-                                    <td>${cus_rows.rows.Fname} ${cus_rows.rows.Lname}</td>
-                                    <td>${cus_rows.rows.phone}</td>
-                                    <td>${cus_rows.rows.email}</td>
-                                    <td>${cont_row.cont_desc}</td>
-                                    <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
-                                </tr>
+                                <c:forEach var="cus" items="${cus_rows.rows}">
+                                    <tr>
+                                        <td>${cont_row.cont_date}</td>
+                                        <td>${cus.Fname} ${cus.rows.Lname}</td>
+                                        <td>${cus.phone}</td>
+                                        <td>${cus.email}</td>
+                                        <td>${cont_row.cont_desc}</td>
+                                        <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                                    </tr>
+                                </c:forEach>
                             </c:forEach>
                         </tbody>
                     </table>
@@ -114,7 +116,7 @@
                             <c:forEach var="ads_row" items="${ads_rows.rows}">
                                 <tr>
                                     <td>${ads_row.Ads_id}</td>
-                                    <td><a href="property.html">${ads_row.Res_id}</a></td>
+                                    <td><a href="property.html">${ads_row.topic}</a></td>
                                     <td>${ads_row.present_date}</td>
                                     <td><p data-placement="top" title="show"><a class="btn btn-success btn-sm" data-toggle="modal" data-target=".item-show"><span class="glyphicon glyphicon-bullhorn"></span></a></p></td>
                                     <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
