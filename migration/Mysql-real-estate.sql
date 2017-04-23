@@ -28,7 +28,7 @@ CREATE TABLE `advertised` (
   `Ads_id` int(11) NOT NULL auto_increment,
   `image` mediumblob,
   `topic` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `present_date` datetime NOT NULL,
+  `present_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Res_id` int(11) NOT NULL,
   `Emp_num` int(11) NOT NULL,
   PRIMARY KEY (`Ads_id`),
@@ -85,7 +85,7 @@ DROP TABLE IF EXISTS `contact`;
 CREATE TABLE `contact` (
   `Cus_id` int(11) NOT NULL,
   `Emp_num` int(11) NOT NULL,
-  `cont_date` datetime NOT NULL,
+  `cont_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `cont_desc` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`Cus_id`,`Emp_num`),
   KEY `fk_Customer_has_Employees_Employees1_idx` (`Emp_num`),
