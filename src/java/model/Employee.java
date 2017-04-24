@@ -9,6 +9,7 @@ public class Employee {
     private String phone;
     private String email;
     private String password;
+    private String role;
 
     /**
      * @return the number
@@ -106,6 +107,20 @@ public class Employee {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the role
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(String role) {
+        this.role = role;
     }
 
 }
