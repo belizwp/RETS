@@ -30,6 +30,7 @@ CREATE TABLE `advertised` (
   `topic` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `detail` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `present_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `role_ads` boolean not null,
   `Res_id` int(11) NOT NULL,
   `Emp_num` int(11) NOT NULL,
   PRIMARY KEY (`Ads_id`),
