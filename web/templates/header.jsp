@@ -45,6 +45,7 @@
                                             <li><a href="/RETS/menu">เมนูสมาชิก</a></li>
                                             <li><a href="/RETS/edit_profile">แก้ไขบัญชี</a></li>
                                             <li><a href="/RETS/menu?tab=announce">ประกาศของฉัน</a></li>
+                                            <li><a href="/RETS/new_ads.jsp">ลงข่าวประชาสัมพันธ์</a></li>
                                             <li><a href="/RETS/menu?tab=contact">รายการผู้ติดต่อ</a></li>
                                             <li><a href="/RETS/Logout">ออกจากระบบ</a></li>
                                         </ul>
