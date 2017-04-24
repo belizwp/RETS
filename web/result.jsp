@@ -3,6 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<% request.setCharacterEncoding("UTF-8");%>
+
 <c:set var="p_id" value="${param.province != '' && param.province != null && param.province != 0 ? param.province : 'select province_id from province'}"/>
 <c:set var="a_id" value="${param.amphur != '' && param.amphur != null ? param.amphur : 'select amphur_id from amphur'}"/>
 <c:set var="d_id" value="${param.district != '' && param.district != null ? param.district : 'select district_id from district'}"/>
