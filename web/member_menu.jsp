@@ -31,7 +31,9 @@
             <ul class="nav nav-tabs">
                 <li ${param.tab == 'announce' || param.tab == null ? 'class="active"' : ''}><a href="#announce" data-toggle="tab">ประกาศของฉัน</a></li>
                 <li ${param.tab == 'contact' ? 'class="active"' : ''}><a href="#contact" data-toggle="tab">รายชื่อผู้ติดต่อ</a></li>
-                <li ${param.tab == 'ads' ? 'class="active"' : ''}><a href="#ads" data-toggle="tab">ข่าวของฉัน</a></li>
+                    <c:if test="${sessionScope.employee.role == 'admin' || sessionScope.employee.role == 'webmaster'}">
+                    <li ${param.tab == 'ads' ? 'class="active"' : ''}><a href="#ads" data-toggle="tab">ข่าวของฉัน</a></li>
+                    </c:if>
             </ul>
         </div>
         <div class="panel-body">
@@ -99,32 +101,34 @@
                     </table>
                 </div>
 
-                <div class="tab-pane fade ${param.tab == 'ads' ? 'in active' : ''}" id="ads">
-                    <table id="ads-table" class="table table-bordred table-striped display" cellspacing="0" width="100%">
-                        <thead>
-                        <th>รหัส</th>
-                        <th>ชื่อเรื่อง</th>
-                        <th>วันที่แก้ไขล่าสุด</th>
-                        <th>นำเสนอ</th>
-                        <th>ลบ</th>
-                        </thead>
-                        <tbody>
-                            <sql:query var="ads_rows" dataSource="${dataSource}">
-                                SELECT Ads_id, topic, present_date FROM advertised WHERE Emp_num = ?;
-                                <sql:param value="${sessionScope.employee.number}"/>
-                            </sql:query>
-                            <c:forEach var="ads_row" items="${ads_rows.rows}">
-                                <tr>
-                                    <td>${ads_row.Ads_id}</td>
-                                    <td><a href="property.html">${ads_row.topic}</a></td>
-                                    <td>${ads_row.present_date}</td>
-                                    <td><p data-placement="top" title="show"><a class="btn btn-success btn-sm" data-toggle="modal" data-target=".item-show"><span class="glyphicon glyphicon-bullhorn"></span></a></p></td>
-                                    <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
+                <c:if test="${sessionScope.employee.role == 'admin' || sessionScope.employee.role == 'webmaster'}">
+                    <div class="tab-pane fade ${param.tab == 'ads' ? 'in active' : ''}" id="ads">
+                        <table id="ads-table" class="table table-bordred table-striped display" cellspacing="0" width="100%">
+                            <thead>
+                            <th>รหัส</th>
+                            <th>ชื่อเรื่อง</th>
+                            <th>วันที่แก้ไขล่าสุด</th>
+                            <th>นำเสนอ</th>
+                            <th>ลบ</th>
+                            </thead>
+                            <tbody>
+                                <sql:query var="ads_rows" dataSource="${dataSource}">
+                                    SELECT Ads_id, topic, present_date FROM advertised WHERE Emp_num = ?;
+                                    <sql:param value="${sessionScope.employee.number}"/>
+                                </sql:query>
+                                <c:forEach var="ads_row" items="${ads_rows.rows}">
+                                    <tr>
+                                        <td>${ads_row.Ads_id}</td>
+                                        <td><a href="property.html">${ads_row.topic}</a></td>
+                                        <td>${ads_row.present_date}</td>
+                                        <td><p data-placement="top" title="show"><a class="btn btn-success btn-sm" data-toggle="modal" data-target=".item-show"><span class="glyphicon glyphicon-bullhorn"></span></a></p></td>
+                                        <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </c:if>
 
             </div>
         </div>

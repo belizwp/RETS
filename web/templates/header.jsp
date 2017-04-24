@@ -45,8 +45,10 @@
                                             <li><a href="/RETS/menu">เมนูสมาชิก</a></li>
                                             <li><a href="/RETS/edit_profile">แก้ไขบัญชี</a></li>
                                             <li><a href="/RETS/menu?tab=announce">ประกาศของฉัน</a></li>
-                                            <li><a href="/RETS/new_ads.jsp">ลงข่าวประชาสัมพันธ์</a></li>
-                                            <li><a href="/RETS/menu?tab=contact">รายการผู้ติดต่อ</a></li>
+                                                <c:if test="${sessionScope.employee.role == 'admin' || sessionScope.employee.role == 'webmaster'}">
+                                                <li><a href="/RETS/new_ads.jsp">ลงข่าวประชาสัมพันธ์</a></li>
+                                                </c:if>
+                                            <li><a href="/RETS/menu?tab=contact">รายชื่อผู้ติดต่อ</a></li>
                                             <li><a href="/RETS/Logout">ออกจากระบบ</a></li>
                                         </ul>
                                     </li>
@@ -77,7 +79,7 @@
                                     </li>
                                 </c:otherwise>
                             </c:choose>
-                                    
+
                         </ul> <!-- /nav-right -->
                     </div><!--/.nav-collapse -->
                 </div>
