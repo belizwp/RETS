@@ -10,12 +10,12 @@ package model;
  * @author dell
  */
 public class Advertise {
-    
+
     private int Ads_id;
     private String topic;
     private String detail;
-    private String res_id;
-    
+    private int res_id;
+
     private boolean edit;
 
     public boolean isEdit() {
@@ -50,14 +50,12 @@ public class Advertise {
         this.detail = detail;
     }
 
-    public String getRes_id() {
+    public int getRes_id() {
         return res_id;
     }
 
-    public void setRes_id(String res_id) {
+    public void setRes_id(int res_id) {
         this.res_id = res_id;
     }
-    
-    
-    
+
 }

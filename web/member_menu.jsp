@@ -109,11 +109,12 @@
                             <th>ชื่อเรื่อง</th>
                             <th>วันที่แก้ไขล่าสุด</th>
                             <th>นำเสนอ</th>
+                            <th>แก้ไข</th>
                             <th>ลบ</th>
                             </thead>
                             <tbody>
                                 <sql:query var="ads_rows" dataSource="${dataSource}">
-                                    SELECT Ads_id, topic, present_date FROM advertised WHERE Emp_num = ?;
+                                    SELECT Ads_id, topic, present_date, role_ads FROM advertised WHERE Emp_num = ?;
                                     <sql:param value="${sessionScope.employee.number}"/>
                                 </sql:query>
                                 <c:forEach var="ads_row" items="${ads_rows.rows}">
@@ -121,8 +122,9 @@
                                         <td>${ads_row.Ads_id}</td>
                                         <td><a href="property.html">${ads_row.topic}</a></td>
                                         <td>${ads_row.present_date}</td>
-                                        <td><p data-placement="top" title="show"><a class="btn btn-success btn-sm" data-toggle="modal" data-target=".item-show"><span class="glyphicon glyphicon-bullhorn"></span></a></p></td>
-                                        <td><p data-placement="top" title="Delete"><a class="btn btn-danger btn-sm" data-toggle="modal" data-target=".item-delete"><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                                        <td><p data-placement="top" title="show"><a href="/RETS/ShowAds?id=${ads_row.Ads_id}" class="btn ${ads_row.role_ads ? 'btn-success' : 'btn-default'} btn-sm" ><span class="glyphicon glyphicon-bullhorn"></span></a></p></td>
+                                        <td><p data-placement="top" title="Edit"><a href="/RETS/EditAds?id=${ads_row.Ads_id}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
+                                        <td><p data-placement="top" title="Delete"><a href="/RETS/DeleteAds?id=${ads_row.Ads_id}" class="btn btn-danger btn-sm" ><span class="glyphicon glyphicon-trash"></span></a></p></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

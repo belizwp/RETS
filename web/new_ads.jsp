@@ -39,7 +39,7 @@
                         <legend>กรอกรายละเอียด<span><h6 class="pull-right" style="color: red">* ข้อมูลที่จำเป็นต้องใช้</h6></span></legend>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">รูปภาพ : </label>
+                            <label class="col-md-4 control-label">* รูปภาพ : </label>
                             <div class="col-md-4">
                                 <!-- image-preview-filename input [CUT FROM HERE]-->
                                 <div class="input-group image-preview">
@@ -63,31 +63,33 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">* หัวเรื่อง : </label>
                             <div class="col-md-4">
-                                <input name="title" id="title" class="form-control" type="text" maxlength="40" required>
+                                <input name="title" id="title" class="form-control" type="text" maxlength="40" required value="${requestScope.ads.topic}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-4 control-label">* รายละเอียด : </label>
                             <div class="col-md-4">
-                                <input name="detail" id="detail" class="form-control" type="text" maxlength="40" required>
+                                <input name="detail" id="detail" class="form-control" type="text" maxlength="40" required value="${requestScope.ads.detail}">
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="col-md-4 control-label">* รหัสประกาศ : </label>
                             <div class="col-md-4">
-                                <input name="res_id" id="res_id" class="form-control" type="text" required>
+                                <input name="res_id" id="res_id" class="form-control" type="text" required value="${requestScope.ads.res_id}">
                             </div>
                         </div>
+
+                        <input name="ads_id" type="hidden" value="${requestScope.ads.ads_id}">
 
                     </fieldset>
                 </div>
             </div>       
 
             <div class="panel-footer text-center">
-                <input type="submit" class="btn btn-success" value="บันทึก" />
-                <input type="submit" class="btn btn-danger" value="นำเสนอ" />
+                ${requestScope.ads.edit ? '<input name="submit" type="submit" class="btn btn-success" value="บันทึก" />' : ''}
+                ${requestScope.ads.edit ? '' : '<input name="submit" type="submit" class="btn btn-danger" value="นำเสนอ" />'}
             </div>  
 
         </div>
