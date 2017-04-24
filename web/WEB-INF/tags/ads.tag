@@ -31,14 +31,14 @@
             </c:forEach>
         </c:when>
         <c:when test="${type == 'sidebar'}">
-            <c:forEach begin="1" end="2">
+            <c:forEach var="ads" items="${ads_rows.rows}" end="1">
 
                 <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12">
                     <a class="thumbnail">
-                        <img src="http://placehold.it/350x200" alt="ALT NAME">
+                        <img src="/RETS/image?id=${ads.Ads_id}&type=ads">
                         <div class="caption">
-                            <h4>Residential</h4>
-                            <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <h4>${ads.topic}</h4>
+                            <p>${ads.detail}</p>
                         </div>
                     </a>
                 </div>
