@@ -1,10 +1,34 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="rets" tagdir="/WEB-INF/tags/"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
 
+<c:set var="p_id" value="${param.province != '' && param.province != null && param.province != 0 ? param.province : 'select province_id from province'}"/>
+<c:set var="a_id" value="${param.amphur != '' && param.amphur != null ? param.amphur : 'select amphur_id from amphur'}"/>
+<c:set var="d_id" value="${param.district != '' && param.district != null ? param.district : 'select district_id from district'}"/>
+<c:set var="ann" value="${param.announce_type != '' && param.announce_type != 'ทั้งหมด' && param.announce_type != null ? '\"' += param.announce_type += '\"' : '\"ขาย\", \"เช่า\"'}"/>
+<c:set var="type" value="${param.property_type != '' && param.property_type != 'ทั้งหมด' && param.property_type != null ? '\"' += param.property_type += '\"' : '\"บ้านเดี่ยว\", \"คอนโด\", \"ทาวน์เฮ้าส์\", \"ที่ดิน\", \"อพาร์ทเม้น\"'}"/>
+<c:set var="min" value="${param.min_price != '' && param.min_price != null ? param.min_price : -2147483648}"/>
+<c:set var="max" value="${param.max_price != '' && param.max_price != null ? param.max_price : 2147483648}"/>
+
 <sql:query var="num_rows" dataSource="${dataSource}">
-    SELECT Res_id FROM residential;
+    SELECT province_id, amphur_id, district_id, announce_for, types, price
+    FROM residential
+    natural join details
+    natural join location
+    where
+    (province_id in (${p_id}) or province_id is null or province_id = @province_id)
+    and
+    (amphur_id in (${a_id}) or amphur_id is null or amphur_id = @amphur_id)
+    and
+    (district_id in (${d_id}) or district_id is null or district_id = @district_id)
+    and
+    (announce_for in (${ann}) or announce_for is null or announce_for = @announce_for)
+    and
+    (types in (${type}) or types is null or types = @types)
+    and
+    (price between ${min} and ${max});
 </sql:query>
 
 <div class="container">
