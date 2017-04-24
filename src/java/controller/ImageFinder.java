@@ -150,6 +150,26 @@ public class ImageFinder extends HttpServlet {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else if (type.equals("ads")) {
+                try {
+                    Connection connection = (Connection) getServletContext().getAttribute("connection");
+
+                    String sql = "SELECT image FROM advertised WHERE Ads_id = ?";
+
+                    PreparedStatement stm = connection.prepareStatement(sql);
+                    stm.setInt(1, Integer.parseInt(id));
+                    ResultSet rs = stm.executeQuery();
+
+                    if (rs.next()) {
+                        Blob imageBlob = rs.getBlob("image");
+                        Image img = ImageIO.read(imageBlob.getBinaryStream());
+                        response.setContentType("image/jpeg");
+                        ImageIO.write(toBufferedImage(img.getScaledInstance(350, 250, Image.SCALE_FAST)), "png", response.getOutputStream());
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
         }
