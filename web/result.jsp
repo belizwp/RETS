@@ -33,7 +33,7 @@
             (types in (${type}) or types is null or types = @types)
             and
             (price between ${min} and ${max})
-            ORDER BY dt_modified DESC LIMIT ${param.page - 1}, 10;
+            ORDER BY dt_modified DESC LIMIT ${ 10 * (param.page - 1)}, 10;
         </sql:query>
         <c:forEach var="res" items="${resultSet.rows}">
             <sql:query var="details" dataSource="${dataSource}">
