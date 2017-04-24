@@ -10,12 +10,15 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Employee;
+import model.ImageMeta;
+import model.Residential;
 
 /**
  *
@@ -37,32 +40,46 @@ public class InsertAdvertise extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        
+
+        Connection connection = (Connection) getServletContext().getAttribute("connection");
+        Employee emp = (Employee) request.getSession().getAttribute("employee");
+        Residential res = new Residential();
+
         try {
-            String title = request.getParameter("title");
+            String topic = request.getParameter("title");
             String detail = request.getParameter("detail");
-            String res_id = request.getParameter("res_id"); 
-            
-            Employee emp = (Employee) request.getSession().getAttribute("employee");
+            String res_id = request.getParameter("res_id");
 
-            Connection connection = (Connection) getServletContext().getAttribute("connection");
-
-            String sql = "INSERT INTO advertised (topic, detail, Res_id, Emp_num) VALUES (?, ?, ?, ?);";
+            String sql = "INSERT INTO advertised (image, topic, detail, Res_id, Emp_num) VALUES (?, ?, ?, ?, ?);";
 
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, title);
-            stm.setString(2, detail);
-            stm.setString(3, res_id);
-            stm.setInt(4, emp.getNumber());
-            
+            LinkedList<ImageMeta> files = res.getFiles();
+
+            int i = 0;
+
+            for (ImageMeta file : files) {
+                stm.setBlob(1, file.getInputStream());
+                stm.setString(2, topic);
+                stm.setString(3, detail);
+                stm.setString(4, res_id);
+                stm.setInt(5, emp.getNumber());
+
+                stm.addBatch();
+                i++;
+
+                if (i % 100 == 0 || i == files.size()) {
+                    stm.executeBatch(); // Execute every 100 items.
+                }
+            }
+
             int row = stm.executeUpdate();
 
             if (row > 0) {
-                response.sendRedirect("/RETS/index");
+                response.sendRedirect("/RETS");
             }
 
         } catch (IOException | SQLException e) {
-            response.sendRedirect("/RETS/error");
+            response.sendRedirect("/RETS/error.jsp");
         }
     }
 
