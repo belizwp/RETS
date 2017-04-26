@@ -77,24 +77,6 @@
                 </div> <!-- /body -->
             </div>  <!-- /panel -->
 
-            <div class="panel panel-default hidden-md hidden-lg">
-                <div class="panel-body">
-                    <form action="/RETS/Contact" class="contact form-horizontal">
-                        <input type="hidden" name="id" value="${res.id}">
-                        <input type="hidden" name="emp_num" value="${emp.number}">
-                        <h4>${emp.fname} ${emp.lname}</h4>
-                        <p class="pull-right"><small>โทร.</small> ${emp.phone}</p>
-                        <br>
-                        <input name="fname" class="contact-fname form-control" type="text" placeholder="ชื่อ" required>
-                        <input name="lname" class="contact-lname form-control" type="text" placeholder="นามสกุล" required>
-                        <input name="phone" class="contact-tel form-control" type="text" maxlength="10" placeholder="หมายเลขโทรศัพท์" required>
-                        <input name="email" class="contact-email form-control" type="email" placeholder="อีเมล" >
-                        <textarea name="desc" class="contact-ms form-control">I’m interested in this property. Please contact me, thanks!</textarea>
-                        <input type="submit" class="btn btn-danger form-control" value="ส่งข้อความถึงตัวแทน" >
-                    </form>
-                </div>
-            </div>
-
         </div>  <!-- /col -->
         <div class="col-md-3"> <!-- contact form -->
             <div class="panel panel-default">
