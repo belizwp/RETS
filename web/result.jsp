@@ -6,8 +6,8 @@
 <% request.setCharacterEncoding("UTF-8");%>
 
 <c:set var="p_id" value="${param.province != '' && param.province != null && param.province != 0 ? param.province : 'select province_id from province'}"/>
-<c:set var="a_id" value="${param.amphur != '' && param.amphur != null ? param.amphur : 'select amphur_id from amphur'}"/>
-<c:set var="d_id" value="${param.district != '' && param.district != null ? param.district : 'select district_id from district'}"/>
+<c:set var="a_id" value="${param.amphur != '' && param.amphur != null && param.amphur != 0 ? param.amphur : 'select amphur_id from amphur'}"/>
+<c:set var="d_id" value="${param.district != '' && param.district != null && param.district != 0 ? param.district : 'select district_id from district'}"/>
 <c:set var="ann" value="${param.announce_type != '' && param.announce_type != 'ทั้งหมด' && param.announce_type != null ? '\"' += param.announce_type += '\"' : '\"ขาย\", \"เช่า\"'}"/>
 <c:set var="type" value="${param.property_type != '' && param.property_type != 'ทั้งหมด' && param.property_type != null ? '\"' += param.property_type += '\"' : '\"บ้านเดี่ยว\", \"คอนโด\", \"ทาวน์เฮ้าส์\", \"ที่ดิน\", \"อพาร์ทเม้น\"'}"/>
 <c:set var="min" value="${param.min_price != '' && param.min_price != null ? param.min_price : -2147483648}"/>
