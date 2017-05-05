@@ -52,25 +52,15 @@ public class EditProfile extends HttpServlet {
             if (password.equals(emp.getPassword()) && new_password.equals(new_password_confirmation)) {
                 Connection connection = (Connection) getServletContext().getAttribute("connection");
 
-                String sql = "UPDATE employees SET fname = ?, lname = ?, phone = ?, email = ?, password = ? WHERE Emp_num = ?;";
+                emp.setFname(!fname.equals("") ? fname : emp.getFname());
+                emp.setLname(!lname.equals("") ? lname : emp.getLname());
+                emp.setPhone(!phone.equals("") ? phone : emp.getPhone());
+                emp.setEmail(!email.equals("") ? email : emp.getEmail());
+                emp.setPassword(!new_password.equals("") ? new_password : emp.getPassword());
 
-                PreparedStatement stm = connection.prepareStatement(sql);
-                stm.setString(1, !fname.equals("") ? fname : emp.getFname());
-                stm.setString(2, !lname.equals("") ? lname : emp.getLname());
-                stm.setString(3, !phone.equals("") ? phone : emp.getPhone());
-                stm.setString(4, !email.equals("") ? email : emp.getEmail());
-                stm.setString(5, !new_password.equals("") ? new_password : emp.getPassword());
-                stm.setInt(6, emp.getNumber());
-
-                int row = stm.executeUpdate();
+                int row = emp.update(connection);
 
                 if (row > 0) {
-                    emp.setFname(!fname.equals("") ? fname : emp.getFname());
-                    emp.setLname(!lname.equals("") ? lname : emp.getLname());
-                    emp.setPhone(!phone.equals("") ? phone : emp.getPhone());
-                    emp.setEmail(!email.equals("") ? email : emp.getEmail());
-                    emp.setPassword(!new_password.equals("") ? new_password : emp.getPassword());
-
                     response.sendRedirect("/RETS/edit_profile?success=");
                 } else {
                     response.sendRedirect("/RETS/edit_profile?error=");

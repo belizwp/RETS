@@ -7,13 +7,13 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Employee;
 
 /**
  *
@@ -35,7 +35,7 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-
+        
         try {
             String fname = request.getParameter("first_name");
             String lname = request.getParameter("last_name");
@@ -43,27 +43,25 @@ public class Register extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String role = "employee";
-
+            
             Connection connection = (Connection) getServletContext().getAttribute("connection");
-
-            String sql = "INSERT INTO employees(Fname, Lname, phone, email, password, role) VALUES (?, ?, ?, ?, ?, ?);";
-
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, fname);
-            stm.setString(2, lname);
-            stm.setString(3, phone);
-            stm.setString(4, email);
-            stm.setString(5, password);
-            stm.setString(6, role);
-
-            int row = stm.executeUpdate();
-
-            if (row > 0) {
+            
+            Employee emp = new Employee();
+            emp.setFname(fname);
+            emp.setLname(lname);
+            emp.setPhone(phone);
+            emp.setEmail(email);
+            emp.setPassword(password);
+            emp.setRole(role);
+            
+            if (emp.register(connection)) {
                 response.sendRedirect("/RETS/login");
+            } else {
+                response.sendRedirect("/RETS/register?error=");
             }
-
+            
         } catch (IOException | SQLException e) {
-            response.sendRedirect("/RETS/register?error=");
+            response.sendRedirect("/RETS/error");
         }
     }
 

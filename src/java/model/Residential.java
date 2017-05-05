@@ -1,7 +1,13 @@
 package model;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.LinkedList;
+import javax.imageio.ImageIO;
 
 public class Residential {
 
@@ -32,11 +38,11 @@ public class Residential {
     private int province;
     private int amphur;
     private int district;
-
+    
     private String provinceName;
     private String amphurName;
     private String districtName;
-
+    
     private String name;
     private String address;
 
@@ -53,11 +59,289 @@ public class Residential {
 
     // ====== Media Value ======
     private LinkedList<ImageMeta> files;
-
+    
     private String dt_time;
-
+    
     public Residential() {
         files = new LinkedList<>();
+    }
+    
+    public Residential(Connection conn, int id) throws SQLException, IOException {
+        // residetial table
+        String sql = "SELECT *\n"
+                + "FROM residential\n"
+                + "JOIN owner ON (residential.Owner_Own_id = owner.Own_id)\n"
+                + "NATURAL JOIN details\n"
+                + "NATURAL JOIN location\n"
+                + "NATURAL JOIN province\n"
+                + "NATURAL JOIN amphur\n"
+                + "NATURAL JOIN district\n"
+                + "WHERE Res_id = ?;";
+        
+        PreparedStatement stm = conn.prepareStatement(sql);
+        stm.setInt(1, id);
+        ResultSet rs = stm.executeQuery();
+        
+        if (rs.next()) {
+            
+            this.setEdit(true);
+            
+            this.setId(id);
+            this.setEmp_num(rs.getInt("Emp_num"));
+            this.setOwner_id(rs.getInt("Owner_Own_id"));
+            this.setLoc_id(rs.getInt("Loc_id"));
+            this.setDetails_id(rs.getInt("details_id"));
+            
+            this.setType(rs.getString("announce_for"));
+            this.setPropType(rs.getString("types"));
+            this.setProvince(rs.getShort("province_id"));
+            this.setAmphur(rs.getShort("amphur_id"));
+            this.setDistrict(rs.getShort("district_id"));
+            
+            this.setProvinceName(rs.getString("province_name"));
+            this.setAmphurName(rs.getString("amphur_name"));
+            this.setDistrictName(rs.getString("district_name"));
+            
+            this.setTitle(rs.getString("Res_name"));
+            this.setDetail(rs.getString("remark"));
+            this.setName(rs.getString("buliding_name"));
+            this.setAddress(rs.getString("address"));
+            
+            this.setPrice(rs.getInt("price"));
+            
+            this.setFname(rs.getString("Fname"));
+            this.setLname(rs.getString("Lname"));
+            this.setPhone(rs.getString("phone"));
+            this.setEmail(rs.getString("email"));
+            
+            this.setFloor(rs.getString("floor"));
+            this.setElectricity(rs.getString("electric_bill"));
+            this.setWater(rs.getString("water_bill"));
+            this.setFacilities(rs.getString("facilities"));
+            
+            this.setDt_time(rs.getString("dt_modified"));
+            
+            String imageSQL = "SELECT image_id, image from `image of detail` WHERE Res_id = ?;";
+            PreparedStatement imgSTM = conn.prepareStatement(imageSQL);
+            imgSTM.setInt(1, this.getId());
+            ResultSet imgRS = imgSTM.executeQuery();
+            
+            files = new LinkedList<>();
+            ImageMeta temp = null;
+            while (imgRS.next()) {
+                temp = new ImageMeta();
+                temp.setId(imgRS.getInt("image_id"));
+                temp.setImg(ImageIO.read(imgRS.getBinaryStream("image")));
+                files.add(temp);
+            }
+        }
+    }
+    
+    public int create(Connection connection, Employee emp) throws SQLException, IOException {
+        
+        String sql1 = "INSERT INTO owner(Fname, Lname, email, phone) VALUES(?, ?, ?, ?);";
+        String sql2 = "SET @owner_id := LAST_INSERT_ID();";
+        String sql3 = "INSERT INTO location(address, province_id, amphur_id, district_id) VALUES(?, ?, ?, ?);";
+        String sql4 = "SET @loc_id := LAST_INSERT_ID();";
+        String sql5 = "INSERT INTO residential(Res_name, announce_for, Emp_num, Owner_Own_id, Loc_id) VALUES(?, ?, ?, @owner_id, @loc_id);";
+        String sql6 = "SET @res_id := LAST_INSERT_ID();";
+        String sql7 = "INSERT INTO details(buliding_name, types, floor, price, water_bill, electric_bill, facilities, remark, Res_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, @res_id);";
+        String sql8 = "SET @detail_id := LAST_INSERT_ID();";
+        String sql9 = "INSERT INTO `image of detail`(image, details_id, Res_id) VALUES (?, @detail_id, @res_id);";
+        
+        PreparedStatement stm1 = connection.prepareStatement(sql1);
+        // owner info
+        stm1.setString(1, this.getFname());
+        stm1.setString(2, this.getLname());
+        stm1.setString(3, this.getEmail());
+        stm1.setString(4, this.getPhone());
+        stm1.executeUpdate();
+
+        // owner id
+        PreparedStatement stm2 = connection.prepareStatement(sql2);
+        stm2.executeQuery();
+        
+        PreparedStatement stm3 = connection.prepareStatement(sql3);
+        // location info
+        stm3.setString(1, this.getAddress());
+        stm3.setInt(2, this.getProvince());
+        stm3.setInt(3, this.getAmphur());
+        stm3.setInt(4, this.getDistrict());
+        stm3.executeUpdate();
+
+        // loc id
+        PreparedStatement stm4 = connection.prepareStatement(sql4);
+        stm4.executeQuery();
+        
+        PreparedStatement stm5 = connection.prepareStatement(sql5);
+        // resident info
+        stm5.setString(1, this.getTitle());
+        stm5.setString(2, this.getType());
+        stm5.setInt(3, emp.getNumber());
+        stm5.executeUpdate();
+
+        // res id
+        PreparedStatement stm6 = connection.prepareStatement(sql6);
+        stm6.executeQuery();
+        
+        PreparedStatement stm7 = connection.prepareStatement(sql7);
+        // detail info
+        stm7.setString(1, this.getName());
+        stm7.setString(2, this.getPropType());
+        stm7.setString(3, this.getFloor() + "");
+        stm7.setInt(4, this.getPrice());
+        stm7.setString(5, this.getWater() + "");
+        stm7.setString(6, this.getElectricity() + "");
+        stm7.setString(7, this.getFacilities());
+        stm7.setString(8, this.getDetail());
+        int row = stm7.executeUpdate();
+
+        // detail id
+        PreparedStatement stm8 = connection.prepareStatement(sql8);
+        stm8.executeQuery();
+
+        // image file
+        PreparedStatement stm9 = connection.prepareStatement(sql9);
+        
+        LinkedList<ImageMeta> files = this.getFiles();
+        
+        int i = 0;
+        
+        for (ImageMeta file : files) {
+            stm9.setBlob(1, file.getInputStream());
+            
+            stm9.addBatch();
+            i++;
+            
+            if (i % 100 == 0 || i == files.size()) {
+                stm9.executeBatch(); // Execute every 100 items.
+            }
+        }
+        
+        return row;
+    }
+
+    // update record
+    public void update(Connection connection) throws SQLException, IOException {
+        
+        String sql1 = "UPDATE residential SET Res_name = ?, announce_for = ? WHERE Res_id = ?";
+        String sql2 = "UPDATE owner SET Fname = ?, Lname = ?, phone = ?, email = ? WHERE Own_id = ?";
+        String sql3 = "UPDATE location SET address = ?, province_id = ?, amphur_id = ?, district_id = ? WHERE Loc_id = ?";
+        String sql4 = "UPDATE details SET "
+                + "buliding_name = ?, "
+                + "types = ?, "
+                + "floor = ?, "
+                + "price = ?, "
+                + "water_bill = ?, "
+                + "electric_bill = ?, "
+                + "facilities = ?, "
+                + "remark = ? "
+                + "WHERE details_id = ?";
+        String sql5 = "DELETE FROM `image of detail` WHERE Res_id = ?";
+        String sql6 = "INSERT INTO `image of detail`(image, details_id, Res_id) VALUES (?, ?, ?);";
+        
+        PreparedStatement stm1 = connection.prepareStatement(sql1);
+        PreparedStatement stm2 = connection.prepareStatement(sql2);
+        PreparedStatement stm3 = connection.prepareStatement(sql3);
+        PreparedStatement stm4 = connection.prepareStatement(sql4);
+        PreparedStatement stm5 = connection.prepareStatement(sql5);
+        
+        stm1.setString(1, this.getTitle());
+        stm1.setString(2, this.getType());
+        stm1.setInt(3, this.getId());
+        
+        stm2.setString(1, this.getFname());
+        stm2.setString(2, this.getLname());
+        stm2.setString(3, this.getPhone());
+        stm2.setString(4, this.getEmail());
+        stm2.setInt(5, this.getOwner_id());
+        
+        stm3.setString(1, this.getAddress());
+        stm3.setInt(2, this.getProvince());
+        stm3.setInt(3, this.getAmphur());
+        stm3.setInt(4, this.getDistrict());
+        stm3.setInt(5, this.getOwner_id());
+        
+        stm4.setString(1, this.getName());
+        stm4.setString(2, this.getPropType());
+        stm4.setString(3, this.getFloor());
+        stm4.setInt(4, this.getPrice());
+        stm4.setString(5, this.getWater());
+        stm4.setString(6, this.getElectricity());
+        stm4.setString(7, this.getFacilities());
+        stm4.setString(8, this.getDetail());
+        stm4.setInt(9, this.getDetails_id());
+        
+        stm5.setInt(1, this.getId());
+        
+        stm1.executeUpdate();
+        stm2.executeUpdate();
+        stm3.executeUpdate();
+        stm4.executeUpdate();
+        stm5.executeUpdate();
+
+        // image file
+        PreparedStatement stm6 = connection.prepareStatement(sql6);
+        
+        int i = 0;
+        
+        for (ImageMeta file : this.files) {
+            stm6.setBlob(1, file.getInputStream());
+            stm6.setInt(2, this.getDetails_id());
+            stm6.setInt(3, this.getId());
+            
+            stm6.addBatch();
+            i++;
+            
+            if (i % 100 == 0 || i == this.files.size()) {
+                stm6.executeBatch(); // Execute every 100 items.
+            }
+        }
+    }
+    
+    public static int delete(Connection conn, int id) throws SQLException {
+        
+        String sql1 = "DELETE FROM `image of detail` WHERE Res_id = ?";
+        PreparedStatement stm1 = conn.prepareCall(sql1);
+        stm1.setInt(1, id);
+        stm1.executeUpdate();
+        
+        String sql2 = "DELETE FROM `details` WHERE Res_id = ?";
+        PreparedStatement stm2 = conn.prepareCall(sql2);
+        stm2.setInt(1, id);
+        stm2.executeUpdate();
+        
+        String sql3 = "DELETE FROM `residential` WHERE Res_id = ?";
+        PreparedStatement stm3 = conn.prepareCall(sql3);
+        stm3.setInt(1, id);
+        int row = stm3.executeUpdate();
+        
+        return row;
+        
+    }
+    
+    public static LinkedList<Residential> getResidentials(Connection conn, int emp_num) throws SQLException {
+        
+        LinkedList<Residential> ress = new LinkedList<>();
+        
+        String sql = "SELECT Res_id, Res_name, dt_modified FROM residential WHERE Emp_num = ?;";
+        
+        PreparedStatement stm = conn.prepareStatement(sql);
+        stm.setInt(1, emp_num);
+        ResultSet rs = stm.executeQuery();
+        
+        Residential res = null;
+        
+        while (rs.next()) {
+            res = new Residential();
+            res.setId(rs.getInt("Res_id"));
+            res.setName(rs.getString("Res_name"));
+            res.setDt_time(rs.getString("dt_modified"));
+            
+            ress.add(res);
+        }
+        
+        return ress;
     }
 
     /**
@@ -490,5 +774,5 @@ public class Residential {
     public void setDetails_id(int details_id) {
         this.details_id = details_id;
     }
-
+    
 }

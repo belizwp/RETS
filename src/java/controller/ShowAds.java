@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import model.Advertise;
 
 /**
  *
@@ -41,24 +42,7 @@ public class ShowAds extends HttpServlet {
 
             Connection conn = (Connection) getServletContext().getAttribute("connection");
 
-            String sql1 = "SELECT role_ads FROM advertised WHERE Ads_id = ?;";
-            PreparedStatement stm1 = conn.prepareStatement(sql1);
-            stm1.setInt(1, id);
-            ResultSet rs = stm1.executeQuery();
-
-            boolean show = false;
-
-            if (rs.next()) {
-                show = rs.getBoolean("role_ads");
-            }
-
-            String sql = "UPDATE advertised SET role_ads = ? WHERE Ads_id = ?;";
-
-            PreparedStatement stm = conn.prepareStatement(sql);
-            stm.setBoolean(1, show ? false : true);
-            stm.setInt(2, id);
-
-            int row = stm.executeUpdate();
+            int row = Advertise.show(conn, id);
 
             if (row > 0) {
                 response.sendRedirect("/RETS/menu?tab=ads");

@@ -7,8 +7,6 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,74 +34,26 @@ public class ViewResidential extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         try {
-            String id = request.getParameter("id");
+            int id = Integer.parseInt(request.getParameter("id"));
 
             // query and set value to instance
             Connection conn = (Connection) getServletContext().getAttribute("connection");
 
-            // residetial table
-            String sql = "SELECT *\n"
-                    + "FROM residential\n"
-                    + "NATURAL JOIN employees\n"
-                    + "NATURAL JOIN details\n"
-                    + "NATURAL JOIN location\n"
-                    + "NATURAL JOIN province\n"
-                    + "NATURAL JOIN amphur\n"
-                    + "NATURAL JOIN district\n"
-                    + "WHERE Res_id = ?;";
-            
-            PreparedStatement stm = conn.prepareStatement(sql);
-            stm.setInt(1, Integer.parseInt(id));
-            ResultSet rs = stm.executeQuery();
-            
-            if (rs.next()) {
-                Residential res = new Residential();
-                Employee emp = new Employee();
-                
-                emp.setNumber(rs.getInt("Emp_num"));
-                emp.setFname(rs.getString("Fname"));
-                emp.setLname(rs.getString("Lname"));
-                emp.setPhone(rs.getString("phone"));
-                
-                res.setId(Integer.parseInt(id));
-                
-                res.setType(rs.getString("announce_for"));
-                res.setPropType(rs.getString("types"));
-                res.setProvince(rs.getShort("province_id"));
-                res.setAmphur(rs.getShort("amphur_id"));
-                res.setDistrict(rs.getShort("district_id"));
-                
-                res.setProvinceName(rs.getString("province_name"));
-                res.setAmphurName(rs.getString("amphur_name"));
-                res.setDistrictName(rs.getString("district_name"));
-                
-                res.setTitle(rs.getString("Res_name"));
-                res.setDetail(rs.getString("remark"));
-                res.setName(rs.getString("buliding_name"));
-                res.setAddress(rs.getString("address"));
-                
-                res.setPrice(rs.getInt("price"));
-                
-                res.setFloor(rs.getString("floor"));
-                res.setElectricity(rs.getString("electric_bill"));
-                res.setWater(rs.getString("water_bill"));
-                res.setFacilities(rs.getString("facilities"));
-                
-                res.setDt_time(rs.getString("dt_modified"));
+            Residential res = new Residential(conn, id);
+            Employee emp = new Employee(conn, res.getEmp_num());
 
-                // forwoard instance through req attribute
-                request.setAttribute("residential", res);
-                request.setAttribute("emp_info", emp);
-                request.getRequestDispatcher("/residential.jsp").forward(request, response);
-            }
-            
+            // forwoard instance through req attribute
+            request.setAttribute("residential", res);
+            request.setAttribute("emp_info", emp);
+            request.getRequestDispatcher("/residential.jsp").forward(request, response);
+
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/RETS/error");
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

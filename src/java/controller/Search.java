@@ -7,19 +7,21 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.ContactModel;
+import model.Residential;
+import model.SearchDAO;
 
 /**
  *
  * @author Belize
  */
-@WebServlet(name = "DeleteContact", urlPatterns = {"/DeleteContact"})
-public class DeleteContact extends HttpServlet {
+@WebServlet(name = "Search", urlPatterns = {"/search"})
+public class Search extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,19 +34,42 @@ public class DeleteContact extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
+            String province = request.getParameter("province");
+            String amphur = request.getParameter("amphur");
+            String district = request.getParameter("district");
+            String ann = request.getParameter("announce_type");
+            String type = request.getParameter("property_type");
+            String min = request.getParameter("min_price");
+            String max = request.getParameter("max_price");
+            String page = request.getParameter("page");
 
             Connection conn = (Connection) getServletContext().getAttribute("connection");
 
-            int row = ContactModel.delete(conn, id);
+            SearchDAO searchDao = new SearchDAO();
 
-            if (row > 0) {
-                response.sendRedirect("/RETS/menu?tab=contact");
-            } else {
-                response.sendRedirect("/RETS/menu?tab=contact&error=");
-            }
+            searchDao.setP_id(province != null && !province.equals("") ? Integer.parseInt(province) : null);
+            searchDao.setA_id(amphur != null && !amphur.equals("") ? Integer.parseInt(amphur) : null);
+            searchDao.setD_id(district != null && !district.equals("") ? Integer.parseInt(district) : null);
+            searchDao.setAnn(ann);
+            searchDao.setType(type);
+            searchDao.setMin(min != null && !min.equals("") ? Integer.parseInt(min) : null);
+            searchDao.setMax(max != null && !max.equals("") ? Integer.parseInt(max) : null);
+
+            searchDao.setPage(page != null && !page.equals("") ? Integer.parseInt(page) : null);
+
+            searchDao.setLimit(5); // default
+
+            LinkedList<Residential> result = searchDao.search(conn);
+
+            request.setAttribute("found_rows", searchDao.getFound_rows());
+            request.setAttribute("limit", searchDao.getLimit());
+            request.setAttribute("page", searchDao.getPage());
+            request.setAttribute("result", result);
+            request.getRequestDispatcher("result.jsp").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();

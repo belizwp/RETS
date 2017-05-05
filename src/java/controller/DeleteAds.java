@@ -41,11 +41,7 @@ public class DeleteAds extends HttpServlet {
 
             Connection conn = (Connection) getServletContext().getAttribute("connection");
 
-            String sql = "DELETE FROM advertised WHERE Ads_id = ?;";
-
-            PreparedStatement stm = conn.prepareStatement(sql);
-            stm.setInt(1, id);
-            int row = stm.executeUpdate();
+            int row = Advertise.delete(conn, id);
 
             if (row > 0) {
                 response.sendRedirect("/RETS/menu?tab=ads&success");

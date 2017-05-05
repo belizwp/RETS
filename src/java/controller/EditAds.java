@@ -35,43 +35,22 @@ public class EditAds extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         try {
             int id = Integer.parseInt(request.getParameter("id"));
-            
+
             Connection conn = (Connection) getServletContext().getAttribute("connection");
-            
-            String sql = "SELECT topic, detail, Res_id FROM advertised WHERE Ads_id = ?;";
-            
-            PreparedStatement stm = conn.prepareStatement(sql);
-            stm.setInt(1, id);
-            ResultSet rs = stm.executeQuery();
-            
-            if (rs.next()) {
-                String topic = rs.getString("topic");
-                String detail = rs.getString("detail");
-                int res_id = rs.getInt("Res_id");
-                
-                Advertise ads = new Advertise();
-                
-                ads.setAds_id(id);
-                ads.setTopic(topic);
-                ads.setDetail(detail);
-                ads.setRes_id(res_id);
-                ads.setEdit(true);
-                
-                request.setAttribute("ads", ads);
-                request.getRequestDispatcher("/new_ads.jsp").forward(request, response);
-                
-            } else {
-                response.sendRedirect("/RETS/menu?tab=ads&error");
-            }
-            
+
+            Advertise ads = new Advertise(conn, id);
+
+            request.setAttribute("ads", ads);
+            request.getRequestDispatcher("/new_ads.jsp").forward(request, response);
+
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/RETS/error");
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

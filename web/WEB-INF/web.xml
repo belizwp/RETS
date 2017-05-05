@@ -9,10 +9,6 @@
         <jsp-file>/result.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>menu</servlet-name>
-        <jsp-file>/member_menu.jsp</jsp-file>
-    </servlet>
-    <servlet>
         <servlet-name>edit_profile</servlet-name>
         <jsp-file>/edit_profile.jsp</jsp-file>
     </servlet>
@@ -39,10 +35,6 @@
     <servlet-mapping>
         <servlet-name>result</servlet-name>
         <url-pattern>/result</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>menu</servlet-name>
-        <url-pattern>/menu</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>edit_profile</servlet-name>
@@ -119,13 +111,5 @@
     <servlet-mapping>
         <servlet-name>searchboxURL</servlet-name>
         <url-pattern>/searchbox</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>searchURL</servlet-name>
-        <jsp-file>/search.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>searchURL</servlet-name>
-        <url-pattern>/search</url-pattern>
     </servlet-mapping>
 </web-app>

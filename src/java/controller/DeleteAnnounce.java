@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
@@ -14,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Residential;
 
 /**
  *
@@ -39,20 +39,7 @@ public class DeleteAnnounce extends HttpServlet {
 
             Connection conn = (Connection) getServletContext().getAttribute("connection");
 
-            String sql1 = "DELETE FROM `image of detail` WHERE Res_id = ?";
-            PreparedStatement stm1 = conn.prepareCall(sql1);
-            stm1.setInt(1, id);
-            stm1.executeUpdate();
-
-            String sql2 = "DELETE FROM `details` WHERE Res_id = ?";
-            PreparedStatement stm2 = conn.prepareCall(sql2);
-            stm2.setInt(1, id);
-            stm2.executeUpdate();
-
-            String sql3 = "DELETE FROM `residential` WHERE Res_id = ?";
-            PreparedStatement stm3 = conn.prepareCall(sql3);
-            stm3.setInt(1, id);
-            int row = stm3.executeUpdate();
+            int row = Residential.delete(conn, id);
 
             if (row > 0) {
                 response.sendRedirect("/RETS/menu?tab=announce");

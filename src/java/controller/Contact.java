@@ -7,12 +7,12 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.ContactModel;
 
 /**
  *
@@ -36,7 +36,7 @@ public class Contact extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try {
-            String emp_num = request.getParameter("emp_num");
+            int emp_num = Integer.parseInt(request.getParameter("emp_num"));
             String fname = request.getParameter("fname");
             String lname = request.getParameter("lname");
             String phone = request.getParameter("phone");
@@ -45,24 +45,9 @@ public class Contact extends HttpServlet {
 
             Connection conn = (Connection) getServletContext().getAttribute("connection");
 
-            String sql1 = "INSERT INTO customer (Fname, Lname, phone, email) VALUES (?, ?, ?, ?)";
-            String sql2 = "SET @cus_id := LAST_INSERT_ID();";
-            String sql3 = "INSERT INTO contact (Cus_id, Emp_num, cont_desc) VALUES (@cus_id, ?, ?)";
+            ContactModel contact = new ContactModel(fname, lname, phone, email, desc);
 
-            PreparedStatement stm1 = conn.prepareStatement(sql1);
-            stm1.setString(1, fname);
-            stm1.setString(2, lname);
-            stm1.setString(3, phone);
-            stm1.setString(4, email);
-            stm1.executeUpdate();
-
-            PreparedStatement stm2 = conn.prepareStatement(sql2);
-            stm2.executeQuery();
-
-            PreparedStatement stm3 = conn.prepareStatement(sql3);
-            stm3.setInt(1, Integer.parseInt(emp_num));
-            stm3.setString(2, desc);
-            int row = stm3.executeUpdate();
+            int row = contact.sendContact(conn, emp_num);
 
             if (row > 0) {
                 response.sendRedirect("/RETS/residential?" + request.getQueryString() + "&contact=succeed");

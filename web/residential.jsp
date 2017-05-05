@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="header" />
@@ -7,25 +6,20 @@
 <c:set var="res" value="${requestScope.residential}" />
 <c:set var="emp" value="${requestScope.emp_info}" />
 
-<sql:query var="images" dataSource="${dataSource}">
-    SELECT image_id from `image of detail` WHERE Res_id = ?;
-    <sql:param value="${res.id}"/>
-</sql:query>
-
 <div class="container" style="margin-top: 20px;">
     <div class="row">
         <div class="col-md-9"> <!-- residential detail -->
             <div class="panel panel-default">
                 <div class="panel-body" style="padding-top: 0px;">
 
-                    <c:if test="${images.getRowCount() > 0}">
+                    <c:if test="${res.files.size() > 0}">
                         <div class="row">
                             <div data-ride="carousel" id="myCarousel" class="carousel slide">
                                 <div class="carousel-outer">
                                     <div role="listbox" class="carousel-inner">
-                                        <c:forEach var="image" items="${images.rows}" varStatus="count">
+                                        <c:forEach var="image" items="${res.files}" varStatus="count">
                                             <div class='item ${count.index == 0 ? "active" : ""}'>
-                                                <img class="img-responsive center-block" src='/RETS/image?type=gallery&id=${image.image_id}'/>
+                                                <img class="img-responsive center-block" src='/RETS/image?type=gallery&id=${image.id}'/>
                                             </div>
                                         </c:forEach>
                                     </div>
@@ -40,9 +34,9 @@
                                 </div>
                                 <!-- thumb navigation carousel -->
                                 <ol id="slider-thumbs" class="carousel-indicators horizontal-scrollbar hidden-xs">
-                                    <c:forEach var="image" items="${images.rows}" varStatus="count">
+                                    <c:forEach var="image" items="${res.files}" varStatus="count">
                                         <li data-target='#myCarousel' data-slide-to='${count.index}'  class="active">
-                                            <img src='/RETS/image?type=nav&id=${image.image_id}' />
+                                            <img src='/RETS/image?type=nav&id=${image.id}' />
                                         </li>
                                     </c:forEach>
                                 </ol>
@@ -99,25 +93,5 @@
         </div>  <!-- /contact form -->
     </div>
 </div> <!-- /content -->
-
-<script>
-    $(document).ready(function () {
-        $(".contact-fname").keyup(function () {
-            $(".contact-fname").val($(this).val());
-        });
-        $(".contact-lname").keyup(function () {
-            $(".contact-lname").val($(this).val());
-        });
-        $(".contact-tel").keyup(function () {
-            $(".contact-tel").val($(this).val());
-        });
-        $(".contact-email").keyup(function () {
-            $(".contact-email").val($(this).val());
-        });
-        $(".contact-ms").keyup(function () {
-            $(".contact-ms").val($(this).val());
-        });
-    });
-</script>
 
 <jsp:include page="footer" />

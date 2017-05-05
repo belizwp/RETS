@@ -7,19 +7,23 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Advertise;
 import model.ContactModel;
+import model.Employee;
+import model.Residential;
 
 /**
  *
  * @author Belize
  */
-@WebServlet(name = "DeleteContact", urlPatterns = {"/DeleteContact"})
-public class DeleteContact extends HttpServlet {
+@WebServlet(name = "MemberMenu", urlPatterns = {"/menu"})
+public class MemberMenu extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,24 +36,28 @@ public class DeleteContact extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
 
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
+            Employee emp = (Employee) request.getSession().getAttribute("employee");
 
             Connection conn = (Connection) getServletContext().getAttribute("connection");
 
-            int row = ContactModel.delete(conn, id);
+            LinkedList<Residential> residentials = Residential.getResidentials(conn, emp.getNumber());
+            LinkedList<ContactModel> contacts = ContactModel.getContactModels(conn, emp.getNumber());
+            LinkedList<Advertise> advertises = Advertise.getAdvertises(conn, emp.getNumber());
 
-            if (row > 0) {
-                response.sendRedirect("/RETS/menu?tab=contact");
-            } else {
-                response.sendRedirect("/RETS/menu?tab=contact&error=");
-            }
+            request.setAttribute("myRes", residentials);
+            request.setAttribute("myCont", contacts);
+            request.setAttribute("myAds", advertises);
+
+            request.getRequestDispatcher("member_menu.jsp").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/RETS/error");
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

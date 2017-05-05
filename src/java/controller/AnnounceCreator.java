@@ -7,9 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Employee;
-import model.ImageMeta;
 import model.Residential;
 
 /**
@@ -145,7 +142,7 @@ public class AnnounceCreator extends HttpServlet {
                         saveDetailVal(request, announce);
                         break;
                 }
-                updateAnnounce(announce, emp, response);
+                updateAnnounce(announce, response);
             } catch (Exception e) {
                 e.printStackTrace();
                 response.sendRedirect("/RETS/error");
@@ -162,174 +159,17 @@ public class AnnounceCreator extends HttpServlet {
     }
 
     // update announce record
-    private void updateAnnounce(Residential res, Employee emp, HttpServletResponse response) throws SQLException, IOException {
-
+    private void updateAnnounce(Residential res, HttpServletResponse response) throws SQLException, IOException {
         Connection connection = (Connection) getServletContext().getAttribute("connection");
-
-        String sql1 = "UPDATE residential SET Res_name = ?, announce_for = ? WHERE Res_id = ?";
-        String sql2 = "UPDATE owner SET Fname = ?, Lname = ?, phone = ?, email = ? WHERE Own_id = ?";
-        String sql3 = "UPDATE location SET address = ?, province_id = ?, amphur_id = ?, district_id = ? WHERE Loc_id = ?";
-        String sql4 = "UPDATE details SET "
-                + "buliding_name = ?, "
-                + "types = ?, "
-                + "floor = ?, "
-                + "price = ?, "
-                + "water_bill = ?, "
-                + "electric_bill = ?, "
-                + "facilities = ?, "
-                + "remark = ? "
-                + "WHERE details_id = ?";
-        String sql5 = "DELETE FROM `image of detail` WHERE Res_id = ?";
-        String sql6 = "INSERT INTO `image of detail`(image, details_id, Res_id) VALUES (?, ?, ?);";
-
-        PreparedStatement stm1 = connection.prepareStatement(sql1);
-        PreparedStatement stm2 = connection.prepareStatement(sql2);
-        PreparedStatement stm3 = connection.prepareStatement(sql3);
-        PreparedStatement stm4 = connection.prepareStatement(sql4);
-        PreparedStatement stm5 = connection.prepareStatement(sql5);
-
-        stm1.setString(1, res.getTitle());
-        stm1.setString(2, res.getType());
-        stm1.setInt(3, res.getId());
-
-        stm2.setString(1, res.getFname());
-        stm2.setString(2, res.getLname());
-        stm2.setString(3, res.getPhone());
-        stm2.setString(4, res.getEmail());
-        stm2.setInt(5, res.getOwner_id());
-
-        stm3.setString(1, res.getAddress());
-        stm3.setInt(2, res.getProvince());
-        stm3.setInt(3, res.getAmphur());
-        stm3.setInt(4, res.getDistrict());
-        stm3.setInt(5, res.getOwner_id());
-
-        stm4.setString(1, res.getName());
-        stm4.setString(2, res.getPropType());
-        stm4.setString(3, res.getFloor());
-        stm4.setInt(4, res.getPrice());
-        stm4.setString(5, res.getWater());
-        stm4.setString(6, res.getElectricity());
-        stm4.setString(7, res.getFacilities());
-        stm4.setString(8, res.getDetail());
-        stm4.setInt(9, res.getDetails_id());
-
-        stm5.setInt(1, res.getId());
-
-        stm1.executeUpdate();
-        stm2.executeUpdate();
-        stm3.executeUpdate();
-        stm4.executeUpdate();
-        stm5.executeUpdate();
-
-        // image file
-        PreparedStatement stm6 = connection.prepareStatement(sql6);
-
-        LinkedList<ImageMeta> files = res.getFiles();
-
-        int i = 0;
-
-        for (ImageMeta file : files) {
-            stm6.setBlob(1, file.getInputStream());
-            stm6.setInt(2, res.getDetails_id());
-            stm6.setInt(3, res.getId());
-
-            stm6.addBatch();
-            i++;
-
-            if (i % 100 == 0 || i == files.size()) {
-                stm6.executeBatch(); // Execute every 100 items.
-            }
-        }
-
+        res.update(connection);
         response.sendRedirect("/RETS/menu?tab=announce");
 
     }
 
     // create a new record of announce
     private void announce(Residential ann, Employee emp, HttpServletResponse response) throws SQLException, IOException {
-
         Connection connection = (Connection) getServletContext().getAttribute("connection");
-
-        String sql1 = "INSERT INTO owner(Fname, Lname, email, phone) VALUES(?, ?, ?, ?);";
-        String sql2 = "SET @owner_id := LAST_INSERT_ID();";
-        String sql3 = "INSERT INTO location(address, province_id, amphur_id, district_id) VALUES(?, ?, ?, ?);";
-        String sql4 = "SET @loc_id := LAST_INSERT_ID();";
-        String sql5 = "INSERT INTO residential(Res_name, announce_for, Emp_num, Owner_Own_id, Loc_id) VALUES(?, ?, ?, @owner_id, @loc_id);";
-        String sql6 = "SET @res_id := LAST_INSERT_ID();";
-        String sql7 = "INSERT INTO details(buliding_name, types, floor, price, water_bill, electric_bill, facilities, remark, Res_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, @res_id);";
-        String sql8 = "SET @detail_id := LAST_INSERT_ID();";
-        String sql9 = "INSERT INTO `image of detail`(image, details_id, Res_id) VALUES (?, @detail_id, @res_id);";
-
-        PreparedStatement stm1 = connection.prepareStatement(sql1);
-        // owner info
-        stm1.setString(1, ann.getFname());
-        stm1.setString(2, ann.getLname());
-        stm1.setString(3, ann.getEmail());
-        stm1.setString(4, ann.getPhone());
-        stm1.executeUpdate();
-
-        // owner id
-        PreparedStatement stm2 = connection.prepareStatement(sql2);
-        stm2.executeQuery();
-
-        PreparedStatement stm3 = connection.prepareStatement(sql3);
-        // location info
-        stm3.setString(1, ann.getAddress());
-        stm3.setInt(2, ann.getProvince());
-        stm3.setInt(3, ann.getAmphur());
-        stm3.setInt(4, ann.getDistrict());
-        stm3.executeUpdate();
-
-        // loc id
-        PreparedStatement stm4 = connection.prepareStatement(sql4);
-        stm4.executeQuery();
-
-        PreparedStatement stm5 = connection.prepareStatement(sql5);
-        // resident info
-        stm5.setString(1, ann.getTitle());
-        stm5.setString(2, ann.getType());
-        stm5.setInt(3, emp.getNumber());
-        stm5.executeUpdate();
-
-        // res id
-        PreparedStatement stm6 = connection.prepareStatement(sql6);
-        stm6.executeQuery();
-
-        PreparedStatement stm7 = connection.prepareStatement(sql7);
-        // detail info
-        stm7.setString(1, ann.getName());
-        stm7.setString(2, ann.getPropType());
-        stm7.setString(3, ann.getFloor() + "");
-        stm7.setInt(4, ann.getPrice());
-        stm7.setString(5, ann.getWater() + "");
-        stm7.setString(6, ann.getElectricity() + "");
-        stm7.setString(7, ann.getFacilities());
-        stm7.setString(8, ann.getDetail());
-        int row = stm7.executeUpdate();
-
-        // detail id
-        PreparedStatement stm8 = connection.prepareStatement(sql8);
-        stm8.executeQuery();
-
-        // image file
-        PreparedStatement stm9 = connection.prepareStatement(sql9);
-
-        LinkedList<ImageMeta> files = ann.getFiles();
-
-        int i = 0;
-
-        for (ImageMeta file : files) {
-            stm9.setBlob(1, file.getInputStream());
-
-            stm9.addBatch();
-            i++;
-
-            if (i % 100 == 0 || i == files.size()) {
-                stm9.executeBatch(); // Execute every 100 items.
-            }
-        }
-
+        int row = ann.create(connection, emp);
         if (row > 0) {
             response.sendRedirect("/RETS/menu?tab=announce");
         }

@@ -49,17 +49,13 @@
                         <th>ลบ</th>
                         </thead>
                         <tbody>
-                            <sql:query var="ann_rows" dataSource="${dataSource}">
-                                SELECT Res_id, Res_name, dt_modified FROM residential WHERE Emp_num = ?;
-                                <sql:param value="${sessionScope.employee.number}"/>
-                            </sql:query>
-                            <c:forEach var="ann_row" items="${ann_rows.rows}">
+                            <c:forEach var="res" items="${requestScope.myRes}">
                                 <tr>
-                                    <td>${ann_row.Res_id}</td>
-                                    <td><a href="/RETS/residential?id=${ann_row.Res_id}">${ann_row.Res_name}</a></td>
-                                    <td>${ann_row.dt_modified}</td>
-                                    <td><p data-placement="top" title="Edit"><a href="/RETS/edit_announce?id=${ann_row.Res_id}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
-                                    <td><p data-placement="top" title="Delete"><a href="/RETS/DeleteAnnounce?id=${ann_row.Res_id}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                                    <td>${res.id}</td>
+                                    <td><a href="/RETS/residential?id=${res.id}">${res.name}</a></td>
+                                    <td>${res.dt_time}</td>
+                                    <td><p data-placement="top" title="Edit"><a href="/RETS/edit_announce?id=${res.id}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
+                                    <td><p data-placement="top" title="Delete"><a href="/RETS/DeleteAnnounce?id=${res.id}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a></p></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -77,26 +73,17 @@
                         <th>ลบ</th>
                         </thead>
                         <tbody>
-                            <sql:query var="cont_rows" dataSource="${dataSource}">
-                                SELECT Cus_id, cont_desc, cont_date FROM contact WHERE Emp_num = ?;
-                                <sql:param value="${sessionScope.employee.number}"/>
-                            </sql:query>
-                            <c:forEach var="cont_row" items="${cont_rows.rows}">
-                                <sql:query var="cus_rows" dataSource="${dataSource}">
-                                    SELECT Fname, Lname, phone, email FROM customer WHERE Cus_id = ?;
-                                    <sql:param value="${cont_row.Cus_id}"/>
-                                </sql:query>
-                                <c:forEach var="cus" items="${cus_rows.rows}">
-                                    <tr>
-                                        <td>${cont_row.cont_date}</td>
-                                        <td>${cus.Fname} ${cus.rows.Lname}</td>
-                                        <td>${cus.phone}</td>
-                                        <td>${cus.email}</td>
-                                        <td>${cont_row.cont_desc}</td>
-                                        <td><p data-placement="top" title="Delete"><a href="/RETS/DeleteContact?id=${cont_row.Cus_id}" class="btn btn-danger btn-sm" ><span class="glyphicon glyphicon-trash"></span></a></p></td>
-                                    </tr>
-                                </c:forEach>
+                            <c:forEach var="cus" items="${requestScope.myCont}">
+                                <tr>
+                                    <td>${cus.date}</td>
+                                    <td>${cus.fname} ${cus.lname}</td>
+                                    <td>${cus.phone}</td>
+                                    <td>${cus.email}</td>
+                                    <td>${cus.desc}</td>
+                                    <td><p data-placement="top" title="Delete"><a href="/RETS/DeleteContact?id=${cus.id}" class="btn btn-danger btn-sm" ><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                                </tr>
                             </c:forEach>
+
                         </tbody>
                     </table>
                 </div>
@@ -113,18 +100,14 @@
                             <th>ลบ</th>
                             </thead>
                             <tbody>
-                                <sql:query var="ads_rows" dataSource="${dataSource}">
-                                    SELECT Ads_id, topic, present_date, role_ads FROM advertised WHERE Emp_num = ?;
-                                    <sql:param value="${sessionScope.employee.number}"/>
-                                </sql:query>
-                                <c:forEach var="ads_row" items="${ads_rows.rows}">
+                                <c:forEach var="ads" items="${requestScope.myAds}">
                                     <tr>
-                                        <td>${ads_row.Ads_id}</td>
-                                        <td><a href="property.html">${ads_row.topic}</a></td>
-                                        <td>${ads_row.present_date}</td>
-                                        <td><p data-placement="top" title="show"><a href="/RETS/ShowAds?id=${ads_row.Ads_id}" class="btn ${ads_row.role_ads ? 'btn-success' : 'btn-default'} btn-sm" ><span class="glyphicon glyphicon-bullhorn"></span></a></p></td>
-                                        <td><p data-placement="top" title="Edit"><a href="/RETS/EditAds?id=${ads_row.Ads_id}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
-                                        <td><p data-placement="top" title="Delete"><a href="/RETS/DeleteAds?id=${ads_row.Ads_id}" class="btn btn-danger btn-sm" ><span class="glyphicon glyphicon-trash"></span></a></p></td>
+                                        <td>${ads.ads_id}</td>
+                                        <td><a href="/RETS/residential?id=${ads.res_id}">${ads.topic}</a></td>
+                                        <td>${ads.date}</td>
+                                        <td><p data-placement="top" title="show"><a href="/RETS/ShowAds?id=${ads.ads_id}" class="btn ${ads.status ? 'btn-success' : 'btn-default'} btn-sm" ><span class="glyphicon glyphicon-bullhorn"></span></a></p></td>
+                                        <td><p data-placement="top" title="Edit"><a href="/RETS/EditAds?id=${ads.ads_id}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
+                                        <td><p data-placement="top" title="Delete"><a href="/RETS/DeleteAds?id=${ads.ads_id}" class="btn btn-danger btn-sm" ><span class="glyphicon glyphicon-trash"></span></a></p></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

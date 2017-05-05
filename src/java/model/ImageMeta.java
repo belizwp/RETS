@@ -12,6 +12,8 @@ import javax.imageio.ImageIO;
 @JsonIgnoreProperties({"img", "inputStream"})
 public class ImageMeta {
 
+    private int id;
+    
     private String fileName;
     private String fileSize;
     private String fileType;
@@ -26,7 +28,7 @@ public class ImageMeta {
 
     public InputStream getInputStream() throws IOException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        ImageIO.write((RenderedImage) this.img, "png", os);
+        ImageIO.write((RenderedImage) this.getImg(), "png", os);
         InputStream fis = new ByteArrayInputStream(os.toByteArray());
 
         return fis;
@@ -86,6 +88,20 @@ public class ImageMeta {
      */
     public void setImg(Image img) {
         this.img = img;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

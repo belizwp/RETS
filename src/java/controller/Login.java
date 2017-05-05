@@ -45,26 +45,9 @@ public class Login extends HttpServlet {
 
             Connection connection = (Connection) getServletContext().getAttribute("connection");
 
-            String sql = "SELECT Emp_num, Fname, Lname, phone, role FROM employees WHERE email = ? AND password = ?;";
+            Employee emp = new Employee();
 
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, email);
-            stm.setString(2, password);
-
-            ResultSet rs = stm.executeQuery();
-
-            if (rs.next()) {
-                Employee emp = new Employee();
-                emp.setNumber(rs.getInt("Emp_num"));
-                emp.setFname(rs.getString("Fname"));
-                emp.setLname(rs.getString("Lname"));
-                emp.setPhone(rs.getString("phone"));
-                emp.setEmail(email);
-                emp.setPassword(password);
-                emp.setRole(rs.getString("role"));
-
-                emp.setFlag(1); // login flag
-
+            if (emp.validate(connection, email, password)) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("employee", emp);
 
@@ -74,7 +57,7 @@ public class Login extends HttpServlet {
             }
 
         } catch (IOException | SQLException e) {
-            response.sendRedirect("/RETS/login?error=");
+            response.sendRedirect("/RETS/error");
         }
     }
 
