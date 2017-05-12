@@ -44,11 +44,13 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="/RETS/menu">เมนูสมาชิก</a></li>
                                             <li><a href="/RETS/edit_profile">แก้ไขบัญชี</a></li>
+                                            <li role="separator" class="divider"></li>
                                             <li><a href="/RETS/menu?tab=announce">ประกาศของฉัน</a></li>
                                                 <c:if test="${sessionScope.employee.role == 'admin' || sessionScope.employee.role == 'webmaster'}">
                                                 <li><a href="/RETS/new_ads.jsp">ลงข่าวประชาสัมพันธ์</a></li>
                                                 </c:if>
                                             <li><a href="/RETS/menu?tab=contact">รายชื่อผู้ติดต่อ</a></li>
+                                            <li role="separator" class="divider"></li>
                                             <li><a href="/RETS/Logout">ออกจากระบบ</a></li>
                                         </ul>
                                     </li>
